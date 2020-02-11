@@ -16,7 +16,12 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 
 		const child_process = require("child_process");
-		child_process.execSync("~/.bin/urls_open", { input: text });
+		try {
+			child_process.execSync("~/.bin/urls_open", { input: text });
+		}
+		catch (error) {
+			// Ignored, there's an error if no URLs are found.
+		}
 	});
 
 	context.subscriptions.push(disposable);
