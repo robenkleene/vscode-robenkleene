@@ -63,7 +63,6 @@ export function activate(context: vscode.ExtensionContext) {
 			vscode.window.showTextDocument(doc);
 		});
 	});
-
 	context.subscriptions.push(openFileDisposable);
 
 	let backupDisposable = vscode.commands.registerCommand('extension.backupFile', (uri: vscode.Uri) => {
@@ -90,6 +89,38 @@ export function activate(context: vscode.ExtensionContext) {
 		catch (error) { }
 	});
 	context.subscriptions.push(backupDisposable);
+
+	let slugProjectDisposable = vscode.commands.registerCommand('extension.slugProject', async (uri: vscode.Uri) => {
+		const path = uri.fsPath;
+		const fs = require("fs");
+		if (!fs.lstatSync(path).isDirectory()) {
+			return;
+		}
+
+		const input = await vscode.window.showInputBox();
+		const title = input?.toString();
+		if (title === undefined) {
+			return;
+		}
+		if (!title.length) {
+			return;
+		}
+
+		const child_process = require("child_process");
+		try {
+			const result = child_process.spawnSync("~/.bin/slug_project", [title], { shell: true, cwd: path });
+			const message = result.stdout.toString();
+			const error = result.stderr.toString();
+			if (message.length) {
+				vscode.window.showInformationMessage(message);
+			}
+			if (error.length) {
+				vscode.window.showInformationMessage(message);
+			}
+		}
+		catch (error) { }
+	});
+	context.subscriptions.push(slugProjectDisposable);
 }
 
 export function deactivate() { }
