@@ -69,7 +69,7 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 	context.subscriptions.push(openFileDisposable);
 
-	let backupDisposable = vscode.commands.registerCommand('extension.backupFile', async (uri: vscode.Uri) => {
+	let backupDisposable = vscode.commands.registerCommand('extension.archiveFile', async (uri: vscode.Uri) => {
 		const filePath = uri.fsPath;
 		const fs = require("fs");
 		if (!fs.existsSync(filePath)) {
