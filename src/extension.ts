@@ -84,7 +84,7 @@ export function activate(context: vscode.ExtensionContext) {
 				vscode.window.showInformationMessage(message);
 			}
 			if (error.length) {
-			  vscode.window.showInformationMessage(message);
+				vscode.window.showInformationMessage(message);
 			}
 		}
 		catch (error) { }
