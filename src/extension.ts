@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 
 export function activate(context: vscode.ExtensionContext) {
-	let disposable = vscode.commands.registerCommand('extension.openURLs', () => {
+	let openURLsDisposable = vscode.commands.registerCommand('extension.openURLs', () => {
 		const activeTextEditor = vscode.window.activeTextEditor;
 		if (!activeTextEditor) {
 			return;
@@ -23,8 +23,48 @@ export function activate(context: vscode.ExtensionContext) {
 			// Ignored, there's an error if no URLs are found.
 		}
 	});
+	context.subscriptions.push(openURLsDisposable);
 
-	context.subscriptions.push(disposable);
+	let openFileDisposable = vscode.commands.registerCommand('extension.openFile', () => {
+		const activeTextEditor = vscode.window.activeTextEditor;
+		if (!activeTextEditor) {
+			return;
+		}
+
+		const delimiters = '()\\s"\'';
+		const pathRegExpString = "[" + delimiters + "]([^" + delimiters + "]+)[" + delimiters + "]";
+		const pathRegExp = new RegExp(pathRegExpString);
+		const position = activeTextEditor.selection.active;
+		let range = activeTextEditor.document.getWordRangeAtPosition(position, pathRegExp);
+		if (typeof range === 'undefined') {
+			return;
+		}
+		const text = activeTextEditor.document.getText(range);
+		const match = pathRegExp.exec(text);
+		if (match === null) {
+			return;
+		}
+		if (match.length < 2) {
+			return;
+		}
+		const relativePath = match[1];
+		const currentPath = activeTextEditor.document.uri.fsPath;
+
+		var path = require('path');
+		const currentDirPath = path.dirname(currentPath);
+		const destinationPath = path.resolve(currentDirPath, relativePath);
+		const fs = require("fs"); // Or `import fs from "fs";` with ESM
+		if (!fs.existsSync(destinationPath)) {
+			return;
+		}
+
+		const fileURL = vscode.Uri.file(destinationPath);
+		vscode.workspace.openTextDocument(fileURL).then(doc => {
+			vscode.window.showTextDocument(doc);
+		});
+	});
+
+	context.subscriptions.push(openFileDisposable);
 }
 
 export function deactivate() { }
