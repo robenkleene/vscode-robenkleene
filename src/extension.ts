@@ -1,5 +1,9 @@
 import * as vscode from 'vscode';
 
+var escapeShell = function (cmd: string) {
+	return '"' + cmd.replace(/(["\s'$`\\])/g, '\\$1') + '"';
+};
+
 export function activate(context: vscode.ExtensionContext) {
 	let openURLsDisposable = vscode.commands.registerCommand('extension.openURLs', () => {
 		const activeTextEditor = vscode.window.activeTextEditor;
@@ -63,33 +67,76 @@ export function activate(context: vscode.ExtensionContext) {
 			vscode.window.showTextDocument(doc);
 		});
 	});
-
 	context.subscriptions.push(openFileDisposable);
 
-	let backupDisposable = vscode.commands.registerCommand('extension.backupFile', (uri: vscode.Uri) => {
-		const path = uri.fsPath;
+	let backupDisposable = vscode.commands.registerCommand('extension.archiveFile', async (uri: vscode.Uri) => {
+		const filePath = uri.fsPath;
 		const fs = require("fs");
-		if (!fs.existsSync(path)) {
+		if (!fs.existsSync(filePath)) {
 			return;
 		}
+
+		const path = require('path');
+		const filename = path.basename(filePath);
+		const response = await vscode.window.showQuickPick(['no', 'yes'], { placeHolder: `Backup ${filename}?` });
+
+		if (response === "no") {
+			return;
+		}
+
 		const child_process = require("child_process");
 		try {
 			// This doesn't return for some reason
 			// const result = child_process.execFileSync('~/.bin/backup_file', [path]);
 			// const message = result.toString();
-			const result = child_process.spawnSync('~/.bin/backup_file', [path], { shell: true });
+			const result = child_process.spawnSync('~/.bin/backup_file', [`"${escapeShell(filePath)}"`], { shell: true });
+
 			const message = result.stdout.toString();
 			const error = result.stderr.toString();
 			if (message.length) {
 				vscode.window.showInformationMessage(message);
 			}
 			if (error.length) {
-				vscode.window.showInformationMessage(message);
+				vscode.window.showErrorMessage(error);
 			}
 		}
 		catch (error) { }
 	});
 	context.subscriptions.push(backupDisposable);
+
+	let slugProjectDisposable = vscode.commands.registerCommand('extension.slugProject', async (uri: vscode.Uri) => {
+		const path = uri.fsPath;
+		const fs = require("fs");
+		if (!fs.lstatSync(path).isDirectory()) {
+			return;
+		}
+
+		const input = await vscode.window.showInputBox();
+		const title = input?.toString();
+		if (title === undefined) {
+			return;
+		}
+		if (!title.length) {
+			return;
+		}
+
+		const child_process = require("child_process");
+		try {
+			const result = child_process.spawnSync("~/.bin/slug_project", [escapeShell(title)], { shell: true, cwd: path });
+			const message = result.stdout.toString();
+			const error = result.stderr.toString();
+			if (message.length) {
+				vscode.window.showInformationMessage(message);
+				console.log("message = " + message);
+			}
+			if (error.length) {
+				vscode.window.showErrorMessage(error);
+				console.log("error = " + error);
+			}
+		}
+		catch (error) { }
+	});
+	context.subscriptions.push(slugProjectDisposable);
 }
 
 export function deactivate() { }

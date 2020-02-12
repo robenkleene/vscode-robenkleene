@@ -11,7 +11,8 @@
   ],
   "activationEvents": [
     "onCommand:extension.openURLs",
-    "onCommand:extension.backupFile",
+    "onCommand:extension.archiveFile",
+    "onCommand:extension.slugProject",
     "onCommand:extension.openFile"
   ],
   "main": "./out/extension.js",
@@ -22,8 +23,12 @@
         "title": "Open URLs"
       },
       {
-        "command": "extension.backupFile",
-        "title": "Backup File"
+        "command": "extension.archiveFile",
+        "title": "Archive File"
+      },
+      {
+        "command": "extension.slugProject",
+        "title": "Slug Project"
       },
       {
         "command": "extension.openFile",
@@ -33,7 +38,12 @@
     "menus": {
       "explorer/context": [
         {
-          "command": "extension.backupFile",
+          "command": "extension.archiveFile",
+          "group": "navigation"
+        },
+        {
+          "command": "extension.slugProject",
+          "when": "explorerResourceIsFolder",
           "group": "navigation"
         }
       ]
