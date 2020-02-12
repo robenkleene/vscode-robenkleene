@@ -53,6 +53,11 @@ export function activate(context: vscode.ExtensionContext) {
 		var path = require('path');
 		const currentDirPath = path.dirname(currentPath);
 		const destinationPath = path.resolve(currentDirPath, relativePath);
+		const fs = require("fs"); // Or `import fs from "fs";` with ESM
+		if (!fs.existsSync(destinationPath)) {
+			return;
+		}
+
 		const fileURL = vscode.Uri.file(destinationPath);
 		vscode.workspace.openTextDocument(fileURL).then(doc => {
 			vscode.window.showTextDocument(doc);
