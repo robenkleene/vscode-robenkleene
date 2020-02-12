@@ -53,7 +53,7 @@ export function activate(context: vscode.ExtensionContext) {
 		var path = require('path');
 		const currentDirPath = path.dirname(currentPath);
 		const destinationPath = path.resolve(currentDirPath, relativePath);
-		const fs = require("fs"); // Or `import fs from "fs";` with ESM
+		const fs = require("fs");
 		if (!fs.existsSync(destinationPath)) {
 			return;
 		}
@@ -65,6 +65,17 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 
 	context.subscriptions.push(openFileDisposable);
+
+	let backupDisposable = vscode.commands.registerCommand('extension.backupFile', (uri: vscode.Uri) => {
+		const path = uri.fsPath;
+		console.log("path = " + path);
+
+		const fs = require("fs");
+		if (!fs.existsSync(path)) {
+			return;
+		}
+	});
+	context.subscriptions.push(backupDisposable);
 }
 
 export function deactivate() { }
