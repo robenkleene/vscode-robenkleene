@@ -32,17 +32,31 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 
 		const delimiters = '()\\s"\'';
-		const regExpString = "[" + delimiters + "]([^" + delimiters + "]+)[" + delimiters + "]";
-		const pathRegExp = new RegExp(regExpString);
-		// const detectFile = new RegExp("[(]([^)])+[)]");
+		const pathRegExpString = "[" + delimiters + "]([^" + delimiters + "]+)[" + delimiters + "]";
+		const pathRegExp = new RegExp(pathRegExpString);
 		const position = activeTextEditor.selection.active;
 		let range = activeTextEditor.document.getWordRangeAtPosition(position, pathRegExp);
 		if (typeof range === 'undefined') {
 			return;
 		}
-
 		const text = activeTextEditor.document.getText(range);
-		console.log(text);
+		const match = pathRegExp.exec(text);
+		if (match === null) {
+			return;
+		}
+		if (match.length < 2) {
+			return;
+		}
+		const relativePath = match[1];
+		const currentPath = activeTextEditor.document.uri.fsPath;
+
+		var path = require('path');
+		const currentDirPath = path.dirname(currentPath);
+		const destinationPath = path.resolve(currentDirPath, relativePath);
+		const fileURL = vscode.Uri.file(destinationPath);
+		vscode.workspace.openTextDocument(fileURL).then(doc => {
+			vscode.window.showTextDocument(doc);
+		});
 	});
 
 	context.subscriptions.push(openFileDisposable);
