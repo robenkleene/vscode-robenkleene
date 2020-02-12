@@ -10,14 +10,19 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.openURLs"
-	],
+		"onCommand:extension.openURLs",
+		"onCommand:extension.openFile"
+  ],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
 				"command": "extension.openURLs",
 				"title": "Open URLs"
+			},
+      {
+				"command": "extension.openFile",
+				"title": "Open Files"
 			}
 		]
 	},

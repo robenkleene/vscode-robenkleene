@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 
 export function activate(context: vscode.ExtensionContext) {
-	let disposable = vscode.commands.registerCommand('extension.openURLs', () => {
+	let openURLsDisposable = vscode.commands.registerCommand('extension.openURLs', () => {
 		const activeTextEditor = vscode.window.activeTextEditor;
 		if (!activeTextEditor) {
 			return;
@@ -23,8 +23,27 @@ export function activate(context: vscode.ExtensionContext) {
 			// Ignored, there's an error if no URLs are found.
 		}
 	});
+	context.subscriptions.push(openURLsDisposable);
 
-	context.subscriptions.push(disposable);
+	let openFileDisposable = vscode.commands.registerCommand('extension.openFile', () => {
+		const activeTextEditor = vscode.window.activeTextEditor;
+		if (!activeTextEditor) {
+			return;
+		}
+
+		const detectFile = new RegExp("[(]([^)]+)[)]");
+		const position = activeTextEditor.selection.active;
+		let range = activeTextEditor.document.getWordRangeAtPosition(position, detectFile);
+		if (typeof range === 'undefined') {
+			return;
+		}
+
+		console.log("range = " + range);
+		const text = activeTextEditor.document.getText(range);
+		console.log(text);
+	});
+
+	context.subscriptions.push(openFileDisposable);
 }
 
 export function deactivate() { }
