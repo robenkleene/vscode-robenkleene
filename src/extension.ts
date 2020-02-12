@@ -69,18 +69,27 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 	context.subscriptions.push(openFileDisposable);
 
-	let backupDisposable = vscode.commands.registerCommand('extension.backupFile', (uri: vscode.Uri) => {
-		const path = uri.fsPath;
+	let backupDisposable = vscode.commands.registerCommand('extension.backupFile', async (uri: vscode.Uri) => {
+		const filePath = uri.fsPath;
 		const fs = require("fs");
-		if (!fs.existsSync(path)) {
+		if (!fs.existsSync(filePath)) {
 			return;
 		}
+
+		const path = require('path');
+		const filename = path.basename(filePath);
+		const response = await vscode.window.showQuickPick(['no', 'yes'], { placeHolder: `Backup ${filename}?` });
+
+		if (response === "no") {
+			return;
+		}
+
 		const child_process = require("child_process");
 		try {
 			// This doesn't return for some reason
 			// const result = child_process.execFileSync('~/.bin/backup_file', [path]);
 			// const message = result.toString();
-			const result = child_process.spawnSync('~/.bin/backup_file', [`"${escapeShell(path)}"`], { shell: true });
+			const result = child_process.spawnSync('~/.bin/backup_file', [`"${escapeShell(filePath)}"`], { shell: true });
 
 			const message = result.stdout.toString();
 			const error = result.stderr.toString();
