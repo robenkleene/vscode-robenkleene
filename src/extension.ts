@@ -68,12 +68,23 @@ export function activate(context: vscode.ExtensionContext) {
 
 	let backupDisposable = vscode.commands.registerCommand('extension.backupFile', (uri: vscode.Uri) => {
 		const path = uri.fsPath;
-		console.log("path = " + path);
-
 		const fs = require("fs");
 		if (!fs.existsSync(path)) {
 			return;
 		}
+
+		const child_process = require("child_process");
+		const spawn = child_process.spawn('~/.bin/backup_file', [path]);
+
+		console.log("got here path = " + path);
+
+		spawn.stdout.on('data', (data: string) => {
+			vscode.window.showInformationMessage(data);
+		});
+
+		spawn.stderr.on('data', (data: string) => {
+			vscode.window.showErrorMessage(data);
+		});
 	});
 	context.subscriptions.push(backupDisposable);
 }
