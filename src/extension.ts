@@ -31,14 +31,16 @@ export function activate(context: vscode.ExtensionContext) {
 			return;
 		}
 
-		const detectFile = new RegExp("[(]([^)]+)[)]");
+		const delimiters = '()\\s"\'';
+		const regExpString = "[" + delimiters + "]([^" + delimiters + "]+)[" + delimiters + "]";
+		const pathRegExp = new RegExp(regExpString);
+		// const detectFile = new RegExp("[(]([^)])+[)]");
 		const position = activeTextEditor.selection.active;
-		let range = activeTextEditor.document.getWordRangeAtPosition(position, detectFile);
+		let range = activeTextEditor.document.getWordRangeAtPosition(position, pathRegExp);
 		if (typeof range === 'undefined') {
 			return;
 		}
 
-		console.log("range = " + range);
 		const text = activeTextEditor.document.getText(range);
 		console.log(text);
 	});
