@@ -11,6 +11,7 @@
   ],
   "activationEvents": [
     "onCommand:extension.openURLs",
+    "onCommand:extension.backupFile",
     "onCommand:extension.openFile"
   ],
   "main": "./out/extension.js",
@@ -21,10 +22,22 @@
         "title": "Open URLs"
       },
       {
+        "command": "extension.backupFile",
+        "title": "Backup File"
+      },
+      {
         "command": "extension.openFile",
         "title": "Open File"
       }
     ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "extension.backupFile",
+          "group": "navigation"
+        }
+      ]
+    },
     "keybindings": [
       {
         "command": "extension.openFile",
