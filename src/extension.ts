@@ -104,7 +104,7 @@ export function activate(context: vscode.ExtensionContext) {
 				// This doesn't return for some reason
 				// const result = child_process.execFileSync('~/.bin/backup_file', [path]);
 				// const message = result.toString();
-				const result = child_process.spawnSync('~/.bin/backup_file', [`"${escapeShell(filePath)}"`], { shell: true });
+				const result = child_process.spawnSync("~/.bin/backup_file", [`"${escapeShell(filePath)}"`], { shell: true });
 
 				const message = result.stdout.toString();
 				const error = result.stderr.toString();
@@ -119,8 +119,15 @@ export function activate(context: vscode.ExtensionContext) {
 		} else if (text && text.length) {
 			const child_process = require("child_process");
 			try {
-				const result = child_process.execFileSync("~/.bin/backup_text", ["-m"], { input: text });
-				vscode.window.showInformationMessage(result.toString());
+				const result = child_process.spawnSync("~/.bin/backup_text", ["-m"], { input: text, shell: true });
+				const message = result.stdout.toString();
+				const error = result.stderr.toString();
+				if (message.length) {
+					vscode.window.showInformationMessage(message);
+				}
+				if (error.length) {
+					vscode.window.showErrorMessage(error);
+				}
 			}
 			catch (error) {
 				// Ignored, there's an error if no URLs are found.
