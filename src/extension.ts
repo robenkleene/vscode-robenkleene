@@ -69,7 +69,7 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 	context.subscriptions.push(openFileDisposable);
 
-	let archiveFileDisposable = vscode.commands.registerCommand('extension.archiveFile', async (uri: vscode.Uri) => {
+	let archiveDisposable = vscode.commands.registerCommand('extension.archive', async (uri: vscode.Uri) => {
 		var filePath;
 		if (uri) {
 			filePath = uri.fsPath;
@@ -112,7 +112,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 		catch (error) { }
 	});
-	context.subscriptions.push(archiveFileDisposable);
+	context.subscriptions.push(archiveDisposable);
 
 	let slugProjectDisposable = vscode.commands.registerCommand('extension.slugProject', async (uri: vscode.Uri) => {
 		const path = uri.fsPath;
