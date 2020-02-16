@@ -4,6 +4,38 @@ var escapeShell = function (cmd: string) {
 	return '"' + cmd.replace(/(["\s'$`\\])/g, '\\$1') + '"';
 };
 
+var displayResult = function (result: any) {
+	const message = result.stdout.toString();
+	const error = result.stderr.toString();
+	if (message.length) {
+		vscode.window.showInformationMessage(message);
+	}
+	if (error.length) {
+		vscode.window.showErrorMessage(error);
+	}
+};
+
+var archiveFilePath = async function (filePath: string) {
+	const fs = require("fs");
+	if (!fs.existsSync(filePath)) {
+		return;
+	}
+	const path = require('path');
+	const filename = path.basename(filePath);
+	const response = await vscode.window.showQuickPick(['no', 'yes'], { placeHolder: `Backup ${filename}?` });
+
+	if (response === "no") {
+		return;
+	}
+
+	const child_process = require("child_process");
+	try {
+		const result = child_process.spawnSync("~/.bin/backup_file", [`"${escapeShell(filePath)}"`], { shell: true });
+		displayResult(result);
+	}
+	catch (error) { }
+};
+
 export function activate(context: vscode.ExtensionContext) {
 	let openURLsDisposable = vscode.commands.registerCommand('extension.openURLs', () => {
 		const activeTextEditor = vscode.window.activeTextEditor;
@@ -69,50 +101,39 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 	context.subscriptions.push(openFileDisposable);
 
-	let archiveFileDisposable = vscode.commands.registerCommand('extension.archiveFile', async (uri: vscode.Uri) => {
+	let archiveDisposable = vscode.commands.registerCommand('extension.archive', async (uri: vscode.Uri) => {
 		var filePath;
+		var text;
 		if (uri) {
 			filePath = uri.fsPath;
-		} else {
-			const activeTextEditor = vscode.window.activeTextEditor;
-			if (!activeTextEditor) {
-				return;
-			}	
-			filePath = activeTextEditor.document.uri.fsPath;
-		}
-
-		const fs = require("fs");
-		if (!fs.existsSync(filePath)) {
+			archiveFilePath(filePath);
 			return;
 		}
-
-		const path = require('path');
-		const filename = path.basename(filePath);
-		const response = await vscode.window.showQuickPick(['no', 'yes'], { placeHolder: `Backup ${filename}?` });
-
-		if (response === "no") {
+		const activeTextEditor = vscode.window.activeTextEditor;
+		if (!activeTextEditor) {
+			return;
+		}
+		const selection = activeTextEditor.selection;
+		text = activeTextEditor.document.getText(selection);
+		if (!text.length) {
+			filePath = activeTextEditor.document.uri.fsPath;
+			archiveFilePath(filePath);
 			return;
 		}
 
 		const child_process = require("child_process");
 		try {
-			// This doesn't return for some reason
-			// const result = child_process.execFileSync('~/.bin/backup_file', [path]);
-			// const message = result.toString();
-			const result = child_process.spawnSync('~/.bin/backup_file', [`"${escapeShell(filePath)}"`], { shell: true });
-
-			const message = result.stdout.toString();
-			const error = result.stderr.toString();
-			if (message.length) {
-				vscode.window.showInformationMessage(message);
-			}
-			if (error.length) {
-				vscode.window.showErrorMessage(error);
-			}
+			const result = child_process.spawnSync("~/.bin/backup_text", ["-m"], { input: text, shell: true });
+			displayResult(result);
+			activeTextEditor.edit(editBuilder => {
+				editBuilder.delete(selection);
+			});
 		}
-		catch (error) { }
+		catch (error) {
+			// Ignored, there's an error if no URLs are found.
+		}
 	});
-	context.subscriptions.push(archiveFileDisposable);
+	context.subscriptions.push(archiveDisposable);
 
 	let slugProjectDisposable = vscode.commands.registerCommand('extension.slugProject', async (uri: vscode.Uri) => {
 		const path = uri.fsPath;
@@ -133,16 +154,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const child_process = require("child_process");
 		try {
 			const result = child_process.spawnSync("~/.bin/slug_project", [escapeShell(title)], { shell: true, cwd: path });
-			const message = result.stdout.toString();
-			const error = result.stderr.toString();
-			if (message.length) {
-				vscode.window.showInformationMessage(message);
-				console.log("message = " + message);
-			}
-			if (error.length) {
-				vscode.window.showErrorMessage(error);
-				console.log("error = " + error);
-			}
+			displayResult(displayResult);
 		}
 		catch (error) { }
 	});
