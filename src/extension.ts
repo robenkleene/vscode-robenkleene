@@ -71,46 +71,63 @@ export function activate(context: vscode.ExtensionContext) {
 
 	let archiveDisposable = vscode.commands.registerCommand('extension.archive', async (uri: vscode.Uri) => {
 		var filePath;
+		var text;
 		if (uri) {
 			filePath = uri.fsPath;
 		} else {
 			const activeTextEditor = vscode.window.activeTextEditor;
 			if (!activeTextEditor) {
 				return;
-			}	
-			filePath = activeTextEditor.document.uri.fsPath;
-		}
-
-		const fs = require("fs");
-		if (!fs.existsSync(filePath)) {
-			return;
-		}
-
-		const path = require('path');
-		const filename = path.basename(filePath);
-		const response = await vscode.window.showQuickPick(['no', 'yes'], { placeHolder: `Backup ${filename}?` });
-
-		if (response === "no") {
-			return;
-		}
-
-		const child_process = require("child_process");
-		try {
-			// This doesn't return for some reason
-			// const result = child_process.execFileSync('~/.bin/backup_file', [path]);
-			// const message = result.toString();
-			const result = child_process.spawnSync('~/.bin/backup_file', [`"${escapeShell(filePath)}"`], { shell: true });
-
-			const message = result.stdout.toString();
-			const error = result.stderr.toString();
-			if (message.length) {
-				vscode.window.showInformationMessage(message);
 			}
-			if (error.length) {
-				vscode.window.showErrorMessage(error);
+			const selection = activeTextEditor.selection;
+			text = activeTextEditor.document.getText(selection);
+			if (!text.length) {
+				filePath = activeTextEditor.document.uri.fsPath;
 			}
 		}
-		catch (error) { }
+
+		if (filePath) {
+			const fs = require("fs");
+			if (!fs.existsSync(filePath)) {
+				return;
+			}
+			const path = require('path');
+			const filename = path.basename(filePath);
+			const response = await vscode.window.showQuickPick(['no', 'yes'], { placeHolder: `Backup ${filename}?` });
+
+			if (response === "no") {
+				return;
+			}
+
+			const child_process = require("child_process");
+			try {
+				// This doesn't return for some reason
+				// const result = child_process.execFileSync('~/.bin/backup_file', [path]);
+				// const message = result.toString();
+				const result = child_process.spawnSync('~/.bin/backup_file', [`"${escapeShell(filePath)}"`], { shell: true });
+
+				const message = result.stdout.toString();
+				const error = result.stderr.toString();
+				if (message.length) {
+					vscode.window.showInformationMessage(message);
+				}
+				if (error.length) {
+					vscode.window.showErrorMessage(error);
+				}
+			}
+			catch (error) { }
+		} else if (text && text.length) {
+			const child_process = require("child_process");
+			try {
+				const result = child_process.execFileSync("~/.bin/backup_text", ["-m"], { input: text });
+				vscode.window.showInformationMessage(result.toString());
+			}
+			catch (error) {
+				// Ignored, there's an error if no URLs are found.
+			}
+		} else {
+			return;
+		}
 	});
 	context.subscriptions.push(archiveDisposable);
 
