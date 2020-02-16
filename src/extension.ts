@@ -4,6 +4,19 @@ var escapeShell = function (cmd: string) {
 	return '"' + cmd.replace(/(["\s'$`\\])/g, '\\$1') + '"';
 };
 
+var displayResult = function (result: any) {
+	const message = result.stdout.toString();
+	const error = result.stderr.toString();
+	if (message.length) {
+		vscode.window.showInformationMessage(message);
+	}
+	if (error.length) {
+		vscode.window.showErrorMessage(error);
+	}
+};
+
+
+
 export function activate(context: vscode.ExtensionContext) {
 	let openURLsDisposable = vscode.commands.registerCommand('extension.openURLs', () => {
 		const activeTextEditor = vscode.window.activeTextEditor;
@@ -101,33 +114,15 @@ export function activate(context: vscode.ExtensionContext) {
 
 			const child_process = require("child_process");
 			try {
-				// This doesn't return for some reason
-				// const result = child_process.execFileSync('~/.bin/backup_file', [path]);
-				// const message = result.toString();
 				const result = child_process.spawnSync("~/.bin/backup_file", [`"${escapeShell(filePath)}"`], { shell: true });
-
-				const message = result.stdout.toString();
-				const error = result.stderr.toString();
-				if (message.length) {
-					vscode.window.showInformationMessage(message);
-				}
-				if (error.length) {
-					vscode.window.showErrorMessage(error);
-				}
+				displayResult(result);
 			}
 			catch (error) { }
 		} else if (text && text.length) {
 			const child_process = require("child_process");
 			try {
 				const result = child_process.spawnSync("~/.bin/backup_text", ["-m"], { input: text, shell: true });
-				const message = result.stdout.toString();
-				const error = result.stderr.toString();
-				if (message.length) {
-					vscode.window.showInformationMessage(message);
-				}
-				if (error.length) {
-					vscode.window.showErrorMessage(error);
-				}
+				displayResult(result);
 			}
 			catch (error) {
 				// Ignored, there's an error if no URLs are found.
@@ -157,16 +152,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const child_process = require("child_process");
 		try {
 			const result = child_process.spawnSync("~/.bin/slug_project", [escapeShell(title)], { shell: true, cwd: path });
-			const message = result.stdout.toString();
-			const error = result.stderr.toString();
-			if (message.length) {
-				vscode.window.showInformationMessage(message);
-				console.log("message = " + message);
-			}
-			if (error.length) {
-				vscode.window.showErrorMessage(error);
-				console.log("error = " + error);
-			}
+			displayResult(displayResult);
 		}
 		catch (error) { }
 	});
