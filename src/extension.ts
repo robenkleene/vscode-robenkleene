@@ -69,8 +69,18 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 	context.subscriptions.push(openFileDisposable);
 
-	let backupDisposable = vscode.commands.registerCommand('extension.archiveFile', async (uri: vscode.Uri) => {
-		const filePath = uri.fsPath;
+	let archiveFileDisposable = vscode.commands.registerCommand('extension.archiveFile', async (uri: vscode.Uri) => {
+		var filePath;
+		if (uri) {
+			filePath = uri.fsPath;
+		} else {
+			const activeTextEditor = vscode.window.activeTextEditor;
+			if (!activeTextEditor) {
+				return;
+			}	
+			filePath = activeTextEditor.document.uri.fsPath;
+		}
+
 		const fs = require("fs");
 		if (!fs.existsSync(filePath)) {
 			return;
@@ -102,7 +112,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 		catch (error) { }
 	});
-	context.subscriptions.push(backupDisposable);
+	context.subscriptions.push(archiveFileDisposable);
 
 	let slugProjectDisposable = vscode.commands.registerCommand('extension.slugProject', async (uri: vscode.Uri) => {
 		const path = uri.fsPath;
