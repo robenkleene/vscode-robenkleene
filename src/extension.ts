@@ -125,6 +125,9 @@ export function activate(context: vscode.ExtensionContext) {
 		try {
 			const result = child_process.spawnSync("~/.bin/backup_text", ["-m"], { input: text, shell: true });
 			displayResult(result);
+			activeTextEditor.edit(editBuilder => {
+				editBuilder.delete(selection);
+			});
 		}
 		catch (error) {
 			// Ignored, there's an error if no URLs are found.
