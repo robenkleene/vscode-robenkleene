@@ -52,6 +52,10 @@
       {
         "command": "extension.openFile",
         "key": "ctrl+x ctrl+f"
+      },
+      {
+        "command": "extension.archive",
+        "key": "ctrl+c d"
       }
     ]
   },
