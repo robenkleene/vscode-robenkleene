@@ -4,6 +4,13 @@ var escapeShell = function(cmd: string) {
   return '"' + cmd.replace(/(["\s'$`\\])/g, "\\$1") + '"';
 };
 
+var displayError = function(result: any) {
+  const error = result.stderr.toString();
+  if (error.length) {
+    vscode.window.showErrorMessage(error);
+  }
+};
+
 var displayResult = function(result: any) {
   const message = result.stdout.toString();
   const error = result.stderr.toString();
@@ -179,7 +186,7 @@ export function activate(context: vscode.ExtensionContext) {
           [`"${escapeShell(title)}"`],
           { shell: true, cwd: currentDirPath }
         );
-        displayResult(result);
+        displayError(result);
         const relativePath = result.stdout.toString();
         var path = require("path");
         const destinationPath = path.resolve(currentDirPath, relativePath);
