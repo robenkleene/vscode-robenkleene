@@ -153,7 +153,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 		const child_process = require("child_process");
 		try {
-			const result = child_process.spawnSync("~/.bin/slug_project", [escapeShell(title)], { shell: true, cwd: path });
+			const result = child_process.spawnSync("~/.bin/slug_project", [`"${escapeShell(title)}"`], { shell: true, cwd: path });
 			displayResult(displayResult);
 		}
 		catch (error) { }
