@@ -13,6 +13,7 @@
     "onCommand:extension.openURLs",
     "onCommand:extension.archive",
     "onCommand:extension.slugProject",
+    "onCommand:extension.insertPath",
     "onCommand:extension.openFile"
   ],
   "main": "./out/extension.js",
@@ -29,6 +30,10 @@
       {
         "command": "extension.slugProject",
         "title": "Slug Project"
+      },
+      {
+        "command": "extension.insertPath",
+        "title": "Insert Path"
       },
       {
         "command": "extension.openFile",

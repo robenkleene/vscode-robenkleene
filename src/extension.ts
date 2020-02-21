@@ -122,6 +122,14 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(openFileDisposable);
 
+  let insertPathDisposable = vscode.commands.registerCommand(
+    "extension.insertPath",
+    () => {
+      console.log("Insert path");
+    }
+  );
+  context.subscriptions.push(insertPathDisposable);
+
   let archiveDisposable = vscode.commands.registerCommand(
     "extension.archive",
     async (uri: vscode.Uri) => {
