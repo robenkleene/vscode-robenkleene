@@ -131,8 +131,8 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(openFileDisposable);
 
-  let insertPathDisposable = vscode.commands.registerCommand(
-    "extension.insertPath",
+  let insertFilePathDisposable = vscode.commands.registerCommand(
+    "extension.insertFilePath",
     async () => {
       const activeTextEditor = vscode.window.activeTextEditor;
       if (!activeTextEditor) {
@@ -163,7 +163,7 @@ export function activate(context: vscode.ExtensionContext) {
       });
     }
   );
-  context.subscriptions.push(insertPathDisposable);
+  context.subscriptions.push(insertFilePathDisposable);
 
   let archiveDisposable = vscode.commands.registerCommand(
     "extension.archive",
