@@ -1,5 +1,7 @@
 import * as vscode from "vscode";
 
+import { pickFile } from "./quickOpen";
+
 var escapeShell = function(cmd: string) {
   return '"' + cmd.replace(/(["\s'$`\\])/g, "\\$1") + '"';
 };
@@ -86,14 +88,21 @@ export function activate(context: vscode.ExtensionContext) {
       const delimiters = "()\\s\"'";
       const pathRegExpString =
         "[" + delimiters + "]([^" + delimiters + "]+)[" + delimiters + "]";
-      const pathRegExp = new RegExp(pathRegExpString);
+      var pathRegExp = new RegExp(pathRegExpString);
       const position = activeTextEditor.selection.active;
       let range = activeTextEditor.document.getWordRangeAtPosition(
         position,
         pathRegExp
       );
       if (typeof range === "undefined") {
-        return;
+        pathRegExp = new RegExp("\\b(.+)\\b");
+        range = activeTextEditor.document.getWordRangeAtPosition(
+          position,
+          pathRegExp
+        );  
+        if (typeof range === "undefined") {
+          return;
+        }
       }
       const text = activeTextEditor.document.getText(range);
       const match = pathRegExp.exec(text);
@@ -121,6 +130,40 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
   context.subscriptions.push(openFileDisposable);
+
+  let insertFilePathDisposable = vscode.commands.registerCommand(
+    "extension.insertFilePath",
+    async () => {
+      const activeTextEditor = vscode.window.activeTextEditor;
+      if (!activeTextEditor) {
+        return;
+      }
+      const currentPath = activeTextEditor.document.uri.fsPath;
+      var path = require("path");
+      const fs = require("fs");
+      if (!fs.existsSync(currentPath)) {
+        return;
+      }
+
+      const uri = await pickFile();
+      if (!uri) {
+        return;
+      }
+
+      const destinationPath = uri.fsPath;
+      if (!fs.existsSync(destinationPath)) {
+        return;
+      }
+
+      const relativePath = path.relative(currentPath, destinationPath);
+      const cleanRelativePath = relativePath.replace(/^\.\.\//, "");
+      const selection = activeTextEditor.selection;
+      activeTextEditor.edit(editBuilder => {
+        editBuilder.insert(selection.active, cleanRelativePath);
+      });
+    }
+  );
+  context.subscriptions.push(insertFilePathDisposable);
 
   let archiveDisposable = vscode.commands.registerCommand(
     "extension.archive",
