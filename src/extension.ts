@@ -1,5 +1,7 @@
 import * as vscode from "vscode";
 
+import { pickFile } from "./quickOpen";
+
 var escapeShell = function(cmd: string) {
   return '"' + cmd.replace(/(["\s'$`\\])/g, "\\$1") + '"';
 };
@@ -93,7 +95,15 @@ export function activate(context: vscode.ExtensionContext) {
         pathRegExp
       );
       if (typeof range === "undefined") {
-        return;
+        // FIXME: This doesn't work of the path goes to the start or end of the line
+        const pathRegExp2 = new RegExp("\\s*(^\\s)\\s*");
+        range = activeTextEditor.document.getWordRangeAtPosition(
+          position,
+          pathRegExp2
+        );  
+        if (typeof range === "undefined") {
+          return;
+        }
       }
       const text = activeTextEditor.document.getText(range);
       const match = pathRegExp.exec(text);
@@ -124,8 +134,36 @@ export function activate(context: vscode.ExtensionContext) {
 
   let insertPathDisposable = vscode.commands.registerCommand(
     "extension.insertPath",
-    () => {
-      console.log("Insert path");
+    async () => {
+      const activeTextEditor = vscode.window.activeTextEditor;
+      if (!activeTextEditor) {
+        return;
+      }
+      const currentPath = activeTextEditor.document.uri.fsPath;
+      var path = require("path");
+      const fs = require("fs");
+      if (!fs.existsSync(currentPath)) {
+        return;
+      }
+
+      const uri = await pickFile();
+      if (!uri) {
+        return;
+      }
+
+      const destinationPath = uri.fsPath;
+      if (!fs.existsSync(destinationPath)) {
+        return;
+      }
+
+      const relativePath = path.relative(currentPath, destinationPath);
+      const cleanRelativePath = relativePath.replace(/^\.\.\//, "");
+      const selection = activeTextEditor.selection;
+      activeTextEditor.edit(editBuilder => {
+        editBuilder.insert(selection.active, cleanRelativePath);
+      });
+
+      console.log("cleanRelativePath = " + cleanRelativePath);
     }
   );
   context.subscriptions.push(insertPathDisposable);
