@@ -88,18 +88,17 @@ export function activate(context: vscode.ExtensionContext) {
       const delimiters = "()\\s\"'";
       const pathRegExpString =
         "[" + delimiters + "]([^" + delimiters + "]+)[" + delimiters + "]";
-      const pathRegExp = new RegExp(pathRegExpString);
+      var pathRegExp = new RegExp(pathRegExpString);
       const position = activeTextEditor.selection.active;
       let range = activeTextEditor.document.getWordRangeAtPosition(
         position,
         pathRegExp
       );
       if (typeof range === "undefined") {
-        // FIXME: This doesn't work of the path goes to the start or end of the line
-        const pathRegExp2 = new RegExp("\\s*(^\\s)\\s*");
+        pathRegExp = new RegExp("\\b(.+)\\b");
         range = activeTextEditor.document.getWordRangeAtPosition(
           position,
-          pathRegExp2
+          pathRegExp
         );  
         if (typeof range === "undefined") {
           return;
@@ -162,8 +161,6 @@ export function activate(context: vscode.ExtensionContext) {
       activeTextEditor.edit(editBuilder => {
         editBuilder.insert(selection.active, cleanRelativePath);
       });
-
-      console.log("cleanRelativePath = " + cleanRelativePath);
     }
   );
   context.subscriptions.push(insertPathDisposable);
