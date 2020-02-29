@@ -60,6 +60,10 @@
       },
       {
         "command": "extension.insertFilePath",
+        "key": "ctrl+c cmd-p"
+      },
+      {
+        "command": "extension.insertFilePath",
         "key": "ctrl+c e"
       },
       {
