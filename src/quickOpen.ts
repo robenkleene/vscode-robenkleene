@@ -27,8 +27,9 @@ class MessageItem implements QuickPickItem {
 	}
 }
 
-// This uses a search that matches a files path, but it ignores the directory of the file
-// E.g., `path/file.ext` a search for `file` would match, but not a search for `path`
+// This uses a search that matches a files path, but it ignores the directory of
+// the file E.g., `path/file.ext` a search for `file` would match, but not a
+// search for `path`
 export async function pickFile() {
 	const disposables: Disposable[] = [];
 	try {
