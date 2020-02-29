@@ -145,7 +145,7 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
 
-      const uri = await pickFile();
+      const uri = await pickFile(true);
       if (!uri) {
         return;
       }
