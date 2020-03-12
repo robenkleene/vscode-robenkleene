@@ -266,12 +266,13 @@ export function activate(context: vscode.ExtensionContext) {
 
       const child_process = require("child_process");
       try {
-        child_process.execFileSync("~/.bin/source_control_open_site", null, {
-          cwd: filePath
-        });
-      } catch (error) {
-        // Ignored
-      }
+        const result = child_process.spawnSync(
+          "~/.bin/source_control_open_site",
+          null,
+          { cwd: filePath }
+        );
+        displayError(result);
+      } catch (error) {}
     }
   );
   context.subscriptions.push(openSourceControlSiteDisposable);
