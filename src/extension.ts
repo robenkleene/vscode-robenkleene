@@ -7,20 +7,26 @@ var escapeShell = function(cmd: string) {
 };
 
 var displayError = function(result: any) {
-  const error = result.stderr.toString();
-  if (error.length) {
-    vscode.window.showErrorMessage(error);
+  if (result.stderr !== null) {
+    const error = result.stderr.toString();
+    if (error.length) {
+      vscode.window.showErrorMessage(error);
+    }
   }
 };
 
 var displayResult = function(result: any) {
-  const message = result.stdout.toString();
-  const error = result.stderr.toString();
-  if (message.length) {
-    vscode.window.showInformationMessage(message);
+  if (result.stdout !== null) {
+    const message = result.stdout.toString();
+    if (message.length) {
+      vscode.window.showInformationMessage(message);
+    }
   }
-  if (error.length) {
-    vscode.window.showErrorMessage(error);
+  if (result.stderr !== null) {
+    const error = result.stderr.toString();
+    if (error.length) {
+      vscode.window.showErrorMessage(error);
+    }
   }
 };
 
@@ -99,7 +105,7 @@ export function activate(context: vscode.ExtensionContext) {
         range = activeTextEditor.document.getWordRangeAtPosition(
           position,
           pathRegExp
-        );  
+        );
         if (typeof range === "undefined") {
           return;
         }
@@ -243,6 +249,42 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
   context.subscriptions.push(slugProjectDisposable);
+
+  let openSourceControlSiteDisposable = vscode.commands.registerCommand(
+    "extension.openSourceControlSite",
+    async (uri: vscode.Uri) => {
+      var filePath;
+      if (uri) {
+        filePath = uri.fsPath;
+      } else {
+        const activeTextEditor = vscode.window.activeTextEditor;
+        if (!activeTextEditor) {
+          return;
+        }
+        const folder = vscode.workspace.getWorkspaceFolder(
+          activeTextEditor.document.uri
+        );
+        if (!folder) {
+          return;
+        }
+        filePath = folder.uri.fsPath;
+      }
+
+      const child_process = require("child_process");
+      try {
+        const result = child_process.spawnSync(
+          "~/.bin/source_control_open_site",
+          null,
+          {
+            shell: true,
+            cwd: filePath
+          }
+        );
+        displayError(result);
+      } catch (error) {}
+    }
+  );
+  context.subscriptions.push(openSourceControlSiteDisposable);
 }
 
 export function deactivate() {}
