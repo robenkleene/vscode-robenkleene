@@ -7,20 +7,26 @@ var escapeShell = function(cmd: string) {
 };
 
 var displayError = function(result: any) {
-  const error = result.stderr.toString();
-  if (error.length) {
-    vscode.window.showErrorMessage(error);
+  if (result.stderr !== null) {
+    const error = result.stderr.toString();
+    if (error.length) {
+      vscode.window.showErrorMessage(error);
+    }
   }
 };
 
 var displayResult = function(result: any) {
-  const message = result.stdout.toString();
-  const error = result.stderr.toString();
-  if (message.length) {
-    vscode.window.showInformationMessage(message);
+  if (result.stdout !== null) {
+    const message = result.stdout.toString();
+    if (message.length) {
+      vscode.window.showInformationMessage(message);
+    }
   }
-  if (error.length) {
-    vscode.window.showErrorMessage(error);
+  if (result.stderr !== null) {
+    const error = result.stderr.toString();
+    if (error.length) {
+      vscode.window.showErrorMessage(error);
+    }
   }
 };
 
