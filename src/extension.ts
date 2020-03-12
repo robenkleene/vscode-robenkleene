@@ -178,18 +178,22 @@ export function activate(context: vscode.ExtensionContext) {
       var text;
       if (uri) {
         filePath = uri.fsPath;
-        archiveFilePath(filePath);
-        return;
       }
       const activeTextEditor = vscode.window.activeTextEditor;
-      if (!activeTextEditor) {
+      if (activeTextEditor) {
+        const selection = activeTextEditor.selection;
+        text = activeTextEditor.document.getText(selection);
+        if (!filePath) {
+          filePath = activeTextEditor.document.uri.fsPath;
+        }
+      }
+
+      if (filePath && (!text || !text.length)) {
+        archiveFilePath(filePath);
         return;
       }
-      const selection = activeTextEditor.selection;
-      text = activeTextEditor.document.getText(selection);
-      if (!text.length) {
-        filePath = activeTextEditor.document.uri.fsPath;
-        archiveFilePath(filePath);
+
+      if (!activeTextEditor) {
         return;
       }
 
@@ -200,6 +204,7 @@ export function activate(context: vscode.ExtensionContext) {
           shell: true
         });
         displayResult(result);
+        const selection = activeTextEditor.selection;
         activeTextEditor.edit(editBuilder => {
           editBuilder.delete(selection);
         });
