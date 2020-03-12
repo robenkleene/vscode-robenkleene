@@ -28,7 +28,7 @@ if [[ "$force" == "true" ]]; then
   dry_run=""
 fi
 
-destination_path="$HOME/.vscode-oss/extensions/"
+destination_path="$HOME/.vscode/extensions/"
 extension_path="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 rsync -a --delete${dry_run} --verbose --exclude=install.sh --exclude=.gitignore \
   --exclude=.git "$extension_path" "$destination_path"
