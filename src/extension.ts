@@ -261,7 +261,13 @@ export function activate(context: vscode.ExtensionContext) {
         if (!activeTextEditor) {
           return;
         }
-        filePath = activeTextEditor.document.uri.fsPath;
+        const folder = vscode.workspace.getWorkspaceFolder(
+          activeTextEditor.document.uri
+        );
+        if (!folder) {
+          return;
+        }
+        filePath = folder.uri.fsPath;
       }
 
       const child_process = require("child_process");
@@ -269,7 +275,10 @@ export function activate(context: vscode.ExtensionContext) {
         const result = child_process.spawnSync(
           "~/.bin/source_control_open_site",
           null,
-          { cwd: filePath }
+          {
+            shell: true,
+            cwd: filePath
+          }
         );
         displayError(result);
       } catch (error) {}
