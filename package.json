@@ -13,6 +13,7 @@
     "onCommand:extension.openURLs",
     "onCommand:extension.archive",
     "onCommand:extension.slugProject",
+    "onCommand:extension.openSourceControlSite",
     "onCommand:extension.insertFilePath",
     "onCommand:extension.openFile"
   ],
@@ -36,6 +37,10 @@
         "title": "Insert File Path"
       },
       {
+        "command": "extension.openSourceControlSite",
+        "title": "Source Control: Open Site"
+      },
+      {
         "command": "extension.openFile",
         "title": "Open File"
       }
@@ -44,6 +49,11 @@
       "explorer/context": [
         {
           "command": "extension.archive",
+          "group": "navigation"
+        },
+        {
+          "command": "extension.openSourceControlSite",
+          "when": "explorerResourceIsFolder",
           "group": "navigation"
         },
         {

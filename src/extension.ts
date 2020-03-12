@@ -99,7 +99,7 @@ export function activate(context: vscode.ExtensionContext) {
         range = activeTextEditor.document.getWordRangeAtPosition(
           position,
           pathRegExp
-        );  
+        );
         if (typeof range === "undefined") {
           return;
         }
@@ -243,6 +243,32 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
   context.subscriptions.push(slugProjectDisposable);
+
+  let openSourceControlSiteDisposable = vscode.commands.registerCommand(
+    "extension.openSourceControlSite",
+    async (uri: vscode.Uri) => {
+      var filePath;
+      if (uri) {
+        filePath = uri.fsPath;
+      } else {
+        const activeTextEditor = vscode.window.activeTextEditor;
+        if (!activeTextEditor) {
+          return;
+        }
+        filePath = activeTextEditor.document.uri.fsPath;
+      }
+
+      const child_process = require("child_process");
+      try {
+        child_process.execFileSync("~/.bin/source_control_open_site", null, {
+          cwd: filePath
+        });
+      } catch (error) {
+        // Ignored
+      }
+    }
+  );
+  context.subscriptions.push(openSourceControlSiteDisposable);
 }
 
 export function deactivate() {}
