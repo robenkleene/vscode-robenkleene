@@ -41,7 +41,7 @@ var archiveFilePath = async function(filePath: string) {
     placeHolder: `Backup ${filename}?`
   });
 
-  if (response === "no") {
+  if (response !== "yes") {
     return;
   }
 
