@@ -46,6 +46,11 @@
       }
     ],
     "menus": {
+      "editor/context": [
+        {
+          "command": "extension.archive"
+        }
+      ],
       "explorer/context": [
         {
           "command": "extension.archive",
