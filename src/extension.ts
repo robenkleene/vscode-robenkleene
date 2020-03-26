@@ -212,7 +212,7 @@ export function activate(context: vscode.ExtensionContext) {
           return;
         }  
         activeTextEditor.edit(editBuilder => {
-          editBuilder.insert(selection.active, newText);
+          editBuilder.replace(selection, newText);
         });  
       } catch (error) {}
     }
