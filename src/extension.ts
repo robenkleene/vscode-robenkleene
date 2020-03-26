@@ -171,6 +171,54 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(insertFilePathDisposable);
 
+  let makeWikiLinkDisposable = vscode.commands.registerCommand(
+    "extension.makeWikiLink",
+    async () => {
+      const activeTextEditor = vscode.window.activeTextEditor;
+      if (!activeTextEditor) {
+        return;
+      }
+      const currentPath = activeTextEditor.document.uri.fsPath;
+      var path = require("path");
+      const fs = require("fs");
+      const currentDirPath = path.dirname(currentPath);
+      if (!fs.existsSync(currentDirPath)) {
+        return;
+      }
+
+      const selection = activeTextEditor.selection;
+      if (!selection) {
+        return;
+      }
+      const text = activeTextEditor.document.getText(selection);
+      if (!text.length) {
+        return;
+      }
+      var match = /\r|\n/.exec(text);
+      if (match) {
+        return;
+      }
+
+      const child_process = require("child_process");
+      try {
+        const result = child_process.spawnSync(
+          "~/.bin/markdown_wiki_link -t ",
+          [`"${escapeShell(text)}"`],
+          { shell: true, cwd: currentDirPath }
+        );
+        displayError(result);
+        const newText = result.stdout.toString();
+        if (!newText.length) {
+          return;
+        }  
+        activeTextEditor.edit(editBuilder => {
+          editBuilder.replace(selection, newText);
+        });  
+      } catch (error) {}
+    }
+  );
+  context.subscriptions.push(makeWikiLinkDisposable);
+
   let archiveDisposable = vscode.commands.registerCommand(
     "extension.archive",
     async (uri: vscode.Uri) => {
