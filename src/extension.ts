@@ -181,7 +181,8 @@ export function activate(context: vscode.ExtensionContext) {
       const currentPath = activeTextEditor.document.uri.fsPath;
       var path = require("path");
       const fs = require("fs");
-      if (!fs.existsSync(currentPath)) {
+      const currentDirPath = path.dirname(currentPath);
+      if (!fs.existsSync(currentDirPath)) {
         return;
       }
 
@@ -203,6 +204,9 @@ export function activate(context: vscode.ExtensionContext) {
         );
         displayError(result);
         const newText = result.stdout.toString();
+        if (!newText.length) {
+          return;
+        }  
         activeTextEditor.edit(editBuilder => {
           editBuilder.insert(selection.active, newText);
         });  
