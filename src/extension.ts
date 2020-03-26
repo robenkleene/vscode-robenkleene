@@ -194,12 +194,16 @@ export function activate(context: vscode.ExtensionContext) {
       if (!text.length) {
         return;
       }
+      var match = /\r|\n/.exec(text);
+      if (match) {
+        return;
+      }
 
       const child_process = require("child_process");
       try {
         const result = child_process.spawnSync(
           "~/.bin/markdown_wiki_link -t ",
-          [`"${escapeShell(title)}"`],
+          [`"${escapeShell(text)}"`],
           { shell: true, cwd: currentDirPath }
         );
         displayError(result);
