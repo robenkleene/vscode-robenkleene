@@ -12,6 +12,7 @@
   "activationEvents": [
     "onCommand:extension.openURLs",
     "onCommand:extension.archive",
+    "onCommand:extension.makeWikiLink",
     "onCommand:extension.slugProject",
     "onCommand:extension.openSourceControlSite",
     "onCommand:extension.insertFilePath",
@@ -23,6 +24,10 @@
       {
         "command": "extension.openURLs",
         "title": "Open URLs"
+      },
+      {
+        "command": "extension.makeWikiLink",
+        "title": "Make Wiki Link"
       },
       {
         "command": "extension.archive",
@@ -49,6 +54,10 @@
       "editor/context": [
         {
           "command": "extension.archive"
+        },
+        {
+          "command": "extension.makeWikiLink",
+          "when": "resourceLangId == markdown"
         }
       ],
       "explorer/context": [
@@ -80,6 +89,10 @@
       {
         "command": "extension.insertFilePath",
         "key": "ctrl+c e"
+      },
+      {
+        "command": "extension.makeWikiLink",
+        "key": "ctrl+c k"
       },
       {
         "command": "extension.archive",
