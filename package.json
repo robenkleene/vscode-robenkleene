@@ -46,6 +46,10 @@
         "title": "Source Control: Open Site"
       },
       {
+        "command": "editor.action.transformToTitlecase",
+        "title": "Transform to Title Case"
+      },
+      {
         "command": "extension.openFile",
         "title": "Open File"
       }
@@ -58,6 +62,9 @@
         {
           "command": "extension.makeWikiLink",
           "when": "resourceLangId == markdown"
+        },
+        {
+          "command": "editor.action.transformToTitlecase"
         }
       ],
       "explorer/context": [
