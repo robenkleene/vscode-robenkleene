@@ -264,6 +264,8 @@ export function activate(context: vscode.ExtensionContext) {
       if (!filePath) {
         return;
       }
+
+      blogFromFile(filePath);
     }
   );
   context.subscriptions.push(blogPostDisposable);
@@ -289,6 +291,8 @@ export function activate(context: vscode.ExtensionContext) {
       if (!filePath) {
         return;
       }
+
+      blogFromFile(filePath, true);
     }
   );
   context.subscriptions.push(blogLinkDisposable);
