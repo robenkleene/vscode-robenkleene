@@ -17,10 +17,11 @@ var displayError = function(result: any) {
 
 var blogFromFile = function(filePath: string, link: Boolean = false) {
   const child_process = require("child_process");
-  var args = [`"${escapeShell(filePath)}"`];
+  var args = ["-f", `"${escapeShell(filePath)}"`];
   if (link) {
     args.unshift("-l");
   }
+
   try {
     const result = child_process.spawnSync(
       "~/.bin/jekyll_new_draft",
@@ -281,7 +282,7 @@ export function activate(context: vscode.ExtensionContext) {
       if (!filePath) {
         const activeTextEditor = vscode.window.activeTextEditor;
         if (activeTextEditor) {
-          if (activeTextEditor.document.languageId !== "Markdown") {
+          if (activeTextEditor.document.languageId !== "markdown") {
             return;
           }
           filePath = activeTextEditor.document.uri.fsPath;
