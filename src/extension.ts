@@ -15,6 +15,29 @@ var displayError = function(result: any) {
   }
 };
 
+var blogFromFile = function(filePath: string, link: Boolean = false) {
+  const child_process = require("child_process");
+  var args = ["-f", `"${escapeShell(filePath)}"`];
+  if (link) {
+    args.unshift("-l");
+  }
+
+  try {
+    const result = child_process.spawnSync("~/.bin/jekyll_new_draft", args, {
+      shell: true
+    });
+    displayError(result);
+    const newFilePath = result.stdout.toString();
+    const fs = require("fs");
+    if (fs.existsSync(newFilePath)) {
+      const fileURL = vscode.Uri.file(newFilePath);
+      vscode.workspace.openTextDocument(fileURL).then(doc => {
+        vscode.window.showTextDocument(doc);
+      });
+    }
+  } catch (error) {}
+};
+
 var displayResult = function(result: any) {
   if (result.stdout !== null) {
     const message = result.stdout.toString();
@@ -210,14 +233,68 @@ export function activate(context: vscode.ExtensionContext) {
         const newText = result.stdout.toString();
         if (!newText.length) {
           return;
-        }  
+        }
         activeTextEditor.edit(editBuilder => {
           editBuilder.replace(selection, newText);
-        });  
+        });
       } catch (error) {}
     }
   );
   context.subscriptions.push(makeWikiLinkDisposable);
+
+  let blogPostDisposable = vscode.commands.registerCommand(
+    "extension.blogPostFromFile",
+    async (uri: vscode.Uri) => {
+      var filePath;
+      if (uri) {
+        filePath = uri.fsPath;
+      }
+
+      if (!filePath) {
+        const activeTextEditor = vscode.window.activeTextEditor;
+        if (activeTextEditor) {
+          if (activeTextEditor.document.languageId !== "Markdown") {
+            return;
+          }
+          filePath = activeTextEditor.document.uri.fsPath;
+        }
+      }
+
+      if (!filePath) {
+        return;
+      }
+
+      blogFromFile(filePath);
+    }
+  );
+  context.subscriptions.push(blogPostDisposable);
+
+  let blogLinkDisposable = vscode.commands.registerCommand(
+    "extension.blogLinkFromFile",
+    async (uri: vscode.Uri) => {
+      var filePath;
+      if (uri) {
+        filePath = uri.fsPath;
+      }
+
+      if (!filePath) {
+        const activeTextEditor = vscode.window.activeTextEditor;
+        if (activeTextEditor) {
+          if (activeTextEditor.document.languageId !== "markdown") {
+            return;
+          }
+          filePath = activeTextEditor.document.uri.fsPath;
+        }
+      }
+
+      if (!filePath) {
+        return;
+      }
+
+      blogFromFile(filePath, true);
+    }
+  );
+  context.subscriptions.push(blogLinkDisposable);
 
   let archiveDisposable = vscode.commands.registerCommand(
     "extension.archive",

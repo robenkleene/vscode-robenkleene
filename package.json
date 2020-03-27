@@ -12,6 +12,8 @@
   "activationEvents": [
     "onCommand:extension.openURLs",
     "onCommand:extension.archive",
+    "onCommand:extension.blogPostFromFile",
+    "onCommand:extension.blogLinkFromFile",
     "onCommand:extension.makeWikiLink",
     "onCommand:extension.slugProject",
     "onCommand:extension.openSourceControlSite",
@@ -36,6 +38,14 @@
       {
         "command": "extension.slugProject",
         "title": "Slug Project"
+      },
+      {
+        "command": "extension.blogPostFromFile",
+        "title": "Blog Post From File"
+      },
+      {
+        "command": "extension.blogLinkFromFile",
+        "title": "Blog Link From File"
       },
       {
         "command": "extension.insertFilePath",
@@ -70,6 +80,16 @@
       "explorer/context": [
         {
           "command": "extension.archive",
+          "group": "navigation"
+        },
+        {
+          "command": "extension.blogPostFromFile",
+          "when": "resourceLangId == markdown",
+          "group": "navigation"
+        },
+        {
+          "command": "extension.blogLinkFromFile",
+          "when": "resourceLangId == markdown",
           "group": "navigation"
         },
         {
