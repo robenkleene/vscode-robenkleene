@@ -23,11 +23,9 @@ var blogFromFile = function(filePath: string, link: Boolean = false) {
   }
 
   try {
-    const result = child_process.spawnSync(
-      "~/.bin/jekyll_new_draft",
-      args,
-      { shell: true }
-    );
+    const result = child_process.spawnSync("~/.bin/jekyll_new_draft", args, {
+      shell: true
+    });
     displayError(result);
     const newFilePath = result.stdout.toString();
     const fs = require("fs");
@@ -235,10 +233,10 @@ export function activate(context: vscode.ExtensionContext) {
         const newText = result.stdout.toString();
         if (!newText.length) {
           return;
-        }  
+        }
         activeTextEditor.edit(editBuilder => {
           editBuilder.replace(selection, newText);
-        });  
+        });
       } catch (error) {}
     }
   );
@@ -259,7 +257,7 @@ export function activate(context: vscode.ExtensionContext) {
             return;
           }
           filePath = activeTextEditor.document.uri.fsPath;
-        }  
+        }
       }
 
       if (!filePath) {
@@ -286,7 +284,7 @@ export function activate(context: vscode.ExtensionContext) {
             return;
           }
           filePath = activeTextEditor.document.uri.fsPath;
-        }  
+        }
       }
 
       if (!filePath) {
