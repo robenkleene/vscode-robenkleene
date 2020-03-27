@@ -219,6 +219,46 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(makeWikiLinkDisposable);
 
+  let blogPostDisposable = vscode.commands.registerCommand(
+    "extension.blogPostFromFile",
+    async (uri: vscode.Uri) => {
+      var filePath;
+      var text;
+      if (uri) {
+        filePath = uri.fsPath;
+      }
+      const activeTextEditor = vscode.window.activeTextEditor;
+      if (activeTextEditor) {
+        const selection = activeTextEditor.selection;
+        text = activeTextEditor.document.getText(selection);
+        if (!filePath) {
+          filePath = activeTextEditor.document.uri.fsPath;
+        }
+      }
+    }
+  );
+  context.subscriptions.push(blogPostDisposable);
+
+  let blogLinkDisposable = vscode.commands.registerCommand(
+    "extension.blogLinkFromFile",
+    async (uri: vscode.Uri) => {
+      var filePath;
+      var text;
+      if (uri) {
+        filePath = uri.fsPath;
+      }
+      const activeTextEditor = vscode.window.activeTextEditor;
+      if (activeTextEditor) {
+        const selection = activeTextEditor.selection;
+        text = activeTextEditor.document.getText(selection);
+        if (!filePath) {
+          filePath = activeTextEditor.document.uri.fsPath;
+        }
+      }
+    }
+  );
+  context.subscriptions.push(blogLinkDisposable);
+
   let archiveDisposable = vscode.commands.registerCommand(
     "extension.archive",
     async (uri: vscode.Uri) => {
