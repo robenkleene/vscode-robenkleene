@@ -84,10 +84,12 @@
         },
         {
           "command": "extension.blogPostFromFile",
+          "when": "resourceLangId == markdown",
           "group": "navigation"
         },
         {
           "command": "extension.blogLinkFromFile",
+          "when": "resourceLangId == markdown",
           "group": "navigation"
         },
         {

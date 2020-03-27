@@ -15,6 +15,30 @@ var displayError = function(result: any) {
   }
 };
 
+var blogFromFile = function(filePath: string, link: Boolean = false) {
+  const child_process = require("child_process");
+  var args = [`"${escapeShell(filePath)}"`];
+  if (link) {
+    args.unshift("-l");
+  }
+  try {
+    const result = child_process.spawnSync(
+      "~/.bin/jekyll_new_draft",
+      args,
+      { shell: true }
+    );
+    displayError(result);
+    const newFilePath = result.stdout.toString();
+    const fs = require("fs");
+    if (fs.existsSync(newFilePath)) {
+      const fileURL = vscode.Uri.file(newFilePath);
+      vscode.workspace.openTextDocument(fileURL).then(doc => {
+        vscode.window.showTextDocument(doc);
+      });
+    }
+  } catch (error) {}
+};
+
 var displayResult = function(result: any) {
   if (result.stdout !== null) {
     const message = result.stdout.toString();
@@ -223,17 +247,22 @@ export function activate(context: vscode.ExtensionContext) {
     "extension.blogPostFromFile",
     async (uri: vscode.Uri) => {
       var filePath;
-      var text;
       if (uri) {
         filePath = uri.fsPath;
       }
-      const activeTextEditor = vscode.window.activeTextEditor;
-      if (activeTextEditor) {
-        const selection = activeTextEditor.selection;
-        text = activeTextEditor.document.getText(selection);
-        if (!filePath) {
+
+      if (!filePath) {
+        const activeTextEditor = vscode.window.activeTextEditor;
+        if (activeTextEditor) {
+          if (activeTextEditor.document.languageId !== "Markdown") {
+            return;
+          }
           filePath = activeTextEditor.document.uri.fsPath;
-        }
+        }  
+      }
+
+      if (!filePath) {
+        return;
       }
     }
   );
@@ -243,17 +272,22 @@ export function activate(context: vscode.ExtensionContext) {
     "extension.blogLinkFromFile",
     async (uri: vscode.Uri) => {
       var filePath;
-      var text;
       if (uri) {
         filePath = uri.fsPath;
       }
-      const activeTextEditor = vscode.window.activeTextEditor;
-      if (activeTextEditor) {
-        const selection = activeTextEditor.selection;
-        text = activeTextEditor.document.getText(selection);
-        if (!filePath) {
+
+      if (!filePath) {
+        const activeTextEditor = vscode.window.activeTextEditor;
+        if (activeTextEditor) {
+          if (activeTextEditor.document.languageId !== "Markdown") {
+            return;
+          }
           filePath = activeTextEditor.document.uri.fsPath;
-        }
+        }  
+      }
+
+      if (!filePath) {
+        return;
       }
     }
   );
