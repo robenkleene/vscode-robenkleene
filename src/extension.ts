@@ -303,8 +303,12 @@ export function activate(context: vscode.ExtensionContext) {
       if (!activeTextEditor) {
         return;
       }
-      const document = activeTextEditor.document;
       
+      const text = activeTextEditor.document.getText();
+      if (!text || !text.length) {
+        return;
+      }
+
       const os = require("os");
       const path = require("path");
       const defaultUri = vscode.Uri.file(
@@ -318,19 +322,16 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       const fs = require("fs");
-      const documentPath = document.uri.fsPath;
-      if (!documentPath || !fs.existsSync(documentPath)) {
-        return;
-      }
-      var text = fs.readFileSync(documentPath);
-      if (!text) {
-        return;
-      }
       const destinationPath = destinationUri?.fsPath;
       if (!destinationPath) {
         return;
       }
       fs.writeFileSync(destinationPath, text);
+      if (!fs.existsSync(destinationPath)) {
+        return;
+      }
+
+      vscode.commands.executeCommand('workbench.action.closeActiveEditor');
       vscode.workspace.openTextDocument(destinationUri).then(doc => {
         vscode.window.showTextDocument(doc, { preview: false });
       });
