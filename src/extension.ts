@@ -314,7 +314,7 @@ export function activate(context: vscode.ExtensionContext) {
       const defaultUri = vscode.Uri.file(
         path.resolve(os.homedir(), "Documents/Text/Inbox")
       );
-      const destinationUri = await vscode.window.showSaveDialog({
+      var destinationUri = await vscode.window.showSaveDialog({
         defaultUri: defaultUri
       });
       if (!destinationUri) {
@@ -322,9 +322,13 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       const fs = require("fs");
-      const destinationPath = destinationUri?.fsPath;
+      var destinationPath = destinationUri?.fsPath;
       if (!destinationPath) {
         return;
+      }
+      if (path.extname(destinationPath) !== "md") {
+        destinationPath = destinationPath + '.md';
+        destinationUri = vscode.Uri.file(destinationPath);
       }
       fs.writeFileSync(destinationPath, text);
       if (!fs.existsSync(destinationPath)) {
