@@ -326,7 +326,7 @@ export function activate(context: vscode.ExtensionContext) {
       if (!destinationPath) {
         return;
       }
-      if (path.extname(destinationPath) !== "md") {
+      if (path.extname(destinationPath) !== ".md") {
         destinationPath = destinationPath + '.md';
         destinationUri = vscode.Uri.file(destinationPath);
       }
