@@ -14,6 +14,7 @@
     "onCommand:extension.archive",
     "onCommand:extension.blogPostFromFile",
     "onCommand:extension.blogLinkFromFile",
+    "onCommand:extension.saveAsInbox",
     "onCommand:extension.makeWikiLink",
     "onCommand:extension.slugProject",
     "onCommand:extension.openSourceControlSite",
@@ -46,6 +47,10 @@
       {
         "command": "extension.blogLinkFromFile",
         "title": "Blog Link From File"
+      },
+      {
+        "command": "extension.saveAsInbox",
+        "title": "Save As Inbox"
       },
       {
         "command": "extension.insertFilePath",

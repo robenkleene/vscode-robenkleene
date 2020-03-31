@@ -296,6 +296,38 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(blogLinkDisposable);
 
+  let saveAsInboxDisposable = vscode.commands.registerCommand(
+    "extension.saveAsInbox",
+    async () => {
+      const activeTextEditor = vscode.window.activeTextEditor;
+      if (!activeTextEditor) {
+        return;
+      }
+      const document = activeTextEditor.document;
+
+      const os = require("os");
+      const path = require("path");
+      const defaultUri = vscode.Uri.file(
+        path.resolve(os.homedir(), "Documents/Text/Inbox")
+      );
+      const destinationUri = await vscode.window.showSaveDialog({
+        defaultUri: defaultUri
+      });
+      if (!destinationUri) {
+        return;
+      }
+
+      const fs = require("fs");
+      var text = fs.readFileSync(document.uri.fsPath);
+      fs.writeFileSync(destinationUri?.fsPath, text);
+      vscode.workspace.openTextDocument(destinationUri).then(doc => {
+        vscode.window.showTextDocument(doc, { preview: false });
+      });
+      // Close original without saving
+    }
+  );
+  context.subscriptions.push(saveAsInboxDisposable);
+
   let archiveDisposable = vscode.commands.registerCommand(
     "extension.archive",
     async (uri: vscode.Uri) => {
@@ -367,7 +399,7 @@ export function activate(context: vscode.ExtensionContext) {
         );
         displayError(result);
         const relativePath = result.stdout.toString();
-        var path = require("path");
+        const path = require("path");
         const destinationPath = path.resolve(currentDirPath, relativePath);
         if (fs.existsSync(destinationPath)) {
           const fileURL = vscode.Uri.file(destinationPath);
