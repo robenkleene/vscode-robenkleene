@@ -304,7 +304,7 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
       const document = activeTextEditor.document;
-
+      
       const os = require("os");
       const path = require("path");
       const defaultUri = vscode.Uri.file(
@@ -318,8 +318,19 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       const fs = require("fs");
-      var text = fs.readFileSync(document.uri.fsPath);
-      fs.writeFileSync(destinationUri?.fsPath, text);
+      const documentPath = document.uri.fsPath;
+      if (!documentPath || !fs.existsSync(documentPath)) {
+        return;
+      }
+      var text = fs.readFileSync(documentPath);
+      if (!text) {
+        return;
+      }
+      const destinationPath = destinationUri?.fsPath;
+      if (!destinationPath) {
+        return;
+      }
+      fs.writeFileSync(destinationPath, text);
       vscode.workspace.openTextDocument(destinationUri).then(doc => {
         vscode.window.showTextDocument(doc, { preview: false });
       });
