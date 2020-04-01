@@ -79,6 +79,10 @@
           "when": "resourceLangId == markdown"
         },
         {
+          "command": "extension.slugProject",
+          "when": "resourceLangId == markdown"
+        },
+        {
           "command": "editor.action.transformToTitlecase"
         }
       ],

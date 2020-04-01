@@ -391,26 +391,53 @@ export function activate(context: vscode.ExtensionContext) {
   let slugProjectDisposable = vscode.commands.registerCommand(
     "extension.slugProject",
     async (uri: vscode.Uri) => {
-      const currentDirPath = uri.fsPath;
+      var currentDirPath = uri.fsPath;
       const fs = require("fs");
       if (!fs.lstatSync(currentDirPath).isDirectory()) {
         return;
       }
 
-      const input = await vscode.window.showInputBox();
-      const title = input?.toString();
-      if (title === undefined) {
-        return;
-      }
-      if (!title.length) {
-        return;
+      var title;
+      var directory;
+      const activeTextEditor = vscode.window.activeTextEditor;
+      if (activeTextEditor) {
+        const selection = activeTextEditor.selection;
+        if (selection) {
+          const text = activeTextEditor.document.getText(selection);
+          if (text.length) {
+            return;
+          }
+          var match = /\r|\n/.exec(text);
+          if (!match) {
+            title = text;
+            currentDirPath = activeTextEditor.document.uri.fsPath;
+            directory = "projects";
+          }
+        }
       }
 
+      if (!title) {
+        const input = await vscode.window.showInputBox();
+        const title = input?.toString();
+        if (title === undefined) {
+          return;
+        }
+      }
+
+      if (!title || !title.length) {
+        return;
+      }  
+
+      var args = ["-t", `"${escapeShell(title)}"`];
+      if (directory) {
+        args.concat(["-l", "-d", `"${escapeShell(directory)}"`]);
+      }
+    
       const child_process = require("child_process");
       try {
         const result = child_process.spawnSync(
           "~/.bin/slug_project",
-          [`"${escapeShell(title)}"`],
+          args,
           { shell: true, cwd: currentDirPath }
         );
         displayError(result);
