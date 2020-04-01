@@ -337,8 +337,13 @@ export function activate(context: vscode.ExtensionContext) {
 
       // Clear the document so we can save without prompting
       var firstLine = activeTextEditor.document.lineAt(0);
-      var lastLine = activeTextEditor.document.lineAt(activeTextEditor.document.lineCount - 1);
-      var textRange = new vscode.Range(firstLine.range.start, lastLine.range.end);
+      var lastLine = activeTextEditor.document.lineAt(
+        activeTextEditor.document.lineCount - 1
+      );
+      var textRange = new vscode.Range(
+        firstLine.range.start,
+        lastLine.range.end
+      );
       activeTextEditor.edit(editBuilder => {
         editBuilder.delete(textRange);
       });
@@ -522,6 +527,27 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
   context.subscriptions.push(openSourceControlSiteDisposable);
+
+  let openInReplaDisposable = vscode.commands.registerCommand(
+    "extension.openInRepla",
+    async (uri: vscode.Uri) => {
+      var filePath;
+      if (uri) {
+        filePath = uri.fsPath;
+      }
+
+      if (!filePath) {
+        const activeTextEditor = vscode.window.activeTextEditor;
+        if (activeTextEditor) {
+          filePath = activeTextEditor.document.uri.fsPath;
+        }
+      }
+      if (!filePath) {
+        return;
+      }
+    }
+  );
+  context.subscriptions.push(blogPostDisposable);
 }
 
 export function deactivate() {}

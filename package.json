@@ -19,6 +19,7 @@
     "onCommand:extension.slugProject",
     "onCommand:extension.openSourceControlSite",
     "onCommand:extension.insertFilePath",
+    "onCommand:extension.openInRepla",
     "onCommand:extension.openFile"
   ],
   "main": "./out/extension.js",
@@ -66,6 +67,10 @@
       },
       {
         "command": "extension.openFile",
+        "title": "Open in Repla"
+      },
+      {
+        "command": "extension.openFile",
         "title": "Open File"
       }
     ],
@@ -104,6 +109,10 @@
         {
           "command": "extension.openSourceControlSite",
           "when": "explorerResourceIsFolder",
+          "group": "navigation"
+        },
+        {
+          "command": "extension.openInRepla",
           "group": "navigation"
         },
         {
