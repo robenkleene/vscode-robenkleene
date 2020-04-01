@@ -391,16 +391,15 @@ export function activate(context: vscode.ExtensionContext) {
   let slugProjectDisposable = vscode.commands.registerCommand(
     "extension.slugProject",
     async (uri: vscode.Uri) => {
-      var currentDirPath = uri.fsPath;
-      const fs = require("fs");
-      if (!fs.lstatSync(currentDirPath).isDirectory()) {
-        return;
-      }
-
+      var currentDirPath;
+      const activeTextEditor = vscode.window.activeTextEditor;
       var title;
       var directory;
-      const activeTextEditor = vscode.window.activeTextEditor;
-      if (activeTextEditor) {
+
+      if (uri) {
+        currentDirPath = uri.fsPath;
+      } else if (activeTextEditor) {
+        currentDirPath = activeTextEditor.document.uri.fsPath;
         const selection = activeTextEditor.selection;
         if (selection) {
           const text = activeTextEditor.document.getText(selection);
@@ -410,11 +409,17 @@ export function activate(context: vscode.ExtensionContext) {
           var match = /\r|\n/.exec(text);
           if (!match) {
             title = text;
-            currentDirPath = activeTextEditor.document.uri.fsPath;
             directory = "projects";
           }
         }
+      } else {        
+        return;
       }
+
+      const fs = require("fs");
+      if (!fs.lstatSync(currentDirPath).isDirectory()) {
+        return;
+      }  
 
       if (!title) {
         const input = await vscode.window.showInputBox();
