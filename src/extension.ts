@@ -303,7 +303,7 @@ export function activate(context: vscode.ExtensionContext) {
       if (!activeTextEditor) {
         return;
       }
-      
+
       const text = activeTextEditor.document.getText();
       if (!text || !text.length) {
         return;
@@ -327,7 +327,7 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
       if (path.extname(destinationPath) !== ".md") {
-        destinationPath = destinationPath + '.md';
+        destinationPath = destinationPath + ".md";
         destinationUri = vscode.Uri.file(destinationPath);
       }
       fs.writeFileSync(destinationPath, text);
@@ -335,7 +335,7 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
 
-      vscode.commands.executeCommand('workbench.action.closeActiveEditor');
+      vscode.commands.executeCommand("workbench.action.closeActiveEditor");
       vscode.workspace.openTextDocument(destinationUri).then(doc => {
         vscode.window.showTextDocument(doc, { preview: false });
       });
@@ -391,37 +391,89 @@ export function activate(context: vscode.ExtensionContext) {
   let slugProjectDisposable = vscode.commands.registerCommand(
     "extension.slugProject",
     async (uri: vscode.Uri) => {
-      const currentDirPath = uri.fsPath;
       const fs = require("fs");
+      var currentDirPath;
+      const activeTextEditor = vscode.window.activeTextEditor;
+      var title;
+      var directory;
+      var selection: vscode.Selection;
+
+      if (uri && fs.lstatSync(uri.fsPath).isDirectory()) {
+        currentDirPath = uri.fsPath;
+      } else if (activeTextEditor) {
+        const folder = vscode.workspace.getWorkspaceFolder(
+          activeTextEditor.document.uri
+        );
+        if (folder) {
+          currentDirPath = folder.uri.fsPath;
+          selection = activeTextEditor.selection;
+          if (selection) {
+            const text = activeTextEditor.document.getText(selection);
+            if (text.length) {
+              var match = /\r|\n/.exec(text);
+              if (!match) {
+                title = text;
+                directory = "projects";
+              }
+            }
+          }
+        }
+      } else {
+        return;
+      }
+
       if (!fs.lstatSync(currentDirPath).isDirectory()) {
         return;
       }
 
-      const input = await vscode.window.showInputBox();
-      const title = input?.toString();
-      if (title === undefined) {
+      if (!title) {
+        const input = await vscode.window.showInputBox();
+        const title = input?.toString();
+        if (title === undefined) {
+          return;
+        }
+      }
+
+      if (!title || !title.length) {
         return;
       }
-      if (!title.length) {
-        return;
+
+      var args = ["-t", `"${escapeShell(title)}"`];
+      if (directory) {
+        args = args.concat(["-l", "-d", `"${escapeShell(directory)}"`]);
       }
 
       const child_process = require("child_process");
       try {
-        const result = child_process.spawnSync(
-          "~/.bin/slug_project",
-          [`"${escapeShell(title)}"`],
-          { shell: true, cwd: currentDirPath }
-        );
+        const result = child_process.spawnSync("~/.bin/slug_project", args, {
+          shell: true,
+          cwd: currentDirPath
+        });
         displayError(result);
-        const relativePath = result.stdout.toString();
-        const path = require("path");
-        const destinationPath = path.resolve(currentDirPath, relativePath);
-        if (fs.existsSync(destinationPath)) {
-          const fileURL = vscode.Uri.file(destinationPath);
-          vscode.workspace.openTextDocument(fileURL).then(doc => {
-            vscode.window.showTextDocument(doc);
-          });
+
+        if (result.status !== 0) {
+          return;
+        }
+        if (directory) {
+          const newText = result.stdout.toString();
+          if (!newText.length) {
+            return;
+          }
+          if (activeTextEditor) {
+            activeTextEditor.edit(editBuilder => {
+              editBuilder.replace(selection, newText);
+            });
+          }
+        } else {
+          const relativePath = result.stdout.toString();
+          const path = require("path");
+          const destinationPath = path.resolve(currentDirPath, relativePath);
+          if (fs.existsSync(destinationPath)) {
+            const fileURL = vscode.Uri.file(destinationPath);
+            vscode.workspace.openTextDocument(fileURL).then(doc => {
+              vscode.window.showTextDocument(doc);
+            });
+          }
         }
       } catch (error) {}
     }
