@@ -545,6 +545,16 @@ export function activate(context: vscode.ExtensionContext) {
       if (!filePath) {
         return;
       }
+
+      const child_process = require("child_process");
+      try {
+        const result = child_process.spawnSync(
+          "repla",
+          [`"${escapeShell(filePath)}"`],
+          { shell: true }
+        );
+        displayResult(result);
+      } catch (error) {}
     }
   );
   context.subscriptions.push(blogPostDisposable);
