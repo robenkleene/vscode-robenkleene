@@ -440,7 +440,7 @@ export function activate(context: vscode.ExtensionContext) {
 
       var args = ["-t", `"${escapeShell(title)}"`];
       if (directory) {
-        args.concat(["-l", "-d", `"${escapeShell(directory)}"`]);
+        args = args.concat(["-l", "-d", `"${escapeShell(directory)}"`]);
       }
 
       const child_process = require("child_process");
@@ -451,6 +451,9 @@ export function activate(context: vscode.ExtensionContext) {
         });
         displayError(result);
 
+        if (result.status !== 0) {
+          return;
+        }
         if (directory) {
           const newText = result.stdout.toString();
           if (!newText.length) {
