@@ -335,6 +335,13 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
 
+      // Clear the document so we can save without prompting
+      var firstLine = activeTextEditor.document.lineAt(0);
+      var lastLine = activeTextEditor.document.lineAt(activeTextEditor.document.lineCount - 1);
+      var textRange = new vscode.Range(firstLine.range.start, lastLine.range.end);
+      activeTextEditor.edit(editBuilder => {
+        editBuilder.delete(textRange);
+      });
       vscode.commands.executeCommand("workbench.action.closeActiveEditor");
       vscode.workspace.openTextDocument(destinationUri).then(doc => {
         vscode.window.showTextDocument(doc, { preview: false });
