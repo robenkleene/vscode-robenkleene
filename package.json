@@ -63,7 +63,7 @@
         "title": "Source Control: Open Site"
       },
       {
-        "command": "extension.makeTitlecase",
+        "command": "extension.makeTitleCase",
         "title": "Make Title Case"
       },
       {
