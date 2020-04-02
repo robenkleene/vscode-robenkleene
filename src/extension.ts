@@ -225,9 +225,8 @@ export function activate(context: vscode.ExtensionContext) {
       const child_process = require("child_process");
       try {
         const result = child_process.spawnSync(
-          "~/.bin/markdown_wiki_link -t ",
-          [`"${escapeShell(text)}"`],
-          { shell: true, cwd: currentDirPath }
+          "~/.bin/markdown_wiki_link", null,
+          { shell: true, cwd: currentDirPath, input: text }
         );
         displayError(result);
         const newText = result.stdout.toString();
@@ -450,16 +449,17 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
 
-      var args = ["-t", `"${escapeShell(title)}"`];
+      var args = null;
       if (directory) {
-        args = args.concat(["-l", "-d", `"${escapeShell(directory)}"`]);
+        args = ["-l", "-d", `"${escapeShell(directory)}"`];
       }
 
       const child_process = require("child_process");
       try {
         const result = child_process.spawnSync("~/.bin/slug_project", args, {
           shell: true,
-          cwd: currentDirPath
+          cwd: currentDirPath,
+          input: title
         });
         displayError(result);
 
