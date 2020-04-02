@@ -579,14 +579,19 @@ export function activate(context: vscode.ExtensionContext) {
 
       const child_process = require("child_process");
       try {
-        const result = child_process.execFileSync("~/.bin/title_case", null, { input: text });
+        const result = child_process.spawnSync(
+          "~/.bin/title_case", null,
+          { shell: true, input: text }
+        );
+        displayError(result);
+        const newText = result.stdout.toString();
+        if (!newText.length) {
+          return;
+        }
         activeTextEditor.edit(editBuilder => {
-          editBuilder.insert(selection.active, result);
+          editBuilder.replace(selection, newText);
         });
-  
-      } catch (error) {
-        // Ignored, there's an error if no URLs are found.
-      }
+      } catch (error) {}
     }
   );
   context.subscriptions.push(makeTitleCaseDisposable);
