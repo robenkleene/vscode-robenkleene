@@ -558,6 +558,43 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
   context.subscriptions.push(openInReplaDisposable);
+
+
+
+  let makeTitleCaseDisposable = vscode.commands.registerCommand(
+    "extension.makeTitleCase",
+     () => {
+      const activeTextEditor = vscode.window.activeTextEditor;
+      if (!activeTextEditor) {
+        return;
+      }
+      const selection = activeTextEditor.selection;
+      if (!selection) {
+        return;
+      }
+      const text = activeTextEditor.document.getText(selection);
+      if (!text.length) {
+        return;
+      }
+
+      const child_process = require("child_process");
+      try {
+        const result = child_process.spawnSync(
+          "~/.bin/title_case", null,
+          { shell: true, input: text }
+        );
+        displayError(result);
+        const newText = result.stdout.toString();
+        if (!newText.length) {
+          return;
+        }
+        activeTextEditor.edit(editBuilder => {
+          editBuilder.replace(selection, newText);
+        });
+      } catch (error) {}
+    }
+  );
+  context.subscriptions.push(makeTitleCaseDisposable);
 }
 
 export function deactivate() {}

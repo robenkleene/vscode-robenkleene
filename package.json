@@ -16,6 +16,7 @@
     "onCommand:extension.blogLinkFromFile",
     "onCommand:extension.saveAsInbox",
     "onCommand:extension.makeWikiLink",
+    "onCommand:extension.makeTitleCase",
     "onCommand:extension.slugProject",
     "onCommand:extension.openSourceControlSite",
     "onCommand:extension.insertFilePath",
@@ -62,8 +63,8 @@
         "title": "Source Control: Open Site"
       },
       {
-        "command": "editor.action.transformToTitlecase",
-        "title": "Transform to Title Case"
+        "command": "extension.makeTitleCase",
+        "title": "Make Title Case"
       },
       {
         "command": "extension.openInRepla",
@@ -88,7 +89,7 @@
           "when": "resourceLangId == markdown"
         },
         {
-          "command": "editor.action.transformToTitlecase"
+          "command": "extension.makeTitleCase"
         }
       ],
       "explorer/context": [
