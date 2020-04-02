@@ -557,7 +557,7 @@ export function activate(context: vscode.ExtensionContext) {
       } catch (error) {}
     }
   );
-  context.subscriptions.push(blogPostDisposable);
+  context.subscriptions.push(openInReplaDisposable);
 }
 
 export function deactivate() {}
