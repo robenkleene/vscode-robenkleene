@@ -20,6 +20,7 @@
     "onCommand:extension.slugProject",
     "onCommand:extension.openSourceControlSite",
     "onCommand:extension.insertFilePath",
+    "onCommand:extension.openDocumentation",
     "onCommand:extension.openInRepla",
     "onCommand:extension.openReadme",
     "onCommand:extension.openFile"
@@ -42,6 +43,10 @@
       {
         "command": "extension.slugProject",
         "title": "Slug Project"
+      },
+      {
+        "command": "extension.openDocumentation",
+        "title": "Open Documentation"
       },
       {
         "command": "extension.blogPostFromFile",

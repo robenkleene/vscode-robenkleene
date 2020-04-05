@@ -636,6 +636,31 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
   context.subscriptions.push(openReadmeDisposable);
+
+  let openDocumentationDisposable = vscode.commands.registerCommand(
+    "extension.openDocumentation",
+    async () => {
+      const path = require("path");
+      const os = require("os");
+      let dirPath = path.resolve(os.homedir(), "Documentation");
+
+      const uri = await pickFile(true, dirPath);
+      if (!uri) {
+        return;
+      }
+
+      const fs = require("fs");
+      const destinationPath = uri.fsPath;
+      if (!fs.existsSync(destinationPath)) {
+        return;
+      }
+
+      vscode.workspace.openTextDocument(uri).then((doc) => {
+        vscode.window.showTextDocument(doc);
+      });
+    }
+  );
+  context.subscriptions.push(openDocumentationDisposable);
 }
 
 export function deactivate() {}
