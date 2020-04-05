@@ -2,11 +2,11 @@ import * as vscode from "vscode";
 
 import { pickFile } from "./quickOpen";
 
-var escapeShell = function(cmd: string) {
+var escapeShell = function (cmd: string) {
   return '"' + cmd.replace(/(["\s'$`\\])/g, "\\$1") + '"';
 };
 
-var displayError = function(result: any) {
+var displayError = function (result: any) {
   if (result.stderr !== null) {
     const error = result.stderr.toString();
     if (error.length) {
@@ -15,7 +15,7 @@ var displayError = function(result: any) {
   }
 };
 
-var blogFromFile = function(filePath: string, link: Boolean = false) {
+var blogFromFile = function (filePath: string, link: Boolean = false) {
   const child_process = require("child_process");
   var args = ["-f", `"${escapeShell(filePath)}"`];
   if (link) {
@@ -24,21 +24,21 @@ var blogFromFile = function(filePath: string, link: Boolean = false) {
 
   try {
     const result = child_process.spawnSync("~/.bin/jekyll_new_draft", args, {
-      shell: true
+      shell: true,
     });
     displayError(result);
     const newFilePath = result.stdout.toString();
     const fs = require("fs");
     if (fs.existsSync(newFilePath)) {
       const fileURL = vscode.Uri.file(newFilePath);
-      vscode.workspace.openTextDocument(fileURL).then(doc => {
+      vscode.workspace.openTextDocument(fileURL).then((doc) => {
         vscode.window.showTextDocument(doc);
       });
     }
   } catch (error) {}
 };
 
-var displayResult = function(result: any) {
+var displayResult = function (result: any) {
   if (result.stdout !== null) {
     const message = result.stdout.toString();
     if (message.length) {
@@ -53,7 +53,7 @@ var displayResult = function(result: any) {
   }
 };
 
-var archiveFilePath = async function(filePath: string) {
+var archiveFilePath = async function (filePath: string) {
   const fs = require("fs");
   if (!fs.existsSync(filePath)) {
     return;
@@ -61,7 +61,7 @@ var archiveFilePath = async function(filePath: string) {
   const path = require("path");
   const filename = path.basename(filePath);
   const response = await vscode.window.showQuickPick(["no", "yes"], {
-    placeHolder: `Backup ${filename}?`
+    placeHolder: `Backup ${filename}?`,
   });
 
   if (response !== "yes") {
@@ -153,7 +153,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       const fileURL = vscode.Uri.file(destinationPath);
-      vscode.workspace.openTextDocument(fileURL).then(doc => {
+      vscode.workspace.openTextDocument(fileURL).then((doc) => {
         vscode.window.showTextDocument(doc);
       });
     }
@@ -187,7 +187,7 @@ export function activate(context: vscode.ExtensionContext) {
       const relativePath = path.relative(currentPath, destinationPath);
       const cleanRelativePath = relativePath.replace(/^\.\.\//, "");
       const selection = activeTextEditor.selection;
-      activeTextEditor.edit(editBuilder => {
+      activeTextEditor.edit((editBuilder) => {
         editBuilder.insert(selection.active, cleanRelativePath);
       });
     }
@@ -225,7 +225,8 @@ export function activate(context: vscode.ExtensionContext) {
       const child_process = require("child_process");
       try {
         const result = child_process.spawnSync(
-          "~/.bin/markdown_wiki_link", null,
+          "~/.bin/markdown_wiki_link",
+          null,
           { shell: true, cwd: currentDirPath, input: text }
         );
         displayError(result);
@@ -233,7 +234,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (!newText.length) {
           return;
         }
-        activeTextEditor.edit(editBuilder => {
+        activeTextEditor.edit((editBuilder) => {
           editBuilder.replace(selection, newText);
         });
       } catch (error) {}
@@ -314,7 +315,7 @@ export function activate(context: vscode.ExtensionContext) {
         path.resolve(os.homedir(), "Documents/Text/Inbox")
       );
       var destinationUri = await vscode.window.showSaveDialog({
-        defaultUri: defaultUri
+        defaultUri: defaultUri,
       });
       if (!destinationUri) {
         return;
@@ -343,11 +344,11 @@ export function activate(context: vscode.ExtensionContext) {
         firstLine.range.start,
         lastLine.range.end
       );
-      activeTextEditor.edit(editBuilder => {
+      activeTextEditor.edit((editBuilder) => {
         editBuilder.delete(textRange);
       });
       vscode.commands.executeCommand("workbench.action.closeActiveEditor");
-      vscode.workspace.openTextDocument(destinationUri).then(doc => {
+      vscode.workspace.openTextDocument(destinationUri).then((doc) => {
         vscode.window.showTextDocument(doc, { preview: false });
       });
       // Close original without saving
@@ -385,11 +386,11 @@ export function activate(context: vscode.ExtensionContext) {
       try {
         const result = child_process.spawnSync("~/.bin/backup_text", ["-m"], {
           input: text,
-          shell: true
+          shell: true,
         });
         displayResult(result);
         const selection = activeTextEditor.selection;
-        activeTextEditor.edit(editBuilder => {
+        activeTextEditor.edit((editBuilder) => {
           editBuilder.delete(selection);
         });
       } catch (error) {
@@ -459,7 +460,7 @@ export function activate(context: vscode.ExtensionContext) {
         const result = child_process.spawnSync("~/.bin/slug_project", args, {
           shell: true,
           cwd: currentDirPath,
-          input: title
+          input: title,
         });
         displayError(result);
 
@@ -472,7 +473,7 @@ export function activate(context: vscode.ExtensionContext) {
             return;
           }
           if (activeTextEditor) {
-            activeTextEditor.edit(editBuilder => {
+            activeTextEditor.edit((editBuilder) => {
               editBuilder.replace(selection, newText);
             });
           }
@@ -482,7 +483,7 @@ export function activate(context: vscode.ExtensionContext) {
           const destinationPath = path.resolve(currentDirPath, relativePath);
           if (fs.existsSync(destinationPath)) {
             const fileURL = vscode.Uri.file(destinationPath);
-            vscode.workspace.openTextDocument(fileURL).then(doc => {
+            vscode.workspace.openTextDocument(fileURL).then((doc) => {
               vscode.window.showTextDocument(doc);
             });
           }
@@ -519,7 +520,7 @@ export function activate(context: vscode.ExtensionContext) {
           null,
           {
             shell: true,
-            cwd: filePath
+            cwd: filePath,
           }
         );
         displayError(result);
@@ -559,11 +560,9 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(openInReplaDisposable);
 
-
-
   let makeTitleCaseDisposable = vscode.commands.registerCommand(
     "extension.makeTitleCase",
-     () => {
+    () => {
       const activeTextEditor = vscode.window.activeTextEditor;
       if (!activeTextEditor) {
         return;
@@ -579,22 +578,64 @@ export function activate(context: vscode.ExtensionContext) {
 
       const child_process = require("child_process");
       try {
-        const result = child_process.spawnSync(
-          "~/.bin/title_case", null,
-          { shell: true, input: text }
-        );
+        const result = child_process.spawnSync("~/.bin/title_case", null, {
+          shell: true,
+          input: text,
+        });
         displayError(result);
         const newText = result.stdout.toString();
         if (!newText.length) {
           return;
         }
-        activeTextEditor.edit(editBuilder => {
+        activeTextEditor.edit((editBuilder) => {
           editBuilder.replace(selection, newText);
         });
       } catch (error) {}
     }
   );
   context.subscriptions.push(makeTitleCaseDisposable);
+
+  let openReadmeDisposable = vscode.commands.registerCommand(
+    "extension.openReadme",
+    async (uri: vscode.Uri) => {
+      var filePath;
+      if (uri) {
+        filePath = uri.fsPath;
+      } else {
+        const activeTextEditor = vscode.window.activeTextEditor;
+        if (!activeTextEditor) {
+          return;
+        }
+        const folder = vscode.workspace.getWorkspaceFolder(
+          activeTextEditor.document.uri
+        );
+        if (!folder) {
+          return;
+        }
+        filePath = folder.uri.fsPath;
+      }
+
+      const path = require("path");
+      var readmePath = path.join(filePath, "README.md");
+      const fs = require("fs");
+      if (fs.existsSync(filePath)) {
+        const fileURL = vscode.Uri.file(readmePath);
+        vscode.workspace.openTextDocument(fileURL).then((doc) => {
+          vscode.window.showTextDocument(doc);
+        });
+        return;
+      }
+
+      readmePath = path.join(filePath, "readme.md");
+      if (fs.existsSync(filePath)) {
+        const fileURL = vscode.Uri.file(readmePath);
+        vscode.workspace.openTextDocument(fileURL).then((doc) => {
+          vscode.window.showTextDocument(doc);
+        });
+      }
+    }
+  );
+  context.subscriptions.push(openReadmeDisposable);
 }
 
 export function deactivate() {}
