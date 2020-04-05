@@ -21,6 +21,7 @@
     "onCommand:extension.openSourceControlSite",
     "onCommand:extension.insertFilePath",
     "onCommand:extension.openInRepla",
+    "onCommand:extension.openReadme",
     "onCommand:extension.openFile"
   ],
   "main": "./out/extension.js",
@@ -71,6 +72,10 @@
         "title": "Open in Repla"
       },
       {
+        "command": "extension.openReadme",
+        "title": "Open README"
+      },
+      {
         "command": "extension.openFile",
         "title": "Open File"
       }
@@ -95,6 +100,11 @@
       "explorer/context": [
         {
           "command": "extension.archive",
+          "group": "navigation"
+        },
+        {
+          "command": "extension.openReadme",
+          "when": "explorerResourceIsFolder",
           "group": "navigation"
         },
         {
