@@ -114,17 +114,24 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
 
-      const delimiters = "()\\s\"'";
+      // First test between delimiters
+      const delimiters = "()\"'";
       const pathRegExpString =
         "[" + delimiters + "]([^" + delimiters + "]+)[" + delimiters + "]";
       var pathRegExp = new RegExp(pathRegExpString);
+      var index = 1;
       const position = activeTextEditor.selection.active;
       let range = activeTextEditor.document.getWordRangeAtPosition(
         position,
         pathRegExp
       );
       if (typeof range === "undefined") {
-        pathRegExp = new RegExp("\\b(.+)\\b");
+        // Otherwise test for word boundaries
+        // `\b` is a word boundary
+        // pathRegExp = new RegExp("\\b(.+)\\b");
+        // This seems to work better than the above:
+        pathRegExp = new RegExp("\\S+");
+        index = 0;
         range = activeTextEditor.document.getWordRangeAtPosition(
           position,
           pathRegExp
@@ -138,10 +145,10 @@ export function activate(context: vscode.ExtensionContext) {
       if (match === null) {
         return;
       }
-      if (match.length < 2) {
+      if (match.length <= index) {
         return;
       }
-      const relativePath = match[1];
+      const relativePath = match[index];
       const currentPath = activeTextEditor.document.uri.fsPath;
 
       var path = require("path");
