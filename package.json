@@ -156,6 +156,10 @@
         "key": "ctrl+c k"
       },
       {
+        "command": "extension.slugProject",
+        "key": "ctrl+c s"
+      },
+      {
         "command": "extension.archive",
         "key": "ctrl+c d"
       }
