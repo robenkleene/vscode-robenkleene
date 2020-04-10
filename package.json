@@ -156,6 +156,10 @@
         "key": "ctrl+c k"
       },
       {
+        "command": "extension.makeTitleCase",
+        "key": "ctrl+c c"
+      },
+      {
         "command": "extension.slugProject",
         "key": "ctrl+c s"
       },
