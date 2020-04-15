@@ -4,7 +4,7 @@ The idea of a personal extension is make a place for personal customizations to 
 
 ## Foreword
 
-This is my personal extension, if you install this extension on your machine, very few of the commands will work, this is because these commands depend on your machine already having [a number of other customizations in place](https://github.com/robenkleene/Dotfiles). The intention of sharing this extension is not for you to install it yourself, but to illustrate how a personal extension can be used to quickly add commands to VSCode, similar to how other programmable text editors can be customized.
+The intention of sharing this extension is not for you to install it yourself, but instead to illustrate how a personal extension can be used to quickly add commands to VSCode, similar to how other programmable text editors can be customized. If you install this extension on your machine, most of the commands will not work, because most of the commands depend on [a number of other customizations](https://github.com/robenkleene/Dotfiles) already being in place. 
 
 To those ends, the best way to peruse what customizations can do, and how they are added, is to look at the commands in the [`package.json`](package.json) file, and review how they are configured as contextual menus, keyboard shortcuts, and command palette commands.
 
