@@ -610,16 +610,21 @@ export function activate(context: vscode.ExtensionContext) {
         filePath = uri.fsPath;
       } else {
         const activeTextEditor = vscode.window.activeTextEditor;
-        if (!activeTextEditor) {
-          return;
+        if (activeTextEditor) {
+          const folder = vscode.workspace.getWorkspaceFolder(
+            activeTextEditor.document.uri
+          );
+          if (!folder) {
+            return;
+          }
+          filePath = folder.uri.fsPath;
+        } else {
+          filePath = vscode.workspace.rootPath;
         }
-        const folder = vscode.workspace.getWorkspaceFolder(
-          activeTextEditor.document.uri
-        );
-        if (!folder) {
-          return;
-        }
-        filePath = folder.uri.fsPath;
+      }
+
+      if (!filePath) {
+        return;
       }
 
       const path = require("path");
