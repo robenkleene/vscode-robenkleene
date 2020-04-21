@@ -53,22 +53,19 @@ var displayResult = function (result: any) {
   }
 };
 
-var archiveFilePath = async function (filePath: string, prompt: Boolean = true) {
+var archiveFilePath = async function (filePath: string) {
   const fs = require("fs");
   if (!fs.existsSync(filePath)) {
     return;
   }
   const path = require("path");
   const filename = path.basename(filePath);
+  const response = await vscode.window.showQuickPick(["no", "yes"], {
+    placeHolder: `Backup ${filename}?`,
+  });
 
-  if (prompt) {
-    const response = await vscode.window.showQuickPick(["no", "yes"], {
-      placeHolder: `Backup ${filename}?`,
-    });
-  
-    if (response !== "yes") {
-      return;
-    }  
+  if (response !== "yes") {
+    return;
   }
 
   const child_process = require("child_process");
@@ -384,11 +381,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       if (filePath && (!text || !text.length)) {
-        if (uri) {
-          archiveFilePath(filePath, true);
-        } else {
-          archiveFilePath(filePath, false);
-        }
+        archiveFilePath(filePath);
         return;
       }
 
