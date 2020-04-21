@@ -557,7 +557,7 @@ export function activate(context: vscode.ExtensionContext) {
       const child_process = require("child_process");
       try {
         const result = child_process.spawnSync(
-          "repla",
+          "/usr/local/bin/repla",
           [`"${escapeShell(filePath)}"`],
           { shell: true }
         );
