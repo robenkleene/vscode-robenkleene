@@ -2,11 +2,11 @@
 
 set -e
 
-force=false
-while getopts ":fh" option; do
+force=true
+while getopts ":dh" option; do
   case "$option" in
-    f)
-      force=true
+    d)
+      force=false
       ;;
     h)
       echo "Usage: ./install.sh [-hf]"
@@ -26,6 +26,9 @@ done
 dry_run=" --dry-run"
 if [[ "$force" == "true" ]]; then
   dry_run=""
+else
+  echo "DRY RUN"
+  echo
 fi
 
 destination_path="$HOME/.vscode/extensions/"
