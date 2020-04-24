@@ -20,6 +20,7 @@
     "onCommand:extension.slugProject",
     "onCommand:extension.openSourceControlSite",
     "onCommand:extension.insertFilePath",
+    "onCommand:extension.insertTitle",
     "onCommand:extension.openDocumentation",
     "onCommand:extension.openInRepla",
     "onCommand:extension.openReadme",
@@ -63,6 +64,10 @@
       {
         "command": "extension.insertFilePath",
         "title": "Insert File Path"
+      },
+      {
+        "command": "extension.insertTitle",
+        "title": "Insert Title"
       },
       {
         "command": "extension.openSourceControlSite",

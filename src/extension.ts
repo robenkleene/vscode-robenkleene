@@ -64,10 +64,10 @@ var archiveFilePath = async function (filePath: string) {
   if (fs.lstatSync(filePath).isDirectory()) {
     const response = await vscode.window.showQuickPick(["no", "yes"], {
       placeHolder: `Backup ${filename}?`,
-    });  
+    });
     if (response !== "yes") {
       return;
-    }  
+    }
   }
 
   const child_process = require("child_process");
@@ -675,6 +675,46 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
   context.subscriptions.push(openDocumentationDisposable);
+
+  let insertTitleDisposable = vscode.commands.registerCommand(
+    "extension.insertTitle",
+    () => {
+      const activeTextEditor = vscode.window.activeTextEditor;
+      if (!activeTextEditor) {
+        return;
+      }
+      const selection = activeTextEditor.selection;
+
+      const currentPath = activeTextEditor.document.uri.fsPath;
+      var path = require("path");
+      const fs = require("fs");
+      if (!fs.existsSync(currentPath)) {
+        return;
+      }
+
+      const child_process = require("child_process");
+      try {
+        const result = child_process.spawnSync("~/.bin/markdown_title", [`"${escapeShell(currentPath)}"`], {
+          shell: true
+        });
+        displayError(result);
+
+        if (result.status !== 0) {
+          return;
+        }
+        const newText = result.stdout.toString();
+        if (!newText.length) {
+          return;
+        }
+        if (activeTextEditor) {
+          activeTextEditor.edit((editBuilder) => {
+            editBuilder.replace(selection, newText);
+          });
+        }
+      } catch (error) {}
+    }
+  );
+  context.subscriptions.push(insertTitleDisposable);
 }
 
 export function deactivate() {}
