@@ -694,9 +694,13 @@ export function activate(context: vscode.ExtensionContext) {
 
       const child_process = require("child_process");
       try {
-        const result = child_process.spawnSync("~/.bin/markdown_title", [`"${escapeShell(currentPath)}"`], {
-          shell: true
-        });
+        const result = child_process.spawnSync(
+          "~/.bin/markdown_title",
+          [`"${escapeShell(currentPath)}"`],
+          {
+            shell: true,
+          }
+        );
         displayError(result);
 
         if (result.status !== 0) {
@@ -707,9 +711,17 @@ export function activate(context: vscode.ExtensionContext) {
           return;
         }
         if (activeTextEditor) {
-          activeTextEditor.edit((editBuilder) => {
-            editBuilder.replace(selection, newText);
-          });
+          activeTextEditor
+            .edit((editBuilder) => {
+              editBuilder.replace(selection, newText);
+            })
+            .then((success) => {
+              var postion = activeTextEditor.selection.end;
+              activeTextEditor.selection = new vscode.Selection(
+                postion,
+                postion
+              );
+            });
         }
       } catch (error) {}
     }
