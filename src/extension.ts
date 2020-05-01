@@ -61,13 +61,13 @@ var archiveFilePath = async function (filePath: string) {
   const path = require("path");
   const filename = path.basename(filePath);
 
-  if (fs.lstatSync(filePath).isDirectory()) {
-    const response = await vscode.window.showQuickPick(["no", "yes"], {
-      placeHolder: `Backup ${filename}?`,
-    });
-    if (response !== "yes") {
-      return;
-    }
+  // if (fs.lstatSync(filePath).isDirectory()) {
+  // }
+  const response = await vscode.window.showQuickPick(["no", "yes"], {
+    placeHolder: `Backup ${filename}?`,
+  });
+  if (response !== "yes") {
+    return;
   }
 
   const child_process = require("child_process");
