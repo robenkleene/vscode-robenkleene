@@ -732,7 +732,43 @@ export function activate(context: vscode.ExtensionContext) {
 
   let copyMarkdownSourceControlLinkDisposable = vscode.commands.registerCommand(
     "extension.copyMarkdownSourceControlLink",
-    () => {}
+    async () => {
+      const activeTextEditor = vscode.window.activeTextEditor;
+      if (!activeTextEditor) {
+        return;
+      }
+      const filePath = activeTextEditor.document.uri.fsPath;
+
+
+      const line = activeTextEditor.selection.active.line;
+      var options: { [k: string]: any } = { shell: true };
+
+      const selection = activeTextEditor.selection;
+      if (!selection) {
+        return;
+      }
+      const text = activeTextEditor.document.getText(selection);
+      if (text.length) {
+        options["input"] = text;
+      }
+
+      const child_process = require("child_process");
+      try {
+        const result = child_process.spawnSync(
+          "~/.bin/link_source_control_markdown",
+          ["--line-number", line, `"${escapeShell(filePath)}"`],
+          options
+        );
+
+        if (result.stdout !== null) {
+          const quote = result.stdout.toString();
+          if (quote.length) {
+            await vscode.env.clipboard.writeText(quote);
+          }
+        }      
+        displayError(result);
+      } catch (error) {}
+    }
   );
   context.subscriptions.push(copyMarkdownSourceControlLinkDisposable);
 
