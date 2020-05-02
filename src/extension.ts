@@ -765,12 +765,53 @@ export function activate(context: vscode.ExtensionContext) {
           if (quote.length) {
             await vscode.env.clipboard.writeText(quote);
           }
-        }      
+        }
         displayError(result);
       } catch (error) {}
     }
   );
   context.subscriptions.push(copyMarkdownSourceControlLinkDisposable);
+
+  let copyMarkdownSourceControlQuoteDisposable = vscode.commands.registerCommand(
+    "extension.copyMarkdownSourceControlQuote",
+    async () => {
+      const activeTextEditor = vscode.window.activeTextEditor;
+      if (!activeTextEditor) {
+        return;
+      }
+      const filePath = activeTextEditor.document.uri.fsPath;
+
+      const line = activeTextEditor.selection.active.line;
+      var options: { [k: string]: any } = { shell: true };
+
+      const selection = activeTextEditor.selection;
+      if (!selection) {
+        return;
+      }
+      const text = activeTextEditor.document.getText(selection);
+      if (text.length) {
+        options["input"] = text;
+      }
+
+      const child_process = require("child_process");
+      try {
+        const result = child_process.spawnSync(
+          "~/.bin/link_source_control_markdown",
+          ["--quote", "--line-number", line, `"${escapeShell(filePath)}"`],
+          options
+        );
+
+        if (result.stdout !== null) {
+          const quote = result.stdout.toString();
+          if (quote.length) {
+            await vscode.env.clipboard.writeText(quote);
+          }
+        }
+        displayError(result);
+      } catch (error) {}
+    }
+  );
+  context.subscriptions.push(copyMarkdownSourceControlQuoteDisposable);
 
   let openSourceControlLinkDisposable = vscode.commands.registerCommand(
     "extension.openSourceControlLink",
@@ -780,7 +821,6 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
       const filePath = activeTextEditor.document.uri.fsPath;
-
 
       const line = activeTextEditor.selection.active.line;
       var options: { [k: string]: any } = { shell: true };
