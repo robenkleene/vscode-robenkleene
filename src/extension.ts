@@ -743,9 +743,11 @@ export function activate(context: vscode.ExtensionContext) {
       if (!activeTextEditor) {
         return;
       }
+      const filePath = activeTextEditor.document.uri.fsPath;
+
 
       const line = activeTextEditor.selection.active.line;
-      var options: { [k: string]: string } = {};
+      var options: { [k: string]: any } = { shell: true };
 
       const selection = activeTextEditor.selection;
       if (!selection) {
@@ -760,7 +762,7 @@ export function activate(context: vscode.ExtensionContext) {
       try {
         const result = child_process.spawnSync(
           "~/.bin/link_source_control_open",
-          ["--line-number", line],
+          ["--line-number", line, `"${escapeShell(filePath)}"`],
           options
         );
         displayError(result);
