@@ -12,6 +12,8 @@ var displayError = function (result: any) {
     if (error.length) {
       vscode.window.showErrorMessage(error);
     }
+  } else if (result.error) {
+    vscode.window.showErrorMessage(result.error.message);
   }
 };
 
