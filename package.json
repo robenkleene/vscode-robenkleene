@@ -20,7 +20,8 @@
     "onCommand:extension.slugProject",
     "onCommand:extension.openSourceControlSite",
     "onCommand:extension.insertFilePath",
-    "onCommand:extension.insertTitle",
+    "onCommand:extension.copyMarkdownSourceControlLink",
+    "onCommand:extension.openSourceControlLink",
     "onCommand:extension.openDocumentation",
     "onCommand:extension.openInRepla",
     "onCommand:extension.openReadme",
@@ -68,6 +69,14 @@
       {
         "command": "extension.insertTitle",
         "title": "Insert Title"
+      },
+      {
+        "command": "extension.copyMarkdownSourceControlLink",
+        "title": "Copy Markdown Source Control Link"
+      },
+      {
+        "command": "extension.openSourceControlLink",
+        "title": "Open Source Control Link"
       },
       {
         "command": "extension.openSourceControlSite",
