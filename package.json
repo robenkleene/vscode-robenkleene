@@ -18,6 +18,7 @@
     "onCommand:extension.makeWikiLink",
     "onCommand:extension.makeTitleCase",
     "onCommand:extension.slugProject",
+    "onCommand:extension.insertTitle",
     "onCommand:extension.openSourceControlSite",
     "onCommand:extension.insertFilePath",
     "onCommand:extension.copyMarkdownSourceControlLink",
