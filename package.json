@@ -17,6 +17,7 @@
     "onCommand:extension.saveAsInbox",
     "onCommand:extension.makeWikiLink",
     "onCommand:extension.makeTitleCase",
+    "onCommand:extension.openFolderForFile",
     "onCommand:extension.slugProject",
     "onCommand:extension.insertTitle",
     "onCommand:extension.openSourceControlSite",
@@ -59,6 +60,10 @@
       {
         "command": "extension.blogLinkFromFile",
         "title": "Blog Link From File"
+      },
+      {
+        "command": "extension.openFolderForFile",
+        "title": "Open Folder for File"
       },
       {
         "command": "extension.saveAsInbox",
