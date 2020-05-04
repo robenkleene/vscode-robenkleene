@@ -739,7 +739,6 @@ export function activate(context: vscode.ExtensionContext) {
       }
       const filePath = activeTextEditor.document.uri.fsPath;
 
-
       const line = activeTextEditor.selection.active.line;
       var options: { [k: string]: any } = { shell: true };
 
@@ -846,6 +845,39 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
   context.subscriptions.push(openSourceControlLinkDisposable);
+
+  let openFolderForFileDisposable = vscode.commands.registerCommand(
+    "extension.openFolderForFile",
+    async () => {
+      const activeTextEditor = vscode.window.activeTextEditor;
+      if (!activeTextEditor) {
+        return;
+      }
+      const fileUri = activeTextEditor.document.uri;
+      const filePath = activeTextEditor.document.uri.fsPath;
+      var path = require("path");
+      const dirPath = path.dirname(filePath);
+      const fs = require("fs");
+
+      if (!fs.lstatSync(dirPath).isDirectory()) {
+        return;
+      }
+
+      let dirUri = vscode.Uri.file(dirPath);
+      const success = await vscode.commands.executeCommand(
+        "vscode.openFolder",
+        dirUri
+      );
+      // This doesn't work, it looks like you can't operate on a window after
+      // running `"vscode.openFolder"` because of the refresh it causes
+      // if (success) {
+      //   vscode.workspace.openTextDocument(fileUri).then((doc) => {
+      //     vscode.window.showTextDocument(doc, { preview: false });
+      //   });
+      // }
+    }
+  );
+  context.subscriptions.push(openFolderForFileDisposable);
 }
 
 export function deactivate() {}
