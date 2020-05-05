@@ -166,31 +166,38 @@
     "keybindings": [
       {
         "command": "extension.openFile",
-        "key": "ctrl+x ctrl+f"
+        "key": "ctrl+x ctrl+f",
+        "when": "!terminalFocus"
       },
       {
         "command": "extension.insertFilePath",
-        "key": "ctrl+c cmd-p"
+        "key": "ctrl+c cmd-p",
+        "when": "!terminalFocus"
       },
       {
         "command": "extension.insertFilePath",
-        "key": "ctrl+c e"
+        "key": "ctrl+c e",
+        "when": "!terminalFocus"
       },
       {
         "command": "extension.makeWikiLink",
-        "key": "ctrl+c k"
+        "key": "ctrl+c k",
+        "when": "!terminalFocus"
       },
       {
         "command": "extension.makeTitleCase",
-        "key": "ctrl+c c"
+        "key": "ctrl+c c",
+        "when": "!terminalFocus"
       },
       {
         "command": "extension.slugProject",
-        "key": "ctrl+c s"
+        "key": "ctrl+c s",
+        "when": "!terminalFocus"
       },
       {
         "command": "extension.archive",
-        "key": "ctrl+c d"
+        "key": "ctrl+c d",
+        "when": "!terminalFocus"
       }
     ]
   },
