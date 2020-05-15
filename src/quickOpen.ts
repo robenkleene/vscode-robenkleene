@@ -54,7 +54,7 @@ export async function pickFile(useFd: Boolean = false, rootDir?: string) {
 					}
 					const q = process.platform === 'win32' ? '"' : '\'';
 					rgs = cwds.map(cwd => {
-						const command = useFd ? `/usr/local/bin/fd -p ${q}.*${value}.*${q}` : `rg --files -g ${q}*${value}*${q}`;
+						const command = useFd ? `/usr/local/bin/fd -p ${q}.*${value}.*${q}` : `/usr/local/bin/rg --files -g ${q}*${value}*${q}`;
 						const rg = cp.exec(command, { cwd }, (err, stdout) => {
 							const i = rgs.indexOf(rg);
 							if (i !== -1) {
