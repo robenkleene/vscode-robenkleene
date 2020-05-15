@@ -853,7 +853,6 @@ export function activate(context: vscode.ExtensionContext) {
       if (!activeTextEditor) {
         return;
       }
-      const fileUri = activeTextEditor.document.uri;
       const filePath = activeTextEditor.document.uri.fsPath;
       var path = require("path");
       const dirPath = path.dirname(filePath);
