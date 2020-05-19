@@ -27,6 +27,7 @@
     "onCommand:extension.openSourceControlLink",
     "onCommand:extension.openDocumentation",
     "onCommand:extension.openDocumentationFolder",
+    "onCommand:extension.openDevelopmentScratch",
     "onCommand:extension.openInRepla",
     "onCommand:extension.openReadme",
     "onCommand:extension.openFile"
@@ -57,6 +58,10 @@
       {
         "command": "extension.openDocumentationFolder",
         "title": "Open Documentation Folder"
+      },
+      {
+        "command": "extension.openDevelopmentScratch",
+        "title": "Open Development Scratch"
       },
       {
         "command": "extension.blogPostFromFile",
