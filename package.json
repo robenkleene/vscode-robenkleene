@@ -26,6 +26,7 @@
     "onCommand:extension.copyMarkdownSourceControlQuote",
     "onCommand:extension.openSourceControlLink",
     "onCommand:extension.openDocumentation",
+    "onCommand:extension.openDocumentationFolder",
     "onCommand:extension.openInRepla",
     "onCommand:extension.openReadme",
     "onCommand:extension.openFile"
@@ -52,6 +53,10 @@
       {
         "command": "extension.openDocumentation",
         "title": "Open Documentation"
+      },
+      {
+        "command": "extension.openDocumentationFolder",
+        "title": "Open Documentation Folder"
       },
       {
         "command": "extension.blogPostFromFile",
