@@ -897,6 +897,26 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
   context.subscriptions.push(openDocumentationFolderDisposable);
+
+  let openDevelopmentScratchDisposable = vscode.commands.registerCommand(
+    "extension.openDevelopmentScratch",
+    async () => {
+      const homedir = require("os").homedir();
+      const path = require("path");
+      const dirPath = path.join(homedir, "Development/Scratch");
+
+      const fs = require("fs");
+      if (!fs.lstatSync(dirPath).isDirectory()) {
+        return;
+      }
+      let dirUri = vscode.Uri.file(dirPath);
+      const success = await vscode.commands.executeCommand(
+        "vscode.openFolder",
+        dirUri
+      );
+    }
+  );
+  context.subscriptions.push(openDevelopmentScratchDisposable);
 }
 
 export function deactivate() {}
