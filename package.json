@@ -28,6 +28,8 @@
     "onCommand:extension.openDocumentation",
     "onCommand:extension.openDocumentationFolder",
     "onCommand:extension.openDevelopmentScratch",
+    "onCommand:extension.openWiki",
+    "onCommand:extension.openPersonalWiki",
     "onCommand:extension.openInRepla",
     "onCommand:extension.openReadme",
     "onCommand:extension.openFile"
@@ -58,6 +60,14 @@
       {
         "command": "extension.openDocumentationFolder",
         "title": "Open Documentation Folder"
+      },
+      {
+        "command": "extension.openWiki",
+        "title": "Open Wiki"
+      },
+      {
+        "command": "extension.openPersonalWiki",
+        "title": "Open Personal Wiki"
       },
       {
         "command": "extension.openDevelopmentScratch",
