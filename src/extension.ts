@@ -856,8 +856,8 @@ export function activate(context: vscode.ExtensionContext) {
       const filePath = activeTextEditor.document.uri.fsPath;
       var path = require("path");
       const dirPath = path.dirname(filePath);
-      const fs = require("fs");
 
+      const fs = require("fs");
       if (!fs.lstatSync(dirPath).isDirectory()) {
         return;
       }
@@ -877,6 +877,26 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
   context.subscriptions.push(openFolderForFileDisposable);
+
+  let openDocumentationFolderDisposable = vscode.commands.registerCommand(
+    "extension.openDocumentationFolder",
+    async () => {
+      const homedir = require("os").homedir();
+      const path = require("path");
+      const dirPath = path.join(homedir, "Documentation");
+
+      const fs = require("fs");
+      if (!fs.lstatSync(dirPath).isDirectory()) {
+        return;
+      }
+      let dirUri = vscode.Uri.file(dirPath);
+      const success = await vscode.commands.executeCommand(
+        "vscode.openFolder",
+        dirUri
+      );
+    }
+  );
+  context.subscriptions.push(openDocumentationFolderDisposable);
 }
 
 export function deactivate() {}
