@@ -917,6 +917,46 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
   context.subscriptions.push(openDevelopmentScratchDisposable);
+
+  let openWikiDisposable = vscode.commands.registerCommand(
+    "extension.openWiki",
+    async () => {
+      const homedir = require("os").homedir();
+      const path = require("path");
+      const dirPath = path.join(homedir, "Text/wiki");
+
+      const fs = require("fs");
+      if (!fs.lstatSync(dirPath).isDirectory()) {
+        return;
+      }
+      let dirUri = vscode.Uri.file(dirPath);
+      const success = await vscode.commands.executeCommand(
+        "vscode.openFolder",
+        dirUri
+      );
+    }
+  );
+  context.subscriptions.push(openWikiDisposable);
+
+  let openPersonalWikiDisposable = vscode.commands.registerCommand(
+    "extension.openPersonalWiki",
+    async () => {
+      const homedir = require("os").homedir();
+      const path = require("path");
+      const dirPath = path.join(homedir, "Text/personal-wiki");
+
+      const fs = require("fs");
+      if (!fs.lstatSync(dirPath).isDirectory()) {
+        return;
+      }
+      let dirUri = vscode.Uri.file(dirPath);
+      const success = await vscode.commands.executeCommand(
+        "vscode.openFolder",
+        dirUri
+      );
+    }
+  );
+  context.subscriptions.push(openPersonalWikiDisposable);
 }
 
 export function deactivate() {}
