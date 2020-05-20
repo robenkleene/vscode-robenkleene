@@ -28,6 +28,7 @@
     "onCommand:extension.openDocumentation",
     "onCommand:extension.openDocumentationFolder",
     "onCommand:extension.newInboxDocument",
+    "onCommand:extension.openJournalEntry",
     "onCommand:extension.openDevelopmentScratch",
     "onCommand:extension.openWiki",
     "onCommand:extension.openPersonalWiki",
@@ -85,6 +86,10 @@
       {
         "command": "extension.newInboxDocument",
         "title": "New Inbox Document"
+      },
+      {
+        "command": "extension.openJournalEntry",
+        "title": "Open Journal Entry"
       },
       {
         "command": "extension.openFolderForFile",
