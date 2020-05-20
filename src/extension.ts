@@ -957,6 +957,36 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
   context.subscriptions.push(openPersonalWikiDisposable);
+
+  let newInboxDocumentDisposable = vscode.commands.registerCommand(
+    "extension.newInboxDocument",
+    async () => {
+      const title = await vscode.window.showInputBox({
+        placeHolder: "Title",
+      });
+
+      if (!title || !title.length) {
+        return;
+      }
+
+      const child_process = require("child_process");
+      try {
+        const result = child_process.spawnSync("~/.bin/inbox_new", [`"${escapeShell(title)}"`], {
+          shell: true,
+        });
+        displayError(result);
+        const newFilePath = result.stdout.toString();
+        const fs = require("fs");
+        if (fs.existsSync(newFilePath)) {
+          const fileURL = vscode.Uri.file(newFilePath);
+          vscode.workspace.openTextDocument(fileURL).then((doc) => {
+            vscode.window.showTextDocument(doc);
+          });
+        }
+      } catch (error) {}
+    }
+  );
+  context.subscriptions.push(newInboxDocumentDisposable);
 }
 
 export function deactivate() {}

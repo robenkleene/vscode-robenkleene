@@ -27,6 +27,7 @@
     "onCommand:extension.openSourceControlLink",
     "onCommand:extension.openDocumentation",
     "onCommand:extension.openDocumentationFolder",
+    "onCommand:extension.newInboxDocument",
     "onCommand:extension.openDevelopmentScratch",
     "onCommand:extension.openWiki",
     "onCommand:extension.openPersonalWiki",
@@ -80,6 +81,10 @@
       {
         "command": "extension.blogLinkFromFile",
         "title": "Blog Link From File"
+      },
+      {
+        "command": "extension.newInboxDocument",
+        "title": "New Inbox Document"
       },
       {
         "command": "extension.openFolderForFile",
