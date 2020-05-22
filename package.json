@@ -226,6 +226,11 @@
       },
       {
         "command": "extension.archive",
+        "key": "ctrl+alt+d",
+        "when": "!terminalFocus"
+      },
+      {
+        "command": "extension.archive",
         "key": "ctrl+c d",
         "when": "!terminalFocus"
       }
