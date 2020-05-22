@@ -1009,6 +1009,26 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
   context.subscriptions.push(openJournalEntryDisposable);
+
+  let openProjectsDisposable = vscode.commands.registerCommand(
+    "extension.openProjects",
+    async () => {
+      const homedir = require("os").homedir();
+      const path = require("path");
+      const dirPath = path.join(homedir, "Text/Projects");
+
+      const fs = require("fs");
+      if (!fs.lstatSync(dirPath).isDirectory()) {
+        return;
+      }
+      let dirUri = vscode.Uri.file(dirPath);
+      const success = await vscode.commands.executeCommand(
+        "vscode.openFolder",
+        dirUri
+      );
+    }
+  );
+  context.subscriptions.push(openProjectsDisposable);
 }
 
 export function deactivate() {}

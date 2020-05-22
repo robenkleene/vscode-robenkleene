@@ -31,6 +31,7 @@
     "onCommand:extension.openJournalEntry",
     "onCommand:extension.openDevelopmentScratch",
     "onCommand:extension.openWiki",
+    "onCommand:extension.openProjects",
     "onCommand:extension.openPersonalWiki",
     "onCommand:extension.openInRepla",
     "onCommand:extension.openReadme",
@@ -66,6 +67,10 @@
       {
         "command": "extension.openWiki",
         "title": "Open Wiki"
+      },
+      {
+        "command": "extension.openProjects",
+        "title": "Open Projects"
       },
       {
         "command": "extension.openPersonalWiki",
