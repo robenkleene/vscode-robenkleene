@@ -966,9 +966,13 @@ export function activate(context: vscode.ExtensionContext) {
 
       const child_process = require("child_process");
       try {
-        const result = child_process.spawnSync("~/.bin/inbox_new", [`"${escapeShell(title)}"`], {
-          shell: true,
-        });
+        const result = child_process.spawnSync(
+          "~/.bin/inbox_new",
+          [`"${escapeShell(title)}"`],
+          {
+            shell: true,
+          }
+        );
         displayError(result);
         const newFilePath = result.stdout.toString();
         const fs = require("fs");
@@ -988,9 +992,13 @@ export function activate(context: vscode.ExtensionContext) {
     async () => {
       const child_process = require("child_process");
       try {
-        const result = child_process.spawnSync("~/.bin/journal_new_make_default", null, {
-          shell: true,
-        });
+        const result = child_process.spawnSync(
+          "~/.bin/journal_new_make_default",
+          null,
+          {
+            shell: true,
+          }
+        );
         displayError(result);
         const newFilePath = result.stdout.toString();
         const fs = require("fs");
