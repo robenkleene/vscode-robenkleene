@@ -654,7 +654,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(openReadmeDisposable);
 
   let openDocumentationDisposable = vscode.commands.registerCommand(
-    "extension.openDocumentation",
+    "extension.quickOpenDocumentation",
     async () => {
       const path = require("path");
       const os = require("os");
@@ -879,7 +879,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(openFolderForFileDisposable);
 
   let openDocumentationFolderDisposable = vscode.commands.registerCommand(
-    "extension.openDocumentationFolder",
+    "extension.openDocumentation",
     async () => {
       const homedir = require("os").homedir();
       const path = require("path");
