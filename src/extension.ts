@@ -653,7 +653,7 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(openReadmeDisposable);
 
-  let openDocumentationDisposable = vscode.commands.registerCommand(
+  let quickOpenDocumentationDisposable = vscode.commands.registerCommand(
     "extension.quickOpenDocumentation",
     async () => {
       const path = require("path");
@@ -676,7 +676,7 @@ export function activate(context: vscode.ExtensionContext) {
       });
     }
   );
-  context.subscriptions.push(openDocumentationDisposable);
+  context.subscriptions.push(quickOpenDocumentationDisposable);
 
   let insertTitleDisposable = vscode.commands.registerCommand(
     "extension.insertTitle",
@@ -878,7 +878,7 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(openFolderForFileDisposable);
 
-  let openDocumentationFolderDisposable = vscode.commands.registerCommand(
+  let openDocumentationFolder/Disposable = vscode.commands.registerCommand(
     "extension.openDocumentation",
     async () => {
       const homedir = require("os").homedir();
@@ -896,7 +896,7 @@ export function activate(context: vscode.ExtensionContext) {
       );
     }
   );
-  context.subscriptions.push(openDocumentationFolderDisposable);
+  context.subscriptions.push(openDocumentationDisposable);
 
   let openDevelopmentScratchDisposable = vscode.commands.registerCommand(
     "extension.openDevelopmentScratch",
