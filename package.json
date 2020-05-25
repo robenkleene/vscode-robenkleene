@@ -25,8 +25,8 @@
     "onCommand:extension.copyMarkdownSourceControlLink",
     "onCommand:extension.copyMarkdownSourceControlQuote",
     "onCommand:extension.openSourceControlLink",
+    "onCommand:extension.quickOpenDocumentation",
     "onCommand:extension.openDocumentation",
-    "onCommand:extension.openDocumentationFolder",
     "onCommand:extension.newInboxDocument",
     "onCommand:extension.openJournalEntry",
     "onCommand:extension.openDevelopmentScratch",
@@ -57,12 +57,12 @@
         "title": "Slug Project"
       },
       {
-        "command": "extension.openDocumentation",
-        "title": "Open Documentation"
+        "command": "extension.quickOpenDocumentation",
+        "title": "Quick Open Documentation"
       },
       {
-        "command": "extension.openDocumentationFolder",
-        "title": "Open Documentation Folder"
+        "command": "extension.openDocumentation",
+        "title": "Open Documentation"
       },
       {
         "command": "extension.openWiki",
