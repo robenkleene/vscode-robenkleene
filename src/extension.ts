@@ -878,7 +878,7 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(openFolderForFileDisposable);
 
-  let openDocumentationFolderDisposable = vscode.commands.registerCommand(
+  let openDocumentationDisposable = vscode.commands.registerCommand(
     "extension.openDocumentation",
     async () => {
       const homedir = require("os").homedir();
