@@ -424,25 +424,20 @@ export function activate(context: vscode.ExtensionContext) {
       if (uri && fs.lstatSync(uri.fsPath).isDirectory()) {
         currentDirPath = uri.fsPath;
       } else if (activeTextEditor) {
-        const folder = vscode.workspace.getWorkspaceFolder(
-          activeTextEditor.document.uri
-        );
-        if (folder) {
-          currentDirPath = folder.uri.fsPath;
-          selection = activeTextEditor.selection;
-          if (selection) {
-            const text = activeTextEditor.document.getText(selection);
-            if (text.length) {
-              var match = /\r|\n/.exec(text);
-              if (!match) {
-                title = text;
-                directory = "projects";
-              }
+        const currentPath = activeTextEditor.document.uri.fsPath;
+        var path = require("path");
+        currentDirPath = path.dirname(currentPath);
+        selection = activeTextEditor.selection;
+        if (selection) {
+          const text = activeTextEditor.document.getText(selection);
+          if (text.length) {
+            var match = /\r|\n/.exec(text);
+            if (!match) {
+              title = text;
+              directory = "projects";
             }
           }
         }
-      } else {
-        return;
       }
 
       if (!fs.lstatSync(currentDirPath).isDirectory()) {
@@ -971,9 +966,13 @@ export function activate(context: vscode.ExtensionContext) {
 
       const child_process = require("child_process");
       try {
-        const result = child_process.spawnSync("~/.bin/inbox_new", [`"${escapeShell(title)}"`], {
-          shell: true,
-        });
+        const result = child_process.spawnSync(
+          "~/.bin/inbox_new",
+          [`"${escapeShell(title)}"`],
+          {
+            shell: true,
+          }
+        );
         displayError(result);
         const newFilePath = result.stdout.toString();
         const fs = require("fs");
@@ -993,9 +992,13 @@ export function activate(context: vscode.ExtensionContext) {
     async () => {
       const child_process = require("child_process");
       try {
-        const result = child_process.spawnSync("~/.bin/journal_new_make_default", null, {
-          shell: true,
-        });
+        const result = child_process.spawnSync(
+          "~/.bin/journal_new_make_default",
+          null,
+          {
+            shell: true,
+          }
+        );
         displayError(result);
         const newFilePath = result.stdout.toString();
         const fs = require("fs");
