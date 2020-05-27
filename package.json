@@ -238,6 +238,11 @@
         "command": "extension.archive",
         "key": "ctrl+c d",
         "when": "!terminalFocus"
+      },
+      {
+        "command": "extension.openFolderForFile",
+        "key": "ctrl+c f",
+        "when": "editorTextFocus"
       }
     ]
   },
