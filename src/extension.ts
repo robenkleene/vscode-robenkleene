@@ -629,21 +629,13 @@ export function activate(context: vscode.ExtensionContext) {
       const path = require("path");
       var readmePath = path.join(filePath, "README.md");
       const fs = require("fs");
-      if (fs.existsSync(filePath)) {
-        const fileURL = vscode.Uri.file(readmePath);
-        vscode.workspace.openTextDocument(fileURL).then((doc) => {
-          vscode.window.showTextDocument(doc);
-        });
+      if (!fs.existsSync(readmePath)) {
         return;
       }
-
-      readmePath = path.join(filePath, "readme.md");
-      if (fs.existsSync(filePath)) {
-        const fileURL = vscode.Uri.file(readmePath);
-        vscode.workspace.openTextDocument(fileURL).then((doc) => {
-          vscode.window.showTextDocument(doc);
-        });
-      }
+      const fileURL = vscode.Uri.file(readmePath);
+      vscode.workspace.openTextDocument(fileURL).then((doc) => {
+        vscode.window.showTextDocument(doc);
+      });
     }
   );
   context.subscriptions.push(openReadmeDisposable);

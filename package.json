@@ -240,8 +240,12 @@
         "when": "!terminalFocus"
       },
       {
+        "command": "extension.openReadme",
+        "key": "alt+o r"
+      },
+      {
         "command": "extension.openFolderForFile",
-        "key": "ctrl+c f",
+        "key": "alt+o d",
         "when": "editorTextFocus"
       }
     ]
