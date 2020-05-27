@@ -629,13 +629,22 @@ export function activate(context: vscode.ExtensionContext) {
       const path = require("path");
       var readmePath = path.join(filePath, "README.md");
       const fs = require("fs");
-      if (!fs.existsSync(readmePath)) {
-        return;
+      if (fs.existsSync(readmePath)) {
+        const fileURL = vscode.Uri.file(readmePath);
+        vscode.workspace.openTextDocument(fileURL).then((doc) => {
+          vscode.window.showTextDocument(doc);
+        });
+      } else {
+        // Try lowercase
+        readmePath = path.join(filePath, "readme.md");
+        if (!fs.existsSync(readmePath)) {
+          return;
+        }
+        const fileURL = vscode.Uri.file(readmePath);
+        vscode.workspace.openTextDocument(fileURL).then((doc) => {
+          vscode.window.showTextDocument(doc);
+        });
       }
-      const fileURL = vscode.Uri.file(readmePath);
-      vscode.workspace.openTextDocument(fileURL).then((doc) => {
-        vscode.window.showTextDocument(doc);
-      });
     }
   );
   context.subscriptions.push(openReadmeDisposable);
