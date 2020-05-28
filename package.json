@@ -17,7 +17,7 @@
     "onCommand:extension.saveAsInbox",
     "onCommand:extension.makeWikiLink",
     "onCommand:extension.makeTitleCase",
-    "onCommand:extension.openFolderForFile",
+    "onCommand:extension.openDirectory",
     "onCommand:extension.slugProject",
     "onCommand:extension.insertTitle",
     "onCommand:extension.openSourceControlSite",
@@ -97,8 +97,8 @@
         "title": "Open Journal Entry"
       },
       {
-        "command": "extension.openFolderForFile",
-        "title": "Open Folder for File"
+        "command": "extension.openDirectory",
+        "title": "Open Directory"
       },
       {
         "command": "extension.saveAsInbox",
@@ -195,6 +195,11 @@
           "command": "extension.slugProject",
           "when": "explorerResourceIsFolder",
           "group": "navigation"
+        },
+        {
+          "command": "extension.openDirectory",
+          "when": "explorerResourceIsFolder",
+          "group": "navigation"
         }
       ]
     },
@@ -241,19 +246,23 @@
       },
       {
         "command": "extension.openReadme",
-        "key": "alt+o r"
+        "key": "alt+o r",
+        "when": "!terminalFocus"
       },
       {
         "command": "extension.openReadme",
-        "key": "alt+o alt+r"
+        "key": "alt+o alt+r",
+        "when": "!terminalFocus"
       },
       {
-        "command": "extension.openFolderForFile",
-        "key": "alt+o alt+d"
+        "command": "extension.openDirectory",
+        "key": "alt+o alt+d",
+        "when": "!terminalFocus"
       },
       {
-        "command": "extension.openFolderForFile",
-        "key": "alt+o d"
+        "command": "extension.openDirectory",
+        "key": "alt+o d",
+        "when": "!terminalFocus"
       }
     ]
   },
