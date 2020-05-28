@@ -244,9 +244,16 @@
         "key": "alt+o r"
       },
       {
+        "command": "extension.openReadme",
+        "key": "alt+o alt+r"
+      },
+      {
         "command": "extension.openFolderForFile",
-        "key": "alt+o d",
-        "when": "editorTextFocus"
+        "key": "alt+o alt+d"
+      },
+      {
+        "command": "extension.openFolderForFile",
+        "key": "alt+o d"
       }
     ]
   },
