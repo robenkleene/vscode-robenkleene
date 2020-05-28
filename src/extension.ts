@@ -843,22 +843,29 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(openSourceControlLinkDisposable);
 
   let openFolderForFileDisposable = vscode.commands.registerCommand(
-    "extension.openFolderForFile",
-    async () => {
-      const activeTextEditor = vscode.window.activeTextEditor;
-      if (!activeTextEditor) {
-        return;
-      }
-      const filePath = activeTextEditor.document.uri.fsPath;
-      var path = require("path");
-      const dirPath = path.dirname(filePath);
-
+    "extension.openDirectory",
+    async (uri: vscode.Uri) => {
+      var dirUri;
       const fs = require("fs");
-      if (!fs.lstatSync(dirPath).isDirectory()) {
-        return;
+      console.log("uri = " + uri);
+      if (uri && fs.lstatSync(uri.fsPath).isDirectory()) {
+        // Use the selected directory in the file explorer
+        dirUri = uri;
+      } else {
+        // Or if a valid directory wasn't passed in, use the directory of the current file
+        const activeTextEditor = vscode.window.activeTextEditor;
+        if (!activeTextEditor) {
+          return;
+        }
+        let filePath = activeTextEditor.document.uri.fsPath;
+        var path = require("path");
+        const dirPath = path.dirname(filePath);
+        if (!fs.lstatSync(dirPath).isDirectory()) {
+          return;
+        }
+        dirUri = vscode.Uri.file(dirPath);
       }
 
-      let dirUri = vscode.Uri.file(dirPath);
       const success = await vscode.commands.executeCommand(
         "vscode.openFolder",
         dirUri
