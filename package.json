@@ -268,6 +268,26 @@
         "command": "extension.openDirectory",
         "key": "alt+o d",
         "when": "!terminalFocus"
+      },
+      {
+        "command": "extension.quickOpenDocumentation",
+        "key": "alt+q alt-d",
+        "when": "!terminalFocus"
+      },
+      {
+        "command": "extension.quickOpenDocumentation",
+        "key": "alt+q d",
+        "when": "!terminalFocus"
+      },
+      {
+        "command": "extension.quickOpenProject",
+        "key": "alt+q alt-p",
+        "when": "!terminalFocus"
+      },
+      {
+        "command": "extension.quickOpenProject",
+        "key": "alt+q p",
+        "when": "!terminalFocus"
       }
     ]
   },
