@@ -288,6 +288,11 @@
         "command": "extension.quickOpenProject",
         "key": "alt+q p",
         "when": "!terminalFocus"
+      },
+      {
+        "command": "extension.insertTitle",
+        "key": "ctrl+c t",
+        "when": "!terminalFocus"
       }
     ]
   },
