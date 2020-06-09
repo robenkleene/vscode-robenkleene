@@ -26,7 +26,7 @@
     "onCommand:extension.copyMarkdownSourceControlQuote",
     "onCommand:extension.openSourceControlLink",
     "onCommand:extension.quickOpenDocumentation",
-    "onCommand:extension.quickOpenProject",
+    "onCommand:extension.quickOpenText",
     "onCommand:extension.openDocumentation",
     "onCommand:extension.newInboxDocument",
     "onCommand:extension.openJournalEntry",
@@ -62,8 +62,8 @@
         "title": "Quick Open Documentation"
       },
       {
-        "command": "extension.quickOpenProject",
-        "title": "Quick Open Project"
+        "command": "extension.quickOpenText",
+        "title": "Quick Open Text"
       },
       {
         "command": "extension.openDocumentation",
@@ -280,13 +280,13 @@
         "when": "!terminalFocus"
       },
       {
-        "command": "extension.quickOpenProject",
-        "key": "alt+q alt-p",
+        "command": "extension.quickOpenText",
+        "key": "alt+q alt-t",
         "when": "!terminalFocus"
       },
       {
-        "command": "extension.quickOpenProject",
-        "key": "alt+q p",
+        "command": "extension.quickOpenText",
+        "key": "alt+q t",
         "when": "!terminalFocus"
       },
       {
