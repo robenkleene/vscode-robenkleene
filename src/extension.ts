@@ -674,32 +674,6 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(quickOpenDocumentationDisposable);
 
-  let quickOpenProjectDisposable = vscode.commands.registerCommand(
-    "extension.quickOpenProject",
-    async () => {
-      const path = require("path");
-      const os = require("os");
-      let dirPath = path.resolve(os.homedir(), "Text/Projects");
-
-      const uri = await pickFile(true, dirPath);
-      if (!uri) {
-        return;
-      }
-
-      const destinationPath = uri.fsPath;
-      const fs = require("fs");
-      if (!fs.lstatSync(destinationPath).isDirectory()) {
-        return;
-      }
-      let dirUri = vscode.Uri.file(destinationPath);
-      const success = await vscode.commands.executeCommand(
-        "vscode.openFolder",
-        dirUri
-      );
-    }
-  );
-  context.subscriptions.push(quickOpenProjectDisposable);
-
   let insertTitleDisposable = vscode.commands.registerCommand(
     "extension.insertTitle",
     () => {
