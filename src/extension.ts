@@ -658,20 +658,27 @@ export function activate(context: vscode.ExtensionContext) {
       const os = require("os");
       let dirPath = path.resolve(os.homedir(), "Documentation");
 
-      const uri = await pickFile(false, dirPath);
+      const uri = await pickFile(true, dirPath);
       if (!uri) {
         return;
       }
 
-      const fs = require("fs");
       const destinationPath = uri.fsPath;
+      const fs = require("fs");
       if (!fs.existsSync(destinationPath)) {
         return;
       }
-
-      vscode.workspace.openTextDocument(uri).then((doc) => {
-        vscode.window.showTextDocument(doc);
-      });
+      let destUri = vscode.Uri.file(destinationPath);
+      if (fs.lstatSync(destinationPath).isDirectory()) {
+        const success = await vscode.commands.executeCommand(
+          "vscode.openFolder",
+          destUri
+        );
+      } else {
+        vscode.workspace.openTextDocument(destUri).then((doc) => {
+          vscode.window.showTextDocument(doc);
+        });
+      }
     }
   );
   context.subscriptions.push(quickOpenDocumentationDisposable);
