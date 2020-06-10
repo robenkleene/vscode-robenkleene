@@ -102,10 +102,12 @@ export function activate(context: vscode.ExtensionContext) {
 
       const child_process = require("child_process");
       try {
-        child_process.execFileSync("~/.bin/urls_open", null, { input: text });
-      } catch (error) {
-        // Ignored, there's an error if no URLs are found.
-      }
+        const result = child_process.spawnSync("~/.bin/urls_open", null, {
+          shell: true,
+          input: text,
+        });
+        displayError(result);
+      } catch (error) {}
     }
   );
   context.subscriptions.push(openURLsDisposable);
@@ -700,7 +702,7 @@ export function activate(context: vscode.ExtensionContext) {
       } else {
         vscode.workspace.openTextDocument(destUri).then((doc) => {
           vscode.window.showTextDocument(doc);
-        });  
+        });
       }
     }
   );
