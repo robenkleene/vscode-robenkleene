@@ -688,14 +688,20 @@ export function activate(context: vscode.ExtensionContext) {
 
       const destinationPath = uri.fsPath;
       const fs = require("fs");
-      if (!fs.lstatSync(destinationPath).isDirectory()) {
+      if (!fs.existsSync(destinationPath)) {
         return;
       }
-      let dirUri = vscode.Uri.file(destinationPath);
-      const success = await vscode.commands.executeCommand(
-        "vscode.openFolder",
-        dirUri
-      );
+      let destUri = vscode.Uri.file(destinationPath);
+      if (fs.lstatSync(destinationPath).isDirectory()) {
+        const success = await vscode.commands.executeCommand(
+          "vscode.openFolder",
+          destUri
+        );
+      } else {
+        vscode.workspace.openTextDocument(destUri).then((doc) => {
+          vscode.window.showTextDocument(doc);
+        });  
+      }
     }
   );
   context.subscriptions.push(quickOpenTextDisposable);
