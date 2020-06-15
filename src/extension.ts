@@ -658,7 +658,7 @@ export function activate(context: vscode.ExtensionContext) {
       const os = require("os");
       let dirPath = path.resolve(os.homedir(), "Documentation");
 
-      const uri = await pickFile(true, dirPath);
+      const uri = await pickFile(true, [dirPath]);
       if (!uri) {
         return;
       }
@@ -690,7 +690,7 @@ export function activate(context: vscode.ExtensionContext) {
       const os = require("os");
       let dirPath = path.resolve(os.homedir(), "Text");
 
-      const uri = await pickFile(true, dirPath);
+      const uri = await pickFile(true, [dirPath]);
       if (!uri) {
         return;
       }
@@ -714,6 +714,39 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
   context.subscriptions.push(quickOpenTextDisposable);
+
+  let quickOpenAllDisposable = vscode.commands.registerCommand(
+    "extension.quickOpenAll",
+    async () => {
+      const path = require("path");
+      const os = require("os");
+      let textDirPath = path.resolve(os.homedir(), "Text");
+      let documentationDirPath = path.resolve(os.homedir(), "Documentation");
+
+      const uri = await pickFile(true, [textDirPath, documentationDirPath]);
+      if (!uri) {
+        return;
+      }
+
+      const destinationPath = uri.fsPath;
+      const fs = require("fs");
+      if (!fs.existsSync(destinationPath)) {
+        return;
+      }
+      let destUri = vscode.Uri.file(destinationPath);
+      if (fs.lstatSync(destinationPath).isDirectory()) {
+        const success = await vscode.commands.executeCommand(
+          "vscode.openFolder",
+          destUri
+        );
+      } else {
+        vscode.workspace.openTextDocument(destUri).then((doc) => {
+          vscode.window.showTextDocument(doc);
+        });
+      }
+    }
+  );
+  context.subscriptions.push(quickOpenAllDisposable);
 
   let insertTitleDisposable = vscode.commands.registerCommand(
     "extension.insertTitle",

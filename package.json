@@ -27,6 +27,7 @@
     "onCommand:extension.openSourceControlLink",
     "onCommand:extension.quickOpenDocumentation",
     "onCommand:extension.quickOpenText",
+    "onCommand:extension.quickOpenAll",
     "onCommand:extension.openDocumentation",
     "onCommand:extension.newInboxDocument",
     "onCommand:extension.openJournalEntry",
@@ -64,6 +65,10 @@
       {
         "command": "extension.quickOpenText",
         "title": "Quick Open Text"
+      },
+      {
+        "command": "extension.quickOpenAll",
+        "title": "Quick Open All"
       },
       {
         "command": "extension.openDocumentation",
@@ -287,6 +292,26 @@
       {
         "command": "extension.quickOpenText",
         "key": "alt+q t",
+        "when": "!terminalFocus"
+      },
+      {
+        "command": "extension.quickOpenAll",
+        "key": "alt+q alt-a",
+        "when": "!terminalFocus"
+      },
+      {
+        "command": "extension.quickOpenAll",
+        "key": "alt+q a",
+        "when": "!terminalFocus"
+      },
+      {
+        "command": "extension.quickOpenAll",
+        "key": "alt+q alt-q",
+        "when": "!terminalFocus"
+      },
+      {
+        "command": "extension.quickOpenAll",
+        "key": "alt+q q",
         "when": "!terminalFocus"
       },
       {

@@ -30,7 +30,7 @@ class MessageItem implements QuickPickItem {
 // This uses a search that matches a files path, but it ignores the directory of
 // the file E.g., `path/file.ext` a search for `file` would match, but not a
 // search for `path`
-export async function pickFile(useFd: Boolean = false, rootDir?: string) {
+export async function pickFile(useFd: Boolean = false, rootDirs?: string[]) {
 	const disposables: Disposable[] = [];
 	try {
 		return await new Promise<Uri | undefined>((resolve, reject) => {
@@ -47,10 +47,10 @@ export async function pickFile(useFd: Boolean = false, rootDir?: string) {
 					}
 					input.busy = true;
 					var cwds;
-					if (!rootDir) {
+					if (!rootDirs) {
 						cwds = workspace.workspaceFolders ? workspace.workspaceFolders.map(f => f.uri.fsPath) : [process.cwd()];
 					} else {
-						cwds = [rootDir];
+						cwds = rootDirs;
 					}
 					const q = process.platform === 'win32' ? '"' : '\'';
 					rgs = cwds.map(cwd => {
