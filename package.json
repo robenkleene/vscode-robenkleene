@@ -318,6 +318,11 @@
         "command": "extension.insertTitle",
         "key": "ctrl+c t",
         "when": "!terminalFocus"
+      },
+      {
+        "command": "extension.copyMarkdownSourceControlQuote",
+        "key": "alt+m",
+        "when": "!terminalFocus"
       }
     ]
   },
