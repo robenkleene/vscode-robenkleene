@@ -975,6 +975,26 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(openDocumentationDisposable);
 
+  let openTweetsDisposable = vscode.commands.registerCommand(
+    "extension.openTweets",
+    async () => {
+      const homedir = require("os").homedir();
+      const path = require("path");
+      const dirPath = path.join(homedir, "/Documents/Text/Writing/Tweets/");
+
+      const fs = require("fs");
+      if (!fs.lstatSync(dirPath).isDirectory()) {
+        return;
+      }
+      let dirUri = vscode.Uri.file(dirPath);
+      const success = await vscode.commands.executeCommand(
+        "vscode.openFolder",
+        dirUri
+      );
+    }
+  );
+  context.subscriptions.push(openTweetsDisposable);
+
   let openDevelopmentScratchDisposable = vscode.commands.registerCommand(
     "extension.openDevelopmentScratch",
     async () => {
