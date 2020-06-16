@@ -29,6 +29,7 @@
     "onCommand:extension.quickOpenText",
     "onCommand:extension.quickOpenAll",
     "onCommand:extension.openDocumentation",
+    "onCommand:extension.openTweets",
     "onCommand:extension.newInboxDocument",
     "onCommand:extension.openJournalEntry",
     "onCommand:extension.openDevelopmentScratch",
@@ -73,6 +74,10 @@
       {
         "command": "extension.openDocumentation",
         "title": "Open Documentation"
+      },
+      {
+        "command": "extension.openTweets",
+        "title": "Open Tweets"
       },
       {
         "command": "extension.openWiki",
