@@ -220,6 +220,11 @@
     },
     "keybindings": [
       {
+        "command": "extension.openURLs",
+        "key": "alt+l",
+        "when": "!terminalFocus && editorHasSelection"
+      },
+      {
         "command": "extension.openFile",
         "key": "ctrl+x ctrl+f",
         "when": "!terminalFocus"
