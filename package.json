@@ -275,46 +275,6 @@
         "when": "!terminalFocus"
       },
       {
-        "command": "extension.quickOpenDocumentation",
-        "key": "alt+q alt-d",
-        "when": "!terminalFocus"
-      },
-      {
-        "command": "extension.quickOpenDocumentation",
-        "key": "alt+q d",
-        "when": "!terminalFocus"
-      },
-      {
-        "command": "extension.quickOpenText",
-        "key": "alt+q alt-t",
-        "when": "!terminalFocus"
-      },
-      {
-        "command": "extension.quickOpenText",
-        "key": "alt+q t",
-        "when": "!terminalFocus"
-      },
-      {
-        "command": "extension.quickOpenAll",
-        "key": "alt+q alt-a",
-        "when": "!terminalFocus"
-      },
-      {
-        "command": "extension.quickOpenAll",
-        "key": "alt+q a",
-        "when": "!terminalFocus"
-      },
-      {
-        "command": "extension.quickOpenAll",
-        "key": "alt+q alt-q",
-        "when": "!terminalFocus"
-      },
-      {
-        "command": "extension.quickOpenAll",
-        "key": "alt+q q",
-        "when": "!terminalFocus"
-      },
-      {
         "command": "extension.insertTitle",
         "key": "ctrl+c t",
         "when": "!terminalFocus"
@@ -322,6 +282,16 @@
       {
         "command": "extension.copyMarkdownSourceControlQuote",
         "key": "alt+m",
+        "when": "!terminalFocus"
+      },
+      {
+        "command": "extension.quickOpenAll",
+        "key": "alt+o alt+o",
+        "when": "!terminalFocus"
+      },
+      {
+        "command": "extension.quickOpenAll",
+        "key": "alt+o o",
         "when": "!terminalFocus"
       }
     ]
