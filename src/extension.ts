@@ -809,7 +809,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
       const filePath = activeTextEditor.document.uri.fsPath;
 
-      const line = activeTextEditor.selection.start.line;
+      const line = activeTextEditor.selection.start.line + 1;
       var options: { [k: string]: any } = { shell: true };
 
       const selection = activeTextEditor.selection;
@@ -850,7 +850,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
       const filePath = activeTextEditor.document.uri.fsPath;
 
-      const line = activeTextEditor.selection.active.line;
+      const line = activeTextEditor.selection.start.line + 1;
       var options: { [k: string]: any } = { shell: true };
 
       const selection = activeTextEditor.selection;
@@ -891,7 +891,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
       const filePath = activeTextEditor.document.uri.fsPath;
 
-      const line = activeTextEditor.selection.active.line;
+      const line = activeTextEditor.selection.start.line + 1;
       var options: { [k: string]: any } = { shell: true };
 
       const selection = activeTextEditor.selection;
