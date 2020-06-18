@@ -306,6 +306,11 @@
       },
       {
         "command": "extension.quickOpenAll",
+        "key": "alt+shift+o",
+        "when": "!terminalFocus"
+      },
+      {
+        "command": "extension.quickOpenAll",
         "key": "alt+o o",
         "when": "!terminalFocus"
       }
