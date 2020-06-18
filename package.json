@@ -33,6 +33,7 @@
     "onCommand:extension.newInboxDocument",
     "onCommand:extension.openJournalEntry",
     "onCommand:extension.openDevelopmentScratch",
+    "onCommand:extension.openBlog",
     "onCommand:extension.openWiki",
     "onCommand:extension.openProjects",
     "onCommand:extension.openPersonalWiki",
@@ -94,6 +95,10 @@
       {
         "command": "extension.openDevelopmentScratch",
         "title": "Open Development Scratch"
+      },
+      {
+        "command": "extension.openBlog",
+        "title": "Open Blog"
       },
       {
         "command": "extension.blogPostFromFile",

@@ -1015,6 +1015,26 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(openDevelopmentScratchDisposable);
 
+  let openBlogDisposable = vscode.commands.registerCommand(
+    "extension.openBlog",
+    async () => {
+      const homedir = require("os").homedir();
+      const path = require("path");
+      const dirPath = path.join(homedir, "Development/Projects/Web/robenkleene.github.io");
+
+      const fs = require("fs");
+      if (!fs.lstatSync(dirPath).isDirectory()) {
+        return;
+      }
+      let dirUri = vscode.Uri.file(dirPath);
+      const success = await vscode.commands.executeCommand(
+        "vscode.openFolder",
+        dirUri
+      );
+    }
+  );
+  context.subscriptions.push(openBlogDisposable);
+
   let openWikiDisposable = vscode.commands.registerCommand(
     "extension.openWiki",
     async () => {
