@@ -270,26 +270,6 @@
         "when": "!terminalFocus"
       },
       {
-        "command": "extension.openReadme",
-        "key": "alt+o r",
-        "when": "!terminalFocus"
-      },
-      {
-        "command": "extension.openReadme",
-        "key": "alt+o alt+r",
-        "when": "!terminalFocus"
-      },
-      {
-        "command": "extension.openDirectory",
-        "key": "alt+o alt+d",
-        "when": "!terminalFocus"
-      },
-      {
-        "command": "extension.openDirectory",
-        "key": "alt+o d",
-        "when": "!terminalFocus"
-      },
-      {
         "command": "extension.insertTitle",
         "key": "ctrl+c t",
         "when": "!terminalFocus"
@@ -301,17 +281,7 @@
       },
       {
         "command": "extension.quickOpenAll",
-        "key": "alt+o alt+o",
-        "when": "!terminalFocus"
-      },
-      {
-        "command": "extension.quickOpenAll",
-        "key": "alt+shift+o",
-        "when": "!terminalFocus"
-      },
-      {
-        "command": "extension.quickOpenAll",
-        "key": "alt+o o",
+        "key": "alt+o",
         "when": "!terminalFocus"
       }
     ]
