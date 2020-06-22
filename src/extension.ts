@@ -722,8 +722,9 @@ export function activate(context: vscode.ExtensionContext) {
       const os = require("os");
       let textDirPath = path.resolve(os.homedir(), "Text");
       let documentationDirPath = path.resolve(os.homedir(), "Documentation");
-
-      const uri = await pickFile(true, [textDirPath, documentationDirPath]);
+      let notesDirPath = path.resolve(os.homedir(), "Documents/Text/Notes");
+      
+      const uri = await pickFile(true, [textDirPath, documentationDirPath, notesDirPath]);
       if (!uri) {
         return;
       }
