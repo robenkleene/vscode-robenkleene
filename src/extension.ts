@@ -325,7 +325,7 @@ export function activate(context: vscode.ExtensionContext) {
       const os = require("os");
       const path = require("path");
       const defaultUri = vscode.Uri.file(
-        path.resolve(os.homedir(), "Documents/Text/Inbox")
+        path.resolve(os.homedir(), "Documents/Text/Notes/Inbox")
       );
       var destinationUri = await vscode.window.showSaveDialog({
         defaultUri: defaultUri,
