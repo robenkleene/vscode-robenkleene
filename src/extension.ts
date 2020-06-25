@@ -266,7 +266,13 @@ export function activate(context: vscode.ExtensionContext) {
       if (!filePath) {
         const activeTextEditor = vscode.window.activeTextEditor;
         if (activeTextEditor) {
-          if (activeTextEditor.document.languageId !== "Markdown") {
+          if (
+            activeTextEditor.document.languageId.localeCompare(
+              "Markdown",
+              undefined,
+              { sensitivity: "base" }
+            )
+          ) {
             return;
           }
           filePath = activeTextEditor.document.uri.fsPath;
@@ -723,8 +729,12 @@ export function activate(context: vscode.ExtensionContext) {
       let textDirPath = path.resolve(os.homedir(), "Text");
       let documentationDirPath = path.resolve(os.homedir(), "Documentation");
       let notesDirPath = path.resolve(os.homedir(), "Documents/Text/Notes");
-      
-      const uri = await pickFile(true, [textDirPath, documentationDirPath, notesDirPath]);
+
+      const uri = await pickFile(true, [
+        textDirPath,
+        documentationDirPath,
+        notesDirPath,
+      ]);
       if (!uri) {
         return;
       }
@@ -1021,7 +1031,10 @@ export function activate(context: vscode.ExtensionContext) {
     async () => {
       const homedir = require("os").homedir();
       const path = require("path");
-      const dirPath = path.join(homedir, "Development/Projects/Web/robenkleene.github.io");
+      const dirPath = path.join(
+        homedir,
+        "Development/Projects/Web/robenkleene.github.io"
+      );
 
       const fs = require("fs");
       if (!fs.lstatSync(dirPath).isDirectory()) {
