@@ -201,7 +201,7 @@ export function activate(context: vscode.ExtensionContext) {
       const cleanRelativePath = relativePath.replace(/^\.\.\//, "");
       const selection = activeTextEditor.selection;
       activeTextEditor.edit((editBuilder) => {
-        editBuilder.insert(selection.active, cleanRelativePath);
+        editBuilder.replace(selection, cleanRelativePath);
       });
     }
   );
