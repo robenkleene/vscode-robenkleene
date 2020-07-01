@@ -210,7 +210,6 @@ export function activate(context: vscode.ExtensionContext) {
   let convertToSlugDisposable = vscode.commands.registerCommand(
     "extension.convertToSlug",
     () => {
-
       const activeTextEditor = vscode.window.activeTextEditor;
       if (!activeTextEditor) {
         return;
@@ -241,7 +240,7 @@ export function activate(context: vscode.ExtensionContext) {
         const selection = activeTextEditor.selection;
         activeTextEditor.edit((editBuilder) => {
           editBuilder.replace(selection, newText);
-        });  
+        });
       } catch (error) {}
     }
   );
