@@ -12,6 +12,7 @@
   "activationEvents": [
     "onCommand:extension.openURLs",
     "onCommand:extension.archive",
+    "onCommand:extension.convertToSlug",
     "onCommand:extension.blogPostFromFile",
     "onCommand:extension.blogLinkFromFile",
     "onCommand:extension.saveAsInbox",
@@ -55,6 +56,10 @@
       {
         "command": "extension.archive",
         "title": "Archive"
+      },
+      {
+        "command": "extension.convertToSlug",
+        "title": "Convert to Slug"
       },
       {
         "command": "extension.slugProject",

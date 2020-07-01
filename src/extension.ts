@@ -207,6 +207,45 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(insertFilePathDisposable);
 
+  let convertToSlugDisposable = vscode.commands.registerCommand(
+    "extension.convertToSlug",
+    () => {
+      const activeTextEditor = vscode.window.activeTextEditor;
+      if (!activeTextEditor) {
+        return;
+      }
+      const selection = activeTextEditor.selection;
+      if (!selection) {
+        return;
+      }
+      const text = activeTextEditor.document.getText(selection);
+      if (!text.length) {
+        return;
+      }
+
+      const child_process = require("child_process");
+      try {
+        const result = child_process.spawnSync("~/.bin/slug", null, {
+          shell: true,
+          input: text,
+        });
+        displayError(result);
+        if (result.status !== 0) {
+          return;
+        }
+        const newText = result.stdout.toString();
+        if (!newText.length) {
+          return;
+        }
+        const selection = activeTextEditor.selection;
+        activeTextEditor.edit((editBuilder) => {
+          editBuilder.replace(selection, newText);
+        });
+      } catch (error) {}
+    }
+  );
+  context.subscriptions.push(convertToSlugDisposable);
+
   let makeWikiLinkDisposable = vscode.commands.registerCommand(
     "extension.makeWikiLink",
     async () => {
