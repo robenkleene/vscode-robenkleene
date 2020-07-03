@@ -231,6 +231,11 @@
           "group": "navigation"
         },
         {
+          "command": "extension.slugProjectArchive",
+          "when": "explorerResourceIsFolder",
+          "group": "navigation"
+        },
+        {
           "command": "extension.openDirectory",
           "when": "explorerResourceIsFolder",
           "group": "navigation"
