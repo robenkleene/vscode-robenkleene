@@ -20,6 +20,8 @@
     "onCommand:extension.makeTitleCase",
     "onCommand:extension.openDirectory",
     "onCommand:extension.slugProject",
+    "onCommand:extension.slugProjectArchive",
+    "onCommand:extension.slugProjectArchiveReadme",
     "onCommand:extension.insertTitle",
     "onCommand:extension.openSourceControlSite",
     "onCommand:extension.insertFilePath",
@@ -63,7 +65,15 @@
       },
       {
         "command": "extension.slugProject",
-        "title": "Slug Project"
+        "title": "Slug Project: New"
+      },
+      {
+        "command": "extension.slugProjectArchive",
+        "title": "Slug Project: Archive"
+      },
+      {
+        "command": "extension.slugProjectArchiveReadme",
+        "title": "Slug Project: Open Archive README"
       },
       {
         "command": "extension.quickOpenDocumentation",
@@ -218,6 +228,16 @@
         },
         {
           "command": "extension.slugProject",
+          "when": "explorerResourceIsFolder",
+          "group": "navigation"
+        },
+        {
+          "command": "extension.slugProjectArchive",
+          "when": "explorerResourceIsFolder",
+          "group": "navigation"
+        },
+        {
+          "command": "extension.slugProjectArchiveReadme",
           "when": "explorerResourceIsFolder",
           "group": "navigation"
         },

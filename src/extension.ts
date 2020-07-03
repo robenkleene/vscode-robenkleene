@@ -546,6 +546,91 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(slugProjectDisposable);
 
+  let slugProjectArchiveDisposable = vscode.commands.registerCommand(
+    "extension.slugProjectArchive",
+    async (uri: vscode.Uri) => {
+      const fs = require("fs");
+      var currentDirPath;
+      const activeTextEditor = vscode.window.activeTextEditor;
+      if (uri && fs.lstatSync(uri.fsPath).isDirectory()) {
+        currentDirPath = uri.fsPath;
+      } else if (activeTextEditor) {
+        const currentPath = activeTextEditor.document.uri.fsPath;
+        var path = require("path");
+        var dirPath = path.dirname(currentPath);
+        if (fs.lstatSync(dirPath).isDirectory()) {
+          currentDirPath = dirPath;
+        }
+      }
+
+      if (!currentDirPath) {
+        return;
+      }
+
+      const args = [`"${escapeShell(currentDirPath)}"`];
+      const child_process = require("child_process");
+      try {
+        const result = child_process.spawnSync(
+          "~/.bin/slug_project_archive",
+          args,
+          {
+            shell: true,
+          }
+        );
+        displayResult(result);
+      } catch (error) {}
+    }
+  );
+  context.subscriptions.push(slugProjectArchiveDisposable);
+
+  let slugProjectArchiveReadmeDisposable = vscode.commands.registerCommand(
+    "extension.slugProjectArchiveReadme",
+    async (uri: vscode.Uri) => {
+      var filePath;
+      if (uri) {
+        filePath = uri.fsPath;
+      } else {
+        const activeTextEditor = vscode.window.activeTextEditor;
+        if (activeTextEditor) {
+          const folder = vscode.workspace.getWorkspaceFolder(
+            activeTextEditor.document.uri
+          );
+          if (!folder) {
+            return;
+          }
+          filePath = folder.uri.fsPath;
+        } else {
+          filePath = vscode.workspace.rootPath;
+        }
+      }
+
+      if (!filePath) {
+        return;
+      }
+
+      const path = require("path");
+      var readmePath = path.join(filePath, "archive/README.md");
+      const fs = require("fs");
+      if (fs.existsSync(readmePath)) {
+        const fileURL = vscode.Uri.file(readmePath);
+        vscode.workspace.openTextDocument(fileURL).then((doc) => {
+          vscode.window.showTextDocument(doc);
+        });
+      } else {
+        // Try lowercase
+        readmePath = path.join(filePath, "archive/readme.md");
+        if (!fs.existsSync(readmePath)) {
+          return;
+        }
+        const fileURL = vscode.Uri.file(readmePath);
+        vscode.workspace.openTextDocument(fileURL).then((doc) => {
+          vscode.window.showTextDocument(doc);
+        });
+      }
+    }
+  );
+  context.subscriptions.push(slugProjectArchiveReadmeDisposable);
+
   let openSourceControlSiteDisposable = vscode.commands.registerCommand(
     "extension.openSourceControlSite",
     async (uri: vscode.Uri) => {
