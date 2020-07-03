@@ -20,6 +20,7 @@
     "onCommand:extension.makeTitleCase",
     "onCommand:extension.openDirectory",
     "onCommand:extension.slugProject",
+    "onCommand:extension.slugProjectArchive",
     "onCommand:extension.insertTitle",
     "onCommand:extension.openSourceControlSite",
     "onCommand:extension.insertFilePath",
@@ -63,7 +64,11 @@
       },
       {
         "command": "extension.slugProject",
-        "title": "Slug Project"
+        "title": "Slug Project: New"
+      },
+      {
+        "command": "extension.slugProjectArchive",
+        "title": "Slug Project: Archive"
       },
       {
         "command": "extension.quickOpenDocumentation",
@@ -181,6 +186,10 @@
         },
         {
           "command": "extension.slugProject",
+          "when": "resourceLangId == markdown"
+        },
+        {
+          "command": "extension.slugProjectArchive",
           "when": "resourceLangId == markdown"
         },
         {
