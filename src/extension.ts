@@ -583,6 +583,54 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(slugProjectArchiveDisposable);
 
+  let slugProjectArchiveReadmeDisposable = vscode.commands.registerCommand(
+    "extension.slugProjectArchiveReadme",
+    async (uri: vscode.Uri) => {
+      var filePath;
+      if (uri) {
+        filePath = uri.fsPath;
+      } else {
+        const activeTextEditor = vscode.window.activeTextEditor;
+        if (activeTextEditor) {
+          const folder = vscode.workspace.getWorkspaceFolder(
+            activeTextEditor.document.uri
+          );
+          if (!folder) {
+            return;
+          }
+          filePath = folder.uri.fsPath;
+        } else {
+          filePath = vscode.workspace.rootPath;
+        }
+      }
+
+      if (!filePath) {
+        return;
+      }
+
+      const path = require("path");
+      var readmePath = path.join(filePath, "archive/README.md");
+      const fs = require("fs");
+      if (fs.existsSync(readmePath)) {
+        const fileURL = vscode.Uri.file(readmePath);
+        vscode.workspace.openTextDocument(fileURL).then((doc) => {
+          vscode.window.showTextDocument(doc);
+        });
+      } else {
+        // Try lowercase
+        readmePath = path.join(filePath, "archive/readme.md");
+        if (!fs.existsSync(readmePath)) {
+          return;
+        }
+        const fileURL = vscode.Uri.file(readmePath);
+        vscode.workspace.openTextDocument(fileURL).then((doc) => {
+          vscode.window.showTextDocument(doc);
+        });
+      }
+    }
+  );
+  context.subscriptions.push(slugProjectArchiveReadmeDisposable);
+
   let openSourceControlSiteDisposable = vscode.commands.registerCommand(
     "extension.openSourceControlSite",
     async (uri: vscode.Uri) => {
