@@ -1056,7 +1056,6 @@ export function activate(context: vscode.ExtensionContext) {
     async (uri: vscode.Uri) => {
       var dirUri;
       const fs = require("fs");
-      console.log("uri = " + uri);
       if (uri && fs.lstatSync(uri.fsPath).isDirectory()) {
         // Use the selected directory in the file explorer
         dirUri = uri;
