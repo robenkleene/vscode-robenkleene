@@ -305,6 +305,16 @@
         "when": "!terminalFocus"
       },
       {
+        "command": "extension.openReadme",
+        "key": "alt+g r",
+        "when": "!terminalFocus"
+      },
+      {
+        "command": "extension.openDirectory",
+        "key": "alt+g d",
+        "when": "!terminalFocus"
+      },
+      {
         "command": "extension.quickOpenAll",
         "key": "alt+o",
         "when": "!terminalFocus"
