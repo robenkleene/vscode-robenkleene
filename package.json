@@ -19,6 +19,7 @@
     "onCommand:extension.makeWikiLink",
     "onCommand:extension.makeTitleCase",
     "onCommand:extension.openDirectory",
+    "onCommand:extension.quickOpenZ",
     "onCommand:extension.slugProject",
     "onCommand:extension.slugProjectArchive",
     "onCommand:extension.slugProjectArchiveReadme",
@@ -134,6 +135,10 @@
       {
         "command": "extension.openDirectory",
         "title": "Open Directory"
+      },
+      {
+        "command": "extension.quickOpenZ",
+        "title": "Quick Open Z"
       },
       {
         "command": "extension.saveAsInbox",
@@ -307,6 +312,11 @@
       {
         "command": "extension.openReadme",
         "key": "alt+g r",
+        "when": "!terminalFocus"
+      },
+      {
+        "command": "extension.quickOpenZ",
+        "key": "alt+z",
         "when": "!terminalFocus"
       },
       {
