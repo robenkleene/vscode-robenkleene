@@ -819,14 +819,20 @@ export function activate(context: vscode.ExtensionContext) {
       const path = require("path");
       const os = require("os");
 
-      const uri = await pickFile(true, undefined, "/usr/local/bin/fasd -Rdl");
+      // Passing in `[""]` as `cwd` makes `pickFile` operate with absolute
+      // paths. E.g., if we pass in `undefined` instead, the absolute path with
+      // be concatenated onto the relative path.
+      const uri = await pickFile(true, [""], "/usr/local/bin/fasd -Rdl");
       if (!uri) {
         return;
       }
 
       const destinationPath = uri.fsPath;
       const fs = require("fs");
-      if (fs.existsSync(destinationPath) && fs.lstatSync(destinationPath).isDirectory()) {
+      if (
+        fs.existsSync(destinationPath) &&
+        fs.lstatSync(destinationPath).isDirectory()
+      ) {
         let destUri = vscode.Uri.file(destinationPath);
         const success = await vscode.commands.executeCommand(
           "vscode.openFolder",
