@@ -315,6 +315,11 @@
         "when": "!terminalFocus"
       },
       {
+        "command": "extension.openReadme",
+        "key": "alt+g alt+r",
+        "when": "!terminalFocus"
+      },
+      {
         "command": "extension.quickOpenZ",
         "key": "alt+z",
         "when": "!terminalFocus"
