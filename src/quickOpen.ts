@@ -69,7 +69,7 @@ export async function pickFile(useFd: Boolean = false, rootDirs?: string[], cmd?
 								if (!err) {
 									input.items = input.items.concat(
 										stdout
-											.split('\n').slice(0, 50)
+											.split('\n').slice(0, 500)
 											.map(relative => new FileItem(Uri.file(cwd), Uri.file(path.join(cwd, relative))))
 									);
 								}
