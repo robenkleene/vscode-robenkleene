@@ -11,6 +11,7 @@
   ],
   "activationEvents": [
     "onCommand:extension.openURLs",
+    "onCommand:extension.openURLsInIINA",
     "onCommand:extension.archive",
     "onCommand:extension.convertToSlug",
     "onCommand:extension.blogPostFromFile",
@@ -51,6 +52,10 @@
       {
         "command": "extension.openURLs",
         "title": "Open URLs"
+      },
+      {
+        "command": "extension.openURLsInIINA",
+        "title": "Open URLs in IINA"
       },
       {
         "command": "extension.makeWikiLink",
@@ -197,6 +202,12 @@
         {
           "command": "extension.slugProject",
           "when": "resourceLangId == markdown"
+        },
+        {
+          "command": "extension.openURLs"
+        },
+        {
+          "command": "extension.openURLsInIINA"
         },
         {
           "command": "extension.makeTitleCase"

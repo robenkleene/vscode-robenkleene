@@ -112,6 +112,39 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(openURLsDisposable);
 
+  // This doesn't work yet, IINA can't open URLs from the command line
+  let openURLsInIINADisposable = vscode.commands.registerCommand(
+    "extension.openURLsInIINA",
+    () => {
+      const activeTextEditor = vscode.window.activeTextEditor;
+      if (!activeTextEditor) {
+        return;
+      }
+      const selection = activeTextEditor.selection;
+      if (!selection) {
+        return;
+      }
+      const text = activeTextEditor.document.getText(selection);
+      if (!text.length) {
+        return;
+      }
+
+      const child_process = require("child_process");
+      try {
+        const result = child_process.spawnSync(
+          "~/.bin/urls_open 'IINA'",
+          null,
+          {
+            shell: true,
+            input: text,
+          }
+        );
+        displayError(result);
+      } catch (error) {}
+    }
+  );
+  context.subscriptions.push(openURLsDisposable);
+
   let openFileDisposable = vscode.commands.registerCommand(
     "extension.openFile",
     () => {
