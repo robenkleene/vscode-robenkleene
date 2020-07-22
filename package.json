@@ -341,6 +341,11 @@
         "when": "!terminalFocus"
       },
       {
+        "command": "extension.openDirectory",
+        "key": "alt+g alt+d",
+        "when": "!terminalFocus"
+      },
+      {
         "command": "extension.quickOpenAll",
         "key": "alt+o",
         "when": "!terminalFocus"

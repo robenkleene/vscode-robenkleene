@@ -220,7 +220,11 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
 
-      const uri = await pickFile(true);
+      var rootDirs;
+      if (!vscode.workspace.workspaceFolders) {
+        rootDirs = [path.dirname(currentPath)];
+      }
+      const uri = await pickFile(true, rootDirs);
       if (!uri) {
         return;
       }
