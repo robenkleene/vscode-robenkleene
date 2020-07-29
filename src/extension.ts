@@ -1122,18 +1122,26 @@ export function activate(context: vscode.ExtensionContext) {
     "extension.openDirectory",
     async (uri: vscode.Uri) => {
       var dirUri;
+      var fileUri;
       const fs = require("fs");
-      if (uri && fs.lstatSync(uri.fsPath).isDirectory()) {
-        // Use the selected directory in the file explorer
-        dirUri = uri;
+      var path = require("path");
+      if (uri) {
+        if (fs.lstatSync(uri.fsPath).isDirectory()) {
+          // Use the selected directory in the file explorer
+          dirUri = uri;
+        } else {
+          fileUri = uri;
+          const dirPath = path.dirname(fileUri.fsPath);
+          dirUri = vscode.Uri.file(dirPath);
+        }
       } else {
         // Or if a valid directory wasn't passed in, use the directory of the current file
         const activeTextEditor = vscode.window.activeTextEditor;
         if (!activeTextEditor) {
           return;
         }
+        fileUri = activeTextEditor.document.uri;
         let filePath = activeTextEditor.document.uri.fsPath;
-        var path = require("path");
         const dirPath = path.dirname(filePath);
         if (!fs.lstatSync(dirPath).isDirectory()) {
           return;
@@ -1141,13 +1149,13 @@ export function activate(context: vscode.ExtensionContext) {
         dirUri = vscode.Uri.file(dirPath);
       }
 
-      const success = await vscode.commands.executeCommand(
-        "vscode.openFolder",
-        dirUri
-      );
-      // This doesn't work, it looks like you can't operate on a window after
-      // running `"vscode.openFolder"` because of the refresh it causes
-      // if (success) {
+      if (!fs.existsSync(dirUri.fsPath)) {
+        return;
+      }
+      await vscode.commands.executeCommand("vscode.openFolder", dirUri);
+      // This doesn't seem to work, I think because `openFolder` triggers some
+      // kind of refresh and no additional commands can be executed after it.
+      // if (fileUri && fs.existsSync(fileUri.fsPath)) {
       //   vscode.workspace.openTextDocument(fileUri).then((doc) => {
       //     vscode.window.showTextDocument(doc, { preview: false });
       //   });
@@ -1174,9 +1182,7 @@ export function activate(context: vscode.ExtensionContext) {
         fileUri = vscode.Uri.file(filePath);
       }
 
-      await vscode.commands.executeCommand(
-        "workbench.action.closeAllEditors"
-      );
+      await vscode.commands.executeCommand("workbench.action.closeAllEditors");
       vscode.workspace.openTextDocument(fileUri).then((doc) => {
         vscode.window.showTextDocument(doc, { preview: false });
       });

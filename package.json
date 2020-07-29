@@ -269,7 +269,6 @@
         },
         {
           "command": "extension.openDirectory",
-          "when": "explorerResourceIsFolder",
           "group": "navigation"
         }
       ]
