@@ -325,6 +325,11 @@
         "when": "!terminalFocus"
       },
       {
+        "command": "extension.closeOtherEditors",
+        "key": "ctrl+c o",
+        "when": "!terminalFocus"
+      },
+      {
         "command": "extension.copyMarkdownSourceControlQuote",
         "key": "alt+m",
         "when": "!terminalFocus"
