@@ -1156,6 +1156,34 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(openFolderForFileDisposable);
 
+  let closeOtherEditorsDisposable = vscode.commands.registerCommand(
+    "extension.closeOtherEditors",
+    async (uri: vscode.Uri) => {
+      var fileUri;
+      const fs = require("fs");
+      if (uri && !fs.lstatSync(uri.fsPath).isDirectory()) {
+        // Use the selected directory in the file explorer
+        fileUri = uri;
+      } else {
+        // Or if a valid directory wasn't passed in, use the directory of the current file
+        const activeTextEditor = vscode.window.activeTextEditor;
+        if (!activeTextEditor) {
+          return;
+        }
+        let filePath = activeTextEditor.document.uri.fsPath;
+        fileUri = vscode.Uri.file(filePath);
+      }
+
+      await vscode.commands.executeCommand(
+        "workbench.action.closeAllEditors"
+      );
+      vscode.workspace.openTextDocument(fileUri).then((doc) => {
+        vscode.window.showTextDocument(doc, { preview: false });
+      });
+    }
+  );
+  context.subscriptions.push(closeOtherEditorsDisposable);
+
   let openDocumentationDisposable = vscode.commands.registerCommand(
     "extension.openDocumentation",
     async () => {

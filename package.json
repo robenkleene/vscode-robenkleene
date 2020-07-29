@@ -20,6 +20,7 @@
     "onCommand:extension.makeWikiLink",
     "onCommand:extension.makeTitleCase",
     "onCommand:extension.openDirectory",
+    "onCommand:extension.closeOtherEditors",
     "onCommand:extension.quickOpenZ",
     "onCommand:extension.slugProject",
     "onCommand:extension.slugProjectArchive",
@@ -142,6 +143,10 @@
         "title": "Open Directory"
       },
       {
+        "command": "extension.closeOtherEditors",
+        "title": "Close Other Editors"
+      },
+      {
         "command": "extension.quickOpenZ",
         "title": "Quick Open Z"
       },
@@ -255,6 +260,11 @@
         {
           "command": "extension.slugProjectArchiveReadme",
           "when": "explorerResourceIsFolder",
+          "group": "navigation"
+        },
+        {
+          "command": "extension.closeOtherEditors",
+          "when": "!explorerResourceIsFolder",
           "group": "navigation"
         },
         {
