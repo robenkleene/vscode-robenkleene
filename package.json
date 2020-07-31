@@ -306,7 +306,7 @@
       },
       {
         "command": "extension.slugProject",
-        "key": "ctrl+c s",
+        "key": "ctrl+c p",
         "when": "!terminalFocus"
       },
       {
