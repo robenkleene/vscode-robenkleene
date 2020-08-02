@@ -132,7 +132,7 @@ export function activate(context: vscode.ExtensionContext) {
       const child_process = require("child_process");
       try {
         const result = child_process.spawnSync(
-          "~/.bin/urls_open 'IINA'",
+          "~/.bin/urls_open_iina",
           null,
           {
             shell: true,
