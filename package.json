@@ -361,7 +361,7 @@
       },
       {
         "command": "extension.quickOpenAll",
-        "key": "alt+o",
+        "key": "alt+q",
         "when": "!terminalFocus"
       }
     ]
