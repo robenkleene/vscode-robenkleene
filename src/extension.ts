@@ -83,7 +83,7 @@ var archiveFilePath = async function (filePath: string) {
   } catch (error) {}
 };
 
-var markdownTodo = function (flag: string)  {
+var todoCheck = function (flag: string) {
   const activeTextEditor = vscode.window.activeTextEditor;
   if (!activeTextEditor) {
     return;
@@ -93,24 +93,22 @@ var markdownTodo = function (flag: string)  {
   var filePath: string | undefined;
   if (selection) {
     text = activeTextEditor.document.getText(selection);
-    if (!text.length) {
-      return;
-    }  
-  } else {
+  }
+  if (!(text && text.length)) {
     filePath = activeTextEditor.document.uri.fsPath;
     var path = require("path");
     const fs = require("fs");
     if (!fs.existsSync(filePath)) {
       return;
-    }  
+    }
   }
 
   var args = [flag];
-  var options = { shell: true };
+  var options: any = { shell: true };
   if (filePath) {
     args.push(filePath);
   } else if (text) {
-    options["input"]: text;
+    options["input"] = text;
   }
 
   const child_process = require("child_process");
@@ -125,11 +123,25 @@ var markdownTodo = function (flag: string)  {
     if (!newText.length) {
       return;
     }
-    activeTextEditor.edit((editBuilder) => {
-      editBuilder.replace(selection, newText);
-    });
+    if (selection && text?.length) {
+      activeTextEditor.edit((editBuilder) => {
+        editBuilder.replace(selection, newText);
+      });
+    } else {
+      var firstLine = activeTextEditor.document.lineAt(0);
+      var lastLine = activeTextEditor.document.lineAt(
+        activeTextEditor.document.lineCount - 1
+      );
+      var textRange = new vscode.Range(
+        firstLine.range.start,
+        lastLine.range.end
+      );
+      activeTextEditor.edit((editBuilder) => {
+        editBuilder.replace(textRange, newText);
+      });
+    }
   } catch (error) {}
-}
+};
 
 export function activate(context: vscode.ExtensionContext) {
   let openURLsDisposable = vscode.commands.registerCommand(
@@ -179,14 +191,10 @@ export function activate(context: vscode.ExtensionContext) {
 
       const child_process = require("child_process");
       try {
-        const result = child_process.spawnSync(
-          "~/.bin/urls_open_iina",
-          null,
-          {
-            shell: true,
-            input: text,
-          }
-        );
+        const result = child_process.spawnSync("~/.bin/urls_open_iina", null, {
+          shell: true,
+          input: text,
+        });
         displayError(result);
       } catch (error) {}
     }
@@ -1052,19 +1060,25 @@ export function activate(context: vscode.ExtensionContext) {
 
   let todoCheckDisposable = vscode.commands.registerCommand(
     "extension.todoCheck",
-    () => {}
+    () => {
+      todoCheck("-c");
+    }
   );
   context.subscriptions.push(todoCheckDisposable);
 
   let todoUncheckDisposable = vscode.commands.registerCommand(
     "extension.todoUncheck",
-    () => {}
+    () => {
+      todoCheck("-u");
+    }
   );
   context.subscriptions.push(todoUncheckDisposable);
 
   let todoInvertDisposable = vscode.commands.registerCommand(
     "extension.todoInvert",
-    () => {}
+    () => {
+      todoCheck("-i");
+    }
   );
   context.subscriptions.push(todoInvertDisposable);
 
