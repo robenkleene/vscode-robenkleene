@@ -89,55 +89,41 @@ var todoCheck = function (flag: string) {
     return;
   }
   const selection = activeTextEditor.selection;
-  var text: string | undefined;
-  var filePath: string | undefined;
-  if (selection) {
-    text = activeTextEditor.document.getText(selection);
+  var text: string;
+  var range: vscode.Range;
+  if (!selection || selection.isEmpty) {
+    var firstLine = activeTextEditor.document.lineAt(0);
+    var lastLine = activeTextEditor.document.lineAt(
+      activeTextEditor.document.lineCount - 1
+    );
+    range = new vscode.Range(firstLine.range.start, lastLine.range.end);
+  } else {
+    range = selection;
   }
-  if (!(text && text.length)) {
-    filePath = activeTextEditor.document.uri.fsPath;
-    var path = require("path");
-    const fs = require("fs");
-    if (!fs.existsSync(filePath)) {
-      return;
-    }
-  }
+  text = activeTextEditor.document.getText(range);
 
-  var args = [flag, "-b"];
-  var options: any = { shell: true };
-  if (filePath) {
-    args.push(`"${escapeShell(filePath)}"`);
-  } else if (text) {
-    options["input"] = text;
+  if (!(text && text.length)) {
+    return;
   }
 
   const child_process = require("child_process");
   try {
     const result = child_process.spawnSync(
       "~/.bin/markdown_check",
-      args,
-      options
+      [flag, "-b"],
+      {
+        shell: true,
+        input: text,
+      }
     );
     displayError(result);
     const newText = result.stdout.toString();
     if (!newText.length) {
       return;
     }
-    if (selection && text?.length) {
+    if (text?.length) {
       activeTextEditor.edit((editBuilder) => {
-        editBuilder.replace(selection, newText);
-      });
-    } else {
-      var firstLine = activeTextEditor.document.lineAt(0);
-      var lastLine = activeTextEditor.document.lineAt(
-        activeTextEditor.document.lineCount - 1
-      );
-      var textRange = new vscode.Range(
-        firstLine.range.start,
-        lastLine.range.end
-      );
-      activeTextEditor.edit((editBuilder) => {
-        editBuilder.replace(textRange, newText);
+        editBuilder.replace(range, newText);
       });
     }
   } catch (error) {}
