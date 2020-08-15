@@ -1074,13 +1074,13 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(todoUncheckDisposable);
 
-  let todoInvertDisposable = vscode.commands.registerCommand(
-    "extension.todoInvert",
+  let todoToggleDisposable = vscode.commands.registerCommand(
+    "extension.todoToggle",
     () => {
       todoCheck("-i");
     }
   );
-  context.subscriptions.push(todoInvertDisposable);
+  context.subscriptions.push(todoToggleDisposable);
 
   let copyMarkdownSourceControlLinkDisposable = vscode.commands.registerCommand(
     "extension.copyMarkdownSourceControlLink",

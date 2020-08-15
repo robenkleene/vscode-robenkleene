@@ -21,7 +21,7 @@
     "onCommand:extension.makeTitleCase",
     "onCommand:extension.todoCheck",
     "onCommand:extension.todoUncheck",
-    "onCommand:extension.todoInvert",
+    "onCommand:extension.todoToggle",
     "onCommand:extension.openDirectory",
     "onCommand:extension.closeOtherEditors",
     "onCommand:extension.quickOpenZ",
@@ -194,8 +194,8 @@
         "title": "Todo: Uncheck"
       },
       {
-        "command": "extension.todoInvert",
-        "title": "Todo: Invert"
+        "command": "extension.todoToggle",
+        "title": "Todo: Toggle"
       },
       {
         "command": "extension.openInRepla",
@@ -228,7 +228,7 @@
           "when": "resourceLangId == markdown"
         },
         {
-          "command": "extension.todoInvert",
+          "command": "extension.todoToggle",
           "when": "resourceLangId == markdown"
         },
         {
