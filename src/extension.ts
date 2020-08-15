@@ -103,10 +103,10 @@ var todoCheck = function (flag: string) {
     }
   }
 
-  var args = [flag];
+  var args = [flag, "-b"];
   var options: any = { shell: true };
   if (filePath) {
-    args.push(filePath);
+    args.push(`"${escapeShell(filePath)}"`);
   } else if (text) {
     options["input"] = text;
   }
