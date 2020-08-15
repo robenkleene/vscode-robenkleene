@@ -83,6 +83,52 @@ var archiveFilePath = async function (filePath: string) {
   } catch (error) {}
 };
 
+var todoCheck = function (flag: string) {
+  const activeTextEditor = vscode.window.activeTextEditor;
+  if (!activeTextEditor) {
+    return;
+  }
+  const selection = activeTextEditor.selection;
+  var text: string;
+  var range: vscode.Range;
+  if (!selection || selection.isEmpty) {
+    var firstLine = activeTextEditor.document.lineAt(0);
+    var lastLine = activeTextEditor.document.lineAt(
+      activeTextEditor.document.lineCount - 1
+    );
+    range = new vscode.Range(firstLine.range.start, lastLine.range.end);
+  } else {
+    range = selection;
+  }
+  text = activeTextEditor.document.getText(range);
+
+  if (!(text && text.length)) {
+    return;
+  }
+
+  const child_process = require("child_process");
+  try {
+    const result = child_process.spawnSync(
+      "~/.bin/markdown_check",
+      [flag, "-b"],
+      {
+        shell: true,
+        input: text,
+      }
+    );
+    displayError(result);
+    const newText = result.stdout.toString();
+    if (!newText.length) {
+      return;
+    }
+    if (text?.length) {
+      activeTextEditor.edit((editBuilder) => {
+        editBuilder.replace(range, newText);
+      });
+    }
+  } catch (error) {}
+};
+
 export function activate(context: vscode.ExtensionContext) {
   let openURLsDisposable = vscode.commands.registerCommand(
     "extension.openURLs",
@@ -131,14 +177,10 @@ export function activate(context: vscode.ExtensionContext) {
 
       const child_process = require("child_process");
       try {
-        const result = child_process.spawnSync(
-          "~/.bin/urls_open_iina",
-          null,
-          {
-            shell: true,
-            input: text,
-          }
-        );
+        const result = child_process.spawnSync("~/.bin/urls_open_iina", null, {
+          shell: true,
+          input: text,
+        });
         displayError(result);
       } catch (error) {}
     }
@@ -1001,6 +1043,30 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
   context.subscriptions.push(insertTitleDisposable);
+
+  let todoCheckDisposable = vscode.commands.registerCommand(
+    "extension.todoCheck",
+    () => {
+      todoCheck("-c");
+    }
+  );
+  context.subscriptions.push(todoCheckDisposable);
+
+  let todoUncheckDisposable = vscode.commands.registerCommand(
+    "extension.todoUncheck",
+    () => {
+      todoCheck("-u");
+    }
+  );
+  context.subscriptions.push(todoUncheckDisposable);
+
+  let todoToggleDisposable = vscode.commands.registerCommand(
+    "extension.todoToggle",
+    () => {
+      todoCheck("-i");
+    }
+  );
+  context.subscriptions.push(todoToggleDisposable);
 
   let copyMarkdownSourceControlLinkDisposable = vscode.commands.registerCommand(
     "extension.copyMarkdownSourceControlLink",
