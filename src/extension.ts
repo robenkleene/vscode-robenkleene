@@ -83,6 +83,54 @@ var archiveFilePath = async function (filePath: string) {
   } catch (error) {}
 };
 
+var markdownTodo = function (flag: string)  {
+  const activeTextEditor = vscode.window.activeTextEditor;
+  if (!activeTextEditor) {
+    return;
+  }
+  const selection = activeTextEditor.selection;
+  var text: string | undefined;
+  var filePath: string | undefined;
+  if (selection) {
+    text = activeTextEditor.document.getText(selection);
+    if (!text.length) {
+      return;
+    }  
+  } else {
+    filePath = activeTextEditor.document.uri.fsPath;
+    var path = require("path");
+    const fs = require("fs");
+    if (!fs.existsSync(filePath)) {
+      return;
+    }  
+  }
+
+  var args = [flag];
+  var options = { shell: true };
+  if (filePath) {
+    args.push(filePath);
+  } else if (text) {
+    options["input"]: text;
+  }
+
+  const child_process = require("child_process");
+  try {
+    const result = child_process.spawnSync(
+      "~/.bin/markdown_check",
+      args,
+      options
+    );
+    displayError(result);
+    const newText = result.stdout.toString();
+    if (!newText.length) {
+      return;
+    }
+    activeTextEditor.edit((editBuilder) => {
+      editBuilder.replace(selection, newText);
+    });
+  } catch (error) {}
+}
+
 export function activate(context: vscode.ExtensionContext) {
   let openURLsDisposable = vscode.commands.registerCommand(
     "extension.openURLs",
