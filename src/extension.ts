@@ -1002,6 +1002,24 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(insertTitleDisposable);
 
+  let todoCheckDisposable = vscode.commands.registerCommand(
+    "extension.todoCheck",
+    () => {}
+  );
+  context.subscriptions.push(todoCheckDisposable);
+
+  let todoUncheckDisposable = vscode.commands.registerCommand(
+    "extension.todoUncheck",
+    () => {}
+  );
+  context.subscriptions.push(todoUncheckDisposable);
+
+  let todoInvertDisposable = vscode.commands.registerCommand(
+    "extension.todoInvert",
+    () => {}
+  );
+  context.subscriptions.push(todoInvertDisposable);
+
   let copyMarkdownSourceControlLinkDisposable = vscode.commands.registerCommand(
     "extension.copyMarkdownSourceControlLink",
     async () => {

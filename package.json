@@ -19,6 +19,9 @@
     "onCommand:extension.saveAsInbox",
     "onCommand:extension.makeWikiLink",
     "onCommand:extension.makeTitleCase",
+    "onCommand:extension.todoCheck",
+    "onCommand:extension.todoUncheck",
+    "onCommand:extension.todoInvert",
     "onCommand:extension.openDirectory",
     "onCommand:extension.closeOtherEditors",
     "onCommand:extension.quickOpenZ",
@@ -183,6 +186,18 @@
         "title": "Make Title Case"
       },
       {
+        "command": "extension.todoCheck",
+        "title": "Todo: Check"
+      },
+      {
+        "command": "extension.todoUncheck",
+        "title": "Todo: Uncheck"
+      },
+      {
+        "command": "extension.todoInvert",
+        "title": "Todo: Invert"
+      },
+      {
         "command": "extension.openInRepla",
         "title": "Open in Repla"
       },
@@ -202,6 +217,18 @@
         },
         {
           "command": "extension.makeWikiLink",
+          "when": "resourceLangId == markdown"
+        },
+        {
+          "command": "extension.todoCheck",
+          "when": "resourceLangId == markdown"
+        },
+        {
+          "command": "extension.todoUncheck",
+          "when": "resourceLangId == markdown"
+        },
+        {
+          "command": "extension.todoInvert",
           "when": "resourceLangId == markdown"
         },
         {
