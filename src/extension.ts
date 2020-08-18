@@ -666,18 +666,15 @@ export function activate(context: vscode.ExtensionContext) {
     "extension.slugProjectArchiveReadme",
     async (uri: vscode.Uri) => {
       var filePath;
+      const path = require("path");
       if (uri) {
         filePath = uri.fsPath;
       } else {
         const activeTextEditor = vscode.window.activeTextEditor;
         if (activeTextEditor) {
-          const folder = vscode.workspace.getWorkspaceFolder(
-            activeTextEditor.document.uri
-          );
-          if (!folder) {
-            return;
-          }
-          filePath = folder.uri.fsPath;
+          const fileUri = activeTextEditor.document.uri;
+          const documentFilePath = activeTextEditor.document.uri.fsPath;
+          filePath = path.dirname(documentFilePath);
         } else {
           filePath = vscode.workspace.rootPath;
         }
@@ -687,7 +684,6 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
 
-      const path = require("path");
       var readmePath = path.join(filePath, "archive/README.md");
       const fs = require("fs");
       if (fs.existsSync(readmePath)) {
@@ -1032,10 +1028,10 @@ export function activate(context: vscode.ExtensionContext) {
               editBuilder.replace(selection, newText);
             })
             .then((success) => {
-              var postion = activeTextEditor.selection.end;
+              var position = activeTextEditor.selection.end;
               activeTextEditor.selection = new vscode.Selection(
-                postion,
-                postion
+                position,
+                position
               );
             });
         }
