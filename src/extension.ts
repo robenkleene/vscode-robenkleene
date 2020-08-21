@@ -83,24 +83,24 @@ var archiveFilePath = async function (filePath: string) {
   } catch (error) {}
 };
 
-var todoCheck = function (flag: string) {
+var todoCheck = function (flag: string, range?: vscode.Range) {
   const activeTextEditor = vscode.window.activeTextEditor;
   if (!activeTextEditor) {
     return;
   }
   const selection = activeTextEditor.selection;
-  var text: string;
-  var range: vscode.Range;
-  if (!selection || selection.isEmpty) {
-    var firstLine = activeTextEditor.document.lineAt(0);
-    var lastLine = activeTextEditor.document.lineAt(
-      activeTextEditor.document.lineCount - 1
-    );
-    range = new vscode.Range(firstLine.range.start, lastLine.range.end);
-  } else {
-    range = selection;
+  if (!range) {
+    if (!selection || selection.isEmpty) {
+      var firstLine = activeTextEditor.document.lineAt(0);
+      var lastLine = activeTextEditor.document.lineAt(
+        activeTextEditor.document.lineCount - 1
+      );
+      range = new vscode.Range(firstLine.range.start, lastLine.range.end);
+    } else {
+      range = selection;
+    }    
   }
-  text = activeTextEditor.document.getText(range);
+  const text = activeTextEditor.document.getText(range);
 
   if (!(text && text.length)) {
     return;
@@ -122,8 +122,12 @@ var todoCheck = function (flag: string) {
       return;
     }
     if (text?.length) {
+      if (!range) {
+        return;
+      }
+      const aRange = range;
       activeTextEditor.edit((editBuilder) => {
-        editBuilder.replace(range, newText);
+        editBuilder.replace(aRange, newText);
       });
     }
   } catch (error) {}
@@ -1063,6 +1067,22 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
   context.subscriptions.push(todoToggleDisposable);
+
+  let todoToggleLocalDisposable = vscode.commands.registerCommand(
+    "extension.todoToggleLocal",
+    () => {
+      const activeTextEditor = vscode.window.activeTextEditor;
+      if (!activeTextEditor) {
+        return;
+      }
+      const selection = activeTextEditor.selection;
+      if (!selection) {
+        return;
+      }
+      todoCheck("-i", selection);
+    }
+  );
+  context.subscriptions.push(todoToggleLocalDisposable);
 
   let copyMarkdownSourceControlLinkDisposable = vscode.commands.registerCommand(
     "extension.copyMarkdownSourceControlLink",
