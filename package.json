@@ -22,6 +22,7 @@
     "onCommand:extension.todoCheck",
     "onCommand:extension.todoUncheck",
     "onCommand:extension.todoToggle",
+    "onCommand:extension.todoToggleLocal",
     "onCommand:extension.openDirectory",
     "onCommand:extension.closeOtherEditors",
     "onCommand:extension.quickOpenZ",
@@ -196,6 +197,10 @@
       {
         "command": "extension.todoToggle",
         "title": "Todo: Toggle"
+      },
+      {
+        "command": "extension.todoToggleLocal",
+        "title": "Todo: Toggle Local"
       },
       {
         "command": "extension.openInRepla",
@@ -385,6 +390,11 @@
         "command": "extension.openDirectory",
         "key": "alt+g alt+d",
         "when": "!terminalFocus"
+      },
+      {
+        "command": "extension.todoToggleLocal",
+        "key": "alt+enter",
+        "when": "!terminalFocus && !findWidgetVisible && resourceLangId == markdown"
       },
       {
         "command": "extension.quickOpenAll",
