@@ -1077,11 +1077,13 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
       var range: vscode.Range = activeTextEditor.selection;
+      var useBreak = true;
       if (!range || range.isEmpty) {
         const line = activeTextEditor.document.lineAt(activeTextEditor.selection.active.line);
         range = line.range;
+        useBreak = false;
       }
-      todoCheck("-i", false, range);
+      todoCheck("-i", useBreak, range);
     }
   );
   context.subscriptions.push(todoToggleLocalDisposable);
