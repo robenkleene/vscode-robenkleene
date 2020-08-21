@@ -83,7 +83,7 @@ var archiveFilePath = async function (filePath: string) {
   } catch (error) {}
 };
 
-var todoCheck = function (flag: string, range?: vscode.Range) {
+var todoCheck = function (flag: string, useBreak: Boolean = true, range?: vscode.Range) {
   const activeTextEditor = vscode.window.activeTextEditor;
   if (!activeTextEditor) {
     return;
@@ -108,9 +108,10 @@ var todoCheck = function (flag: string, range?: vscode.Range) {
 
   const child_process = require("child_process");
   try {
+    const args = useBreak ? [flag, "-b"] : [flag];
     const result = child_process.spawnSync(
       "~/.bin/markdown_check",
-      [flag, "-b"],
+      args,
       {
         shell: true,
         input: text,
@@ -1075,11 +1076,12 @@ export function activate(context: vscode.ExtensionContext) {
       if (!activeTextEditor) {
         return;
       }
-      const selection = activeTextEditor.selection;
-      if (!selection) {
-        return;
+      var range: vscode.Range = activeTextEditor.selection;
+      if (!range || range.isEmpty) {
+        const line = activeTextEditor.document.lineAt(activeTextEditor.selection.active.line);
+        range = line.range;
       }
-      todoCheck("-i", selection);
+      todoCheck("-i", false, range);
     }
   );
   context.subscriptions.push(todoToggleLocalDisposable);
