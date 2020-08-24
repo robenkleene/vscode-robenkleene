@@ -661,7 +661,7 @@ export function activate(context: vscode.ExtensionContext) {
             shell: true,
           }
         );
-        displayResult(result);
+        displayError(result);
       } catch (error) {}
     }
   );
