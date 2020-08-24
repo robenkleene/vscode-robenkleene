@@ -120,7 +120,7 @@
       },
       {
         "command": "extension.openDevelopmentScratch",
-        "title": "Open Development Scratch"
+        "title": "Open Developer Scratch"
       },
       {
         "command": "extension.openBlog",
