@@ -1321,7 +1321,7 @@ export function activate(context: vscode.ExtensionContext) {
     async () => {
       const homedir = require("os").homedir();
       const path = require("path");
-      const dirPath = path.join(homedir, "Development/Scratch");
+      const dirPath = path.join(homedir, "Developer/Scratch");
 
       const fs = require("fs");
       if (!fs.lstatSync(dirPath).isDirectory()) {
@@ -1343,7 +1343,7 @@ export function activate(context: vscode.ExtensionContext) {
       const path = require("path");
       const dirPath = path.join(
         homedir,
-        "Development/Projects/Web/robenkleene.github.io"
+        "Developer/Projects/Web/robenkleene.github.io"
       );
 
       const fs = require("fs");
