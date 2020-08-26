@@ -1316,6 +1316,60 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(openTweetsDisposable);
 
+  let openEmailDisposable = vscode.commands.registerCommand(
+    "extension.openEmail",
+    async () => {
+      const homedir = require("os").homedir();
+      const path = require("path");
+      const dirPath = path.join(homedir, "/Documents/Text/Writing/Email/");
+
+      const fs = require("fs");
+      if (!fs.lstatSync(dirPath).isDirectory()) {
+        return;
+      }
+      let dirUri = vscode.Uri.file(dirPath);
+      const success = await vscode.commands.executeCommand(
+        "vscode.openFolder",
+        dirUri
+      );
+    }
+  );
+  context.subscriptions.push(openEmailDisposable);
+
+  let newEmailDisposable = vscode.commands.registerCommand(
+    "extension.newEmail",
+    async () => {
+      const title = await vscode.window.showInputBox({
+        placeHolder: "Name",
+      });
+
+      if (!title || !title.length) {
+        return;
+      }
+
+      const child_process = require("child_process");
+      try {
+        const result = child_process.spawnSync(
+          "~/.bin/email_new",
+          [`"${escapeShell(title)}"`],
+          {
+            shell: true,
+          }
+        );
+        displayError(result);
+        const newFilePath = result.stdout.toString();
+        const fs = require("fs");
+        if (fs.existsSync(newFilePath)) {
+          const fileURL = vscode.Uri.file(newFilePath);
+          vscode.workspace.openTextDocument(fileURL).then((doc) => {
+            vscode.window.showTextDocument(doc);
+          });
+        }
+      } catch (error) {}
+    }
+  );
+  context.subscriptions.push(newEmailDisposable);
+
   let openDevelopmentScratchDisposable = vscode.commands.registerCommand(
     "extension.openDevelopmentScratch",
     async () => {

@@ -16,6 +16,8 @@
     "onCommand:extension.convertToSlug",
     "onCommand:extension.blogPostFromFile",
     "onCommand:extension.blogLinkFromFile",
+    "onCommand:extension.openEmail",
+    "onCommand:extension.newEmail",
     "onCommand:extension.saveAsInbox",
     "onCommand:extension.makeWikiLink",
     "onCommand:extension.makeTitleCase",
@@ -133,6 +135,14 @@
       {
         "command": "extension.blogLinkFromFile",
         "title": "Blog Link From File"
+      },
+      {
+        "command": "extension.openEmail",
+        "title": "Open Email"
+      },
+      {
+        "command": "extension.newEmail",
+        "title": "New Email"
       },
       {
         "command": "extension.newInboxDocument",
