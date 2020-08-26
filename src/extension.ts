@@ -79,7 +79,7 @@ var archiveFilePath = async function (filePath: string) {
       [`"${escapeShell(filePath)}"`],
       { shell: true }
     );
-    displayResult(result);
+    displayError(result);
   } catch (error) {}
 };
 
@@ -530,7 +530,7 @@ export function activate(context: vscode.ExtensionContext) {
           input: text,
           shell: true,
         });
-        displayResult(result);
+        displayError(result);
         const selection = activeTextEditor.selection;
         activeTextEditor.edit((editBuilder) => {
           editBuilder.delete(selection);
