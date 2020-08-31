@@ -17,6 +17,7 @@
     "onCommand:extension.blogPostFromFile",
     "onCommand:extension.blogLinkFromFile",
     "onCommand:extension.openEmail",
+    "onCommand:extension.openSocial",
     "onCommand:extension.newEmail",
     "onCommand:extension.saveAsInbox",
     "onCommand:extension.makeWikiLink",
@@ -139,6 +140,10 @@
       {
         "command": "extension.openEmail",
         "title": "Open Email"
+      },
+      {
+        "command": "extension.openSocial",
+        "title": "Open Social"
       },
       {
         "command": "extension.newEmail",
