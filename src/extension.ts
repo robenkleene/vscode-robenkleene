@@ -1301,7 +1301,7 @@ export function activate(context: vscode.ExtensionContext) {
     async () => {
       const homedir = require("os").homedir();
       const path = require("path");
-      const dirPath = path.join(homedir, "/Documents/Text/Writing/Tweets/");
+      const dirPath = path.join(homedir, "/Documents/Text/Social/Tweets/");
 
       const fs = require("fs");
       if (!fs.lstatSync(dirPath).isDirectory()) {
@@ -1321,7 +1321,27 @@ export function activate(context: vscode.ExtensionContext) {
     async () => {
       const homedir = require("os").homedir();
       const path = require("path");
-      const dirPath = path.join(homedir, "/Documents/Text/Writing/Email/");
+      const dirPath = path.join(homedir, "/Documents/Text/Social/Email/");
+
+      const fs = require("fs");
+      if (!fs.lstatSync(dirPath).isDirectory()) {
+        return;
+      }
+      let dirUri = vscode.Uri.file(dirPath);
+      const success = await vscode.commands.executeCommand(
+        "vscode.openFolder",
+        dirUri
+      );
+    }
+  );
+  context.subscriptions.push(openEmailDisposable);
+
+  let openSocialDisposable = vscode.commands.registerCommand(
+    "extension.openSocial",
+    async () => {
+      const homedir = require("os").homedir();
+      const path = require("path");
+      const dirPath = path.join(homedir, "/Documents/Text/Social/");
 
       const fs = require("fs");
       if (!fs.lstatSync(dirPath).isDirectory()) {
