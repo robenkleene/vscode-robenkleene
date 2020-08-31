@@ -968,7 +968,7 @@ export function activate(context: vscode.ExtensionContext) {
         textDirPath,
         documentationDirPath,
         notesDirPath,
-      ]);
+        ], undefined, "--type d");
       if (!uri) {
         return;
       }
