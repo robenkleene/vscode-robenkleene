@@ -447,7 +447,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       const text = activeTextEditor.document.getText();
-      if (!text || !text.length) {
+      if (!text?.length) {
         return;
       }
 
@@ -502,7 +502,7 @@ export function activate(context: vscode.ExtensionContext) {
     "extension.archive",
     async (uri: vscode.Uri) => {
       var filePath;
-      var text;
+      var text = null;
       if (uri) {
         filePath = uri.fsPath;
       }
@@ -515,7 +515,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
       }
 
-      if (filePath && (!text || !text.length)) {
+      if (filePath && !text?.length) {
         archiveFilePath(filePath);
         return;
       }
@@ -548,7 +548,7 @@ export function activate(context: vscode.ExtensionContext) {
       const fs = require("fs");
       var currentDirPath;
       const activeTextEditor = vscode.window.activeTextEditor;
-      var title;
+      var title = null;
       var directory;
       var selection: vscode.Selection;
 
@@ -583,7 +583,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
       }
 
-      if (!title || !title.length) {
+      if (!title?.length) {
         return;
       }
 
@@ -1363,7 +1363,7 @@ export function activate(context: vscode.ExtensionContext) {
         placeHolder: "Name",
       });
 
-      if (!title || !title.length) {
+      if (!title?.length) {
         return;
       }
 
@@ -1480,7 +1480,7 @@ export function activate(context: vscode.ExtensionContext) {
         placeHolder: "Title",
       });
 
-      if (!title || !title.length) {
+      if (!title?.length) {
         return;
       }
 
