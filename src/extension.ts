@@ -1510,25 +1510,19 @@ export function activate(context: vscode.ExtensionContext) {
   let openJournalEntryDisposable = vscode.commands.registerCommand(
     "extension.openJournalEntry",
     async () => {
-      const child_process = require("child_process");
-      try {
-        const result = child_process.spawnSync(
-          "~/.bin/journal_new_make_default",
-          null,
-          {
-            shell: true,
-          }
-        );
-        displayError(result);
-        const newFilePath = result.stdout.toString();
-        const fs = require("fs");
-        if (fs.existsSync(newFilePath)) {
-          const fileURL = vscode.Uri.file(newFilePath);
-          vscode.workspace.openTextDocument(fileURL).then((doc) => {
-            vscode.window.showTextDocument(doc);
-          });
-        }
-      } catch (error) {}
+      const homedir = require("os").homedir();
+      const path = require("path");
+      const dirPath = path.join(homedir, "Text/journal");
+
+      const fs = require("fs");
+      if (!fs.lstatSync(dirPath).isDirectory()) {
+        return;
+      }
+      let dirUri = vscode.Uri.file(dirPath);
+      const success = await vscode.commands.executeCommand(
+        "vscode.openFolder",
+        dirUri
+      );
     }
   );
   context.subscriptions.push(openJournalEntryDisposable);
