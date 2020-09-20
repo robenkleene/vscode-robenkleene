@@ -333,27 +333,27 @@
       },
       {
         "command": "extension.insertFilePath",
-        "key": "ctrl+c cmd-p",
+        "key": "alt+s cmd-p",
         "when": "!terminalFocus"
       },
       {
         "command": "extension.insertFilePath",
-        "key": "ctrl+c e",
+        "key": "alt+s e",
         "when": "!terminalFocus"
       },
       {
         "command": "extension.makeWikiLink",
-        "key": "ctrl+c k",
+        "key": "alt+s k",
         "when": "!terminalFocus"
       },
       {
         "command": "extension.makeTitleCase",
-        "key": "ctrl+c c",
+        "key": "alt+s c",
         "when": "!terminalFocus"
       },
       {
         "command": "extension.slugProject",
-        "key": "ctrl+c p",
+        "key": "alt+s p",
         "when": "!terminalFocus"
       },
       {
@@ -363,17 +363,17 @@
       },
       {
         "command": "extension.archive",
-        "key": "ctrl+c d",
+        "key": "alt+s d",
         "when": "!terminalFocus"
       },
       {
         "command": "extension.insertTitle",
-        "key": "ctrl+c t",
+        "key": "alt+s t",
         "when": "!terminalFocus"
       },
       {
         "command": "extension.closeOtherEditors",
-        "key": "ctrl+c o",
+        "key": "alt+s o",
         "when": "!terminalFocus"
       },
       {
