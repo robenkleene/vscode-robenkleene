@@ -41,6 +41,7 @@
     "onCommand:extension.quickOpenDocumentation",
     "onCommand:extension.quickOpenText",
     "onCommand:extension.quickOpenAll",
+    "onCommand:extension.quickOpenAllFiles",
     "onCommand:extension.openDocumentation",
     "onCommand:extension.openTweets",
     "onCommand:extension.newInboxDocument",
@@ -100,6 +101,10 @@
       {
         "command": "extension.quickOpenAll",
         "title": "Quick Open All"
+      },
+      {
+        "command": "extension.quickOpenAllFiles",
+        "title": "Quick Open All Files"
       },
       {
         "command": "extension.openDocumentation",
@@ -410,6 +415,11 @@
         "command": "extension.todoToggleLocal",
         "key": "alt+enter",
         "when": "!terminalFocus && !findWidgetVisible && resourceLangId == markdown"
+      },
+      {
+        "command": "extension.quickOpenAllFiles",
+        "key": "alt+shift+o",
+        "when": "!terminalFocus"
       },
       {
         "command": "extension.quickOpenAll",

@@ -993,6 +993,44 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(quickOpenAllDisposable);
 
+  let quickOpenAllFilesDisposable = vscode.commands.registerCommand(
+    "extension.quickOpenAllFiles",
+    async () => {
+      const path = require("path");
+      const os = require("os");
+      let textDirPath = path.resolve(os.homedir(), "Text");
+      let documentationDirPath = path.resolve(os.homedir(), "Documentation");
+      let notesDirPath = path.resolve(os.homedir(), "Documents/Text/Notes");
+
+      const uri = await pickFile(true, [
+        textDirPath,
+        documentationDirPath,
+        notesDirPath,
+        ], undefined, "--type f");
+      if (!uri) {
+        return;
+      }
+
+      const destinationPath = uri.fsPath;
+      const fs = require("fs");
+      if (!fs.existsSync(destinationPath)) {
+        return;
+      }
+      let destUri = vscode.Uri.file(destinationPath);
+      if (fs.lstatSync(destinationPath).isDirectory()) {
+        const success = await vscode.commands.executeCommand(
+          "vscode.openFolder",
+          destUri
+        );
+      } else {
+        vscode.workspace.openTextDocument(destUri).then((doc) => {
+          vscode.window.showTextDocument(doc);
+        });
+      }
+    }
+  );
+  context.subscriptions.push(quickOpenAllFilesDisposable);
+
   let insertTitleDisposable = vscode.commands.registerCommand(
     "extension.insertTitle",
     () => {
