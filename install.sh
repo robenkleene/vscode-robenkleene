@@ -31,14 +31,23 @@ else
   echo
 fi
 
+extension_path="$(
+  cd "$(dirname "$0")" >/dev/null 2>&1
+  pwd -P
+)"
+
 destination_path="$HOME/.vscode/extensions/"
 if [ ! -d "$destination_path" ]; then
   echo "$destination_path does not exist" >&2
   exit 1
 fi
-extension_path="$(
-  cd "$(dirname "$0")" >/dev/null 2>&1
-  pwd -P
-)"
 rsync -a --delete${dry_run} --verbose --exclude=install.sh --exclude=.gitignore \
   --exclude=.git "$extension_path" "$destination_path"
+
+insiders_destination_path="$HOME/.vscode-insiders/extensions/"
+if [ ! -d "$insiders_destination_path" ]; then
+  echo "$insiders_destination_path does not exist" >&2
+  exit 1
+fi
+rsync -a --delete${dry_run} --verbose --exclude=install.sh --exclude=.gitignore \
+  --exclude=.git "$extension_path" "$insiders_destination_path"
