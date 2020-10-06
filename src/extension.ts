@@ -563,13 +563,16 @@ export function activate(context: vscode.ExtensionContext) {
       const child_process = require("child_process");
       const args = ["-f", languageId, "-e", extension];
       try {
-        const result = child_process.spawnSync("~/.bin/scratch", args, {
+        const result = child_process.spawnSync("~/.bin/scratch_file", args, {
           input: text,
           shell: true,
         });
         displayError(result);
         const newFilePath = result.stdout.toString();
         const fs = require("fs");
+        if (result.status !== 0) {
+          return;
+        }
         if (fs.existsSync(newFilePath)) {
           const fileURL = vscode.Uri.file(newFilePath);
           vscode.workspace.openTextDocument(fileURL).then((doc) => {
