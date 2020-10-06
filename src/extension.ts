@@ -83,7 +83,11 @@ var archiveFilePath = async function (filePath: string) {
   } catch (error) {}
 };
 
-var todoCheck = function (flag: string, useBreak: Boolean = true, range?: vscode.Range) {
+var todoCheck = function (
+  flag: string,
+  useBreak: Boolean = true,
+  range?: vscode.Range
+) {
   const activeTextEditor = vscode.window.activeTextEditor;
   if (!activeTextEditor) {
     return;
@@ -98,7 +102,7 @@ var todoCheck = function (flag: string, useBreak: Boolean = true, range?: vscode
       range = new vscode.Range(firstLine.range.start, lastLine.range.end);
     } else {
       range = selection;
-    }    
+    }
   }
   const text = activeTextEditor.document.getText(range);
 
@@ -109,14 +113,10 @@ var todoCheck = function (flag: string, useBreak: Boolean = true, range?: vscode
   const child_process = require("child_process");
   try {
     const args = useBreak ? [flag, "-b"] : [flag];
-    const result = child_process.spawnSync(
-      "~/.bin/markdown_check",
-      args,
-      {
-        shell: true,
-        input: text,
-      }
-    );
+    const result = child_process.spawnSync("~/.bin/markdown_check", args, {
+      shell: true,
+      input: text,
+    });
     displayError(result);
     const newText = result.stdout.toString();
     if (!newText.length) {
@@ -542,6 +542,47 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(archiveDisposable);
 
+  let openScratchDisposable = vscode.commands.registerCommand(
+    "extension.openScratch",
+    async () => {
+      const activeTextEditor = vscode.window.activeTextEditor;
+      const filePath = activeTextEditor?.document.uri.path;
+      var path = require("path");
+      const extension = path.extname(filePath);
+      const languageId = activeTextEditor?.document.languageId;
+      var text = null;
+      if (activeTextEditor) {
+        const selection = activeTextEditor.selection;
+        text = activeTextEditor.document.getText(selection);
+      } else {
+        return;
+      }
+
+      if (!extension || !languageId) {
+        return;
+      }
+
+      const child_process = require("child_process");
+      const args = ["-f", languageId, "-e", extension];
+      try {
+        const result = child_process.spawnSync("~/.bin/scratch", args, {
+          input: text,
+          shell: true,
+        });
+        displayError(result);
+        const newFilePath = result.stdout.toString();
+        const fs = require("fs");
+        if (fs.existsSync(newFilePath)) {
+          const fileURL = vscode.Uri.file(newFilePath);
+          vscode.workspace.openTextDocument(fileURL).then((doc) => {
+            vscode.window.showTextDocument(doc);
+          });
+        }
+      } catch (error) {}
+    }
+  );
+  context.subscriptions.push(openScratchDisposable);
+
   let slugProjectDisposable = vscode.commands.registerCommand(
     "extension.slugProject",
     async (uri: vscode.Uri) => {
@@ -964,11 +1005,12 @@ export function activate(context: vscode.ExtensionContext) {
       let documentationDirPath = path.resolve(os.homedir(), "Documentation");
       let notesDirPath = path.resolve(os.homedir(), "Documents/Text/Notes");
 
-      const uri = await pickFile(true, [
-        textDirPath,
-        documentationDirPath,
-        notesDirPath,
-        ], undefined, "--type d");
+      const uri = await pickFile(
+        true,
+        [textDirPath, documentationDirPath, notesDirPath],
+        undefined,
+        "--type d"
+      );
       if (!uri) {
         return;
       }
@@ -1002,11 +1044,12 @@ export function activate(context: vscode.ExtensionContext) {
       let documentationDirPath = path.resolve(os.homedir(), "Documentation");
       let notesDirPath = path.resolve(os.homedir(), "Documents/Text/Notes");
 
-      const uri = await pickFile(true, [
-        textDirPath,
-        documentationDirPath,
-        notesDirPath,
-        ], undefined, "--type f");
+      const uri = await pickFile(
+        true,
+        [textDirPath, documentationDirPath, notesDirPath],
+        undefined,
+        "--type f"
+      );
       if (!uri) {
         return;
       }
@@ -1117,7 +1160,9 @@ export function activate(context: vscode.ExtensionContext) {
       var range: vscode.Range = activeTextEditor.selection;
       var useBreak = true;
       if (!range || range.isEmpty) {
-        const line = activeTextEditor.document.lineAt(activeTextEditor.selection.active.line);
+        const line = activeTextEditor.document.lineAt(
+          activeTextEditor.selection.active.line
+        );
         range = line.range;
         useBreak = false;
       }
