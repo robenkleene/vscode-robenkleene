@@ -13,6 +13,7 @@
     "onCommand:extension.openURLs",
     "onCommand:extension.openURLsInIINA",
     "onCommand:extension.archive",
+    "onCommand:extension.openScratchFile",
     "onCommand:extension.convertToSlug",
     "onCommand:extension.blogPostFromFile",
     "onCommand:extension.blogLinkFromFile",
@@ -73,6 +74,10 @@
       {
         "command": "extension.archive",
         "title": "Archive"
+      },
+      {
+        "command": "extension.openScratchFile",
+        "title": "Open Scratch File"
       },
       {
         "command": "extension.convertToSlug",
@@ -239,6 +244,9 @@
       "editor/context": [
         {
           "command": "extension.archive"
+        },
+        {
+          "command": "extension.openScratchFile"
         },
         {
           "command": "extension.makeWikiLink",
