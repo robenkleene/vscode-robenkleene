@@ -535,15 +535,13 @@ export function activate(context: vscode.ExtensionContext) {
         activeTextEditor.edit((editBuilder) => {
           editBuilder.delete(selection);
         });
-      } catch (error) {
-        // Ignored, there's an error if no URLs are found.
-      }
+      } catch (error) {}
     }
   );
   context.subscriptions.push(archiveDisposable);
 
-  let openScratchDisposable = vscode.commands.registerCommand(
-    "extension.openScratch",
+  let openScratchFileDisposable = vscode.commands.registerCommand(
+    "extension.openScratchFile",
     async () => {
       const activeTextEditor = vscode.window.activeTextEditor;
       const filePath = activeTextEditor?.document.uri.path;
@@ -581,7 +579,7 @@ export function activate(context: vscode.ExtensionContext) {
       } catch (error) {}
     }
   );
-  context.subscriptions.push(openScratchDisposable);
+  context.subscriptions.push(openScratchFileDisposable);
 
   let slugProjectDisposable = vscode.commands.registerCommand(
     "extension.slugProject",

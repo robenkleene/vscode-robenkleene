@@ -13,7 +13,7 @@
     "onCommand:extension.openURLs",
     "onCommand:extension.openURLsInIINA",
     "onCommand:extension.archive",
-    "onCommand:extension.openScratch",
+    "onCommand:extension.openScratchFile",
     "onCommand:extension.convertToSlug",
     "onCommand:extension.blogPostFromFile",
     "onCommand:extension.blogLinkFromFile",
@@ -76,8 +76,8 @@
         "title": "Archive"
       },
       {
-        "command": "extension.openScratch",
-        "title": "Open Scratch"
+        "command": "extension.openScratchFile",
+        "title": "Open Scratch File"
       },
       {
         "command": "extension.convertToSlug",
@@ -246,7 +246,7 @@
           "command": "extension.archive"
         },
         {
-          "command": "extension.openScratch"
+          "command": "extension.openScratchFile"
         },
         {
           "command": "extension.makeWikiLink",
