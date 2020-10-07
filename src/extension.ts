@@ -134,6 +134,43 @@ var todoCheck = function (
   } catch (error) {}
 };
 
+var getScratchFile = async function () {
+  const activeTextEditor = vscode.window.activeTextEditor;
+  const filePath = activeTextEditor?.document.uri.path;
+  var path = require("path");
+  const extension = path.extname(filePath);
+  const languageId = activeTextEditor?.document.languageId;
+  var text = null;
+  if (activeTextEditor) {
+    const selection = activeTextEditor.selection;
+    text = activeTextEditor.document.getText(selection);
+  } else {
+    return;
+  }
+
+  if (!extension || !languageId) {
+    return;
+  }
+
+  const child_process = require("child_process");
+  const args = ["-f", languageId, "-e", extension];
+  try {
+    const result = child_process.spawnSync("~/.bin/scratch_file", args, {
+      input: text,
+      shell: true,
+    });
+    displayError(result);
+    const newFilePath = result.stdout.toString();
+    const fs = require("fs");
+    if (result.status !== 0) {
+      return;
+    }
+    if (fs.existsSync(newFilePath)) {
+      return newFilePath;
+    }
+  } catch (error) {}
+};
+
 export function activate(context: vscode.ExtensionContext) {
   let openURLsDisposable = vscode.commands.registerCommand(
     "extension.openURLs",
@@ -543,46 +580,32 @@ export function activate(context: vscode.ExtensionContext) {
   let openScratchFileDisposable = vscode.commands.registerCommand(
     "extension.openScratchFile",
     async () => {
-      const activeTextEditor = vscode.window.activeTextEditor;
-      const filePath = activeTextEditor?.document.uri.path;
-      var path = require("path");
-      const extension = path.extname(filePath);
-      const languageId = activeTextEditor?.document.languageId;
-      var text = null;
-      if (activeTextEditor) {
-        const selection = activeTextEditor.selection;
-        text = activeTextEditor.document.getText(selection);
-      } else {
-        return;
-      }
-
-      if (!extension || !languageId) {
-        return;
-      }
-
-      const child_process = require("child_process");
-      const args = ["-f", languageId, "-e", extension];
-      try {
-        const result = child_process.spawnSync("~/.bin/scratch_file", args, {
-          input: text,
-          shell: true,
+      const filePath = await getScratchFile();
+      if (filePath) {
+        const fileURL = vscode.Uri.file(filePath);
+        vscode.workspace.openTextDocument(fileURL).then((doc) => {
+          vscode.window.showTextDocument(doc);
         });
-        displayError(result);
-        const newFilePath = result.stdout.toString();
-        const fs = require("fs");
-        if (result.status !== 0) {
-          return;
-        }
-        if (fs.existsSync(newFilePath)) {
-          const fileURL = vscode.Uri.file(newFilePath);
-          vscode.workspace.openTextDocument(fileURL).then((doc) => {
-            vscode.window.showTextDocument(doc);
-          });
-        }
-      } catch (error) {}
+      }
     }
   );
   context.subscriptions.push(openScratchFileDisposable);
+
+  let openScratchFileInSplitDisposable = vscode.commands.registerCommand(
+    "extension.openScratchFileInSplit",
+    async () => {
+      const filePath = await getScratchFile();
+      if (filePath) {
+        const fileURL = vscode.Uri.file(filePath);
+        vscode.workspace.openTextDocument(fileURL).then((doc) => {
+          vscode.window.showTextDocument(doc, {
+            viewColumn: vscode.ViewColumn.Beside,
+          });
+        });
+      }
+    }
+  );
+  context.subscriptions.push(openScratchFileInSplitDisposable);
 
   let slugProjectDisposable = vscode.commands.registerCommand(
     "extension.slugProject",
