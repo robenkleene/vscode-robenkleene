@@ -403,28 +403,8 @@
         "when": "!terminalFocus"
       },
       {
-        "command": "extension.openReadme",
-        "key": "alt+g r",
-        "when": "!terminalFocus"
-      },
-      {
-        "command": "extension.openReadme",
-        "key": "alt+g alt+r",
-        "when": "!terminalFocus"
-      },
-      {
         "command": "extension.quickOpenZ",
         "key": "alt+z",
-        "when": "!terminalFocus"
-      },
-      {
-        "command": "extension.openDirectory",
-        "key": "alt+g d",
-        "when": "!terminalFocus"
-      },
-      {
-        "command": "extension.openDirectory",
-        "key": "alt+g alt+d",
         "when": "!terminalFocus"
       },
       {
