@@ -36,18 +36,17 @@ extension_path="$(
   pwd -P
 )"
 
-destination_path="$HOME/.vscode/extensions/"
-if [ ! -d "$destination_path" ]; then
-  echo "$destination_path does not exist" >&2
-  exit 1
-fi
-rsync -a --delete${dry_run} --verbose --exclude=install.sh --exclude=.gitignore \
-  --exclude=.git "$extension_path" "$destination_path"
+install() {
+  destination_path="$1"
+  if [[ -d "$destination_path" ]]; then
+    echo "Installing to $destination_path"
+    rsync -a --delete${dry_run} --verbose --exclude=install.sh --exclude=.gitignore \
+      --exclude=.git "$extension_path" "$destination_path"
+  else
+    echo "Skipping $destination_path"
+  fi
+}
 
-insiders_destination_path="$HOME/.vscode-insiders/extensions/"
-if [ ! -d "$insiders_destination_path" ]; then
-  echo "$insiders_destination_path does not exist" >&2
-  exit 1
-fi
-rsync -a --delete${dry_run} --verbose --exclude=install.sh --exclude=.gitignore \
-  --exclude=.git "$extension_path" "$insiders_destination_path"
+install "$HOME/.vscode/extensions/"
+install "$HOME/.vscode-insiders/extensions/"
+install "$HOME/.vscode-server-insiders/extensions/"
