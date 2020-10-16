@@ -43,6 +43,7 @@
     "onCommand:extension.quickOpenDocumentation",
     "onCommand:extension.quickOpenText",
     "onCommand:extension.quickOpenAll",
+    "onCommand:extension.quickOpenDeveloper",
     "onCommand:extension.quickOpenAllFiles",
     "onCommand:extension.openDocumentation",
     "onCommand:extension.openTweets",
@@ -115,6 +116,10 @@
       {
         "command": "extension.quickOpenAllFiles",
         "title": "Quick Open All Files"
+      },
+      {
+        "command": "extension.quickOpenDeveloper",
+        "title": "Quick Open Developer"
       },
       {
         "command": "extension.openDocumentation",
@@ -415,6 +420,11 @@
       {
         "command": "extension.quickOpenAllFiles",
         "key": "alt+shift+o",
+        "when": "!terminalFocus"
+      },
+      {
+        "command": "extension.quickOpenDeveloper",
+        "key": "alt+g",
         "when": "!terminalFocus"
       },
       {

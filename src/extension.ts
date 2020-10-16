@@ -1098,6 +1098,43 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(quickOpenAllFilesDisposable);
 
+  let quickOpenDeveloperDisposable = vscode.commands.registerCommand(
+    "extension.quickOpenDeveloper",
+    async () => {
+      const path = require("path");
+      const os = require("os");
+      let developerDirPath = path.resolve(os.homedir(), "Developer");
+
+      const uri = await pickFile(
+        true,
+        [developerDirPath],
+        undefined,
+        "--type d"
+      );
+      if (!uri) {
+        return;
+      }
+
+      const destinationPath = uri.fsPath;
+      const fs = require("fs");
+      if (!fs.existsSync(destinationPath)) {
+        return;
+      }
+      let destUri = vscode.Uri.file(destinationPath);
+      if (fs.lstatSync(destinationPath).isDirectory()) {
+        const success = await vscode.commands.executeCommand(
+          "vscode.openFolder",
+          destUri
+        );
+      } else {
+        vscode.workspace.openTextDocument(destUri).then((doc) => {
+          vscode.window.showTextDocument(doc);
+        });
+      }
+    }
+  );
+  context.subscriptions.push(quickOpenDeveloperDisposable);
+
   let insertTitleDisposable = vscode.commands.registerCommand(
     "extension.insertTitle",
     () => {
