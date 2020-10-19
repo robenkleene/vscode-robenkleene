@@ -1027,11 +1027,10 @@ export function activate(context: vscode.ExtensionContext) {
       const os = require("os");
       let textDirPath = path.resolve(os.homedir(), "Text");
       let documentationDirPath = path.resolve(os.homedir(), "Documentation");
-      let notesDirPath = path.resolve(os.homedir(), "Documents/Text/Notes");
 
       const uri = await pickFile(
         true,
-        [textDirPath, documentationDirPath, notesDirPath],
+        [textDirPath, documentationDirPath],
         undefined,
         "--type d"
       );
@@ -1460,12 +1459,12 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(openTweetsDisposable);
 
-  let openEmailDisposable = vscode.commands.registerCommand(
-    "extension.openEmail",
+  let openNotesDisposable = vscode.commands.registerCommand(
+    "extension.openNotes",
     async () => {
       const homedir = require("os").homedir();
       const path = require("path");
-      const dirPath = path.join(homedir, "/Documents/Text/Social/Email/");
+      const dirPath = path.join(homedir, "/Documents/Text/Notes/");
 
       const fs = require("fs");
       if (!fs.lstatSync(dirPath).isDirectory()) {
@@ -1478,7 +1477,7 @@ export function activate(context: vscode.ExtensionContext) {
       );
     }
   );
-  context.subscriptions.push(openEmailDisposable);
+  context.subscriptions.push(openNotesDisposable);
 
   let openSocialDisposable = vscode.commands.registerCommand(
     "extension.openSocial",
@@ -1498,7 +1497,7 @@ export function activate(context: vscode.ExtensionContext) {
       );
     }
   );
-  context.subscriptions.push(openEmailDisposable);
+  context.subscriptions.push(openNotesDisposable);
 
   let newEmailDisposable = vscode.commands.registerCommand(
     "extension.newEmail",

@@ -18,7 +18,7 @@
     "onCommand:extension.convertToSlug",
     "onCommand:extension.blogPostFromFile",
     "onCommand:extension.blogLinkFromFile",
-    "onCommand:extension.openEmail",
+    "onCommand:extension.openNotes",
     "onCommand:extension.openSocial",
     "onCommand:extension.newEmail",
     "onCommand:extension.saveAsInbox",
@@ -158,8 +158,8 @@
         "title": "Blog Link From File"
       },
       {
-        "command": "extension.openEmail",
-        "title": "Open Email"
+        "command": "extension.openNotes",
+        "title": "Open Notes"
       },
       {
         "command": "extension.openSocial",
