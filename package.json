@@ -1,7 +1,9 @@
 {
   "name": "robenkleene",
   "displayName": "RobenKleene",
+  "publisher": "RobenKleene",
   "description": "Roben Kleene's personal customizations.",
+  "repository": "https://github.com/robenkleene/vscode-robenkleene/",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.42.0"
