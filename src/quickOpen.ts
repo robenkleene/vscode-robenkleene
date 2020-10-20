@@ -58,7 +58,7 @@ export async function pickFile(useFd: Boolean = false, rootDirs?: string[], cmd?
 						if (cmd) {
 							command = cmd;
 						} else {
-							command = useFd ? `/usr/local/bin/fd -p ${flags || ""} ${q}.*${value}.*${q}` : `/usr/local/bin/rg --files -g ${q}*${value}*${q}`;
+							command = useFd ? `fd -p ${flags || ""} ${q}.*${value}.*${q}` : `rg --files -g ${q}*${value}*${q}`;
 						}
 						const rg = cp.exec(command, { cwd }, (err, stdout) => {
 							const i = rgs.indexOf(rg);

@@ -833,7 +833,7 @@ export function activate(context: vscode.ExtensionContext) {
       const child_process = require("child_process");
       try {
         const result = child_process.spawnSync(
-          "/usr/local/bin/repla",
+          "repla",
           [`"${escapeShell(filePath)}"`],
           { shell: true }
         );
@@ -967,7 +967,7 @@ export function activate(context: vscode.ExtensionContext) {
       // Passing in `[""]` as `cwd` makes `pickFile` operate with absolute
       // paths. E.g., if we pass in `undefined` instead, the absolute path with
       // be concatenated onto the relative path.
-      const uri = await pickFile(true, [""], "/usr/local/bin/fasd -Rdl");
+      const uri = await pickFile(true, [""], "fasd -Rdl");
       if (!uri) {
         return;
       }
