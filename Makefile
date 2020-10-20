@@ -1,7 +1,6 @@
 .PHONY: update build install
 
-update:
-	build install
+update: build install
 
 build:
 	vsce package
