@@ -173,7 +173,7 @@ var getScratchFile = async function () {
 
 export function activate(context: vscode.ExtensionContext) {
   let openURLsDisposable = vscode.commands.registerCommand(
-    "extension.openURLs",
+    "robenkleene.openURLs",
     () => {
       const activeTextEditor = vscode.window.activeTextEditor;
       if (!activeTextEditor) {
@@ -202,7 +202,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   // This doesn't work yet, IINA can't open URLs from the command line
   let openURLsInIINADisposable = vscode.commands.registerCommand(
-    "extension.openURLsInIINA",
+    "robenkleene.openURLsInIINA",
     () => {
       const activeTextEditor = vscode.window.activeTextEditor;
       if (!activeTextEditor) {
@@ -230,7 +230,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(openURLsDisposable);
 
   let openFileDisposable = vscode.commands.registerCommand(
-    "extension.openFile",
+    "robenkleene.openFile",
     () => {
       const activeTextEditor = vscode.window.activeTextEditor;
       if (!activeTextEditor) {
@@ -291,7 +291,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(openFileDisposable);
 
   let insertFilePathDisposable = vscode.commands.registerCommand(
-    "extension.insertFilePath",
+    "robenkleene.insertFilePath",
     async () => {
       const activeTextEditor = vscode.window.activeTextEditor;
       if (!activeTextEditor) {
@@ -329,7 +329,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(insertFilePathDisposable);
 
   let quickOpenDirectoryDisposable = vscode.commands.registerCommand(
-    "extension.quickOpenDirectory",
+    "robenkleene.quickOpenDirectory",
     async () => {
       let currentPath = vscode.workspace.rootPath
       var path = require("path");
@@ -358,7 +358,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(quickOpenDirectoryDisposable);
 
   let convertToSlugDisposable = vscode.commands.registerCommand(
-    "extension.convertToSlug",
+    "robenkleene.convertToSlug",
     () => {
       const activeTextEditor = vscode.window.activeTextEditor;
       if (!activeTextEditor) {
@@ -397,7 +397,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(convertToSlugDisposable);
 
   let makeWikiLinkDisposable = vscode.commands.registerCommand(
-    "extension.makeWikiLink",
+    "robenkleene.makeWikiLink",
     async () => {
       const activeTextEditor = vscode.window.activeTextEditor;
       if (!activeTextEditor) {
@@ -445,7 +445,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(makeWikiLinkDisposable);
 
   let blogPostDisposable = vscode.commands.registerCommand(
-    "extension.blogPostFromFile",
+    "robenkleene.blogPostFromFile",
     async (uri: vscode.Uri) => {
       var filePath;
       if (uri) {
@@ -478,7 +478,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(blogPostDisposable);
 
   let blogLinkDisposable = vscode.commands.registerCommand(
-    "extension.blogLinkFromFile",
+    "robenkleene.blogLinkFromFile",
     async (uri: vscode.Uri) => {
       var filePath;
       if (uri) {
@@ -505,7 +505,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(blogLinkDisposable);
 
   let saveAsInboxDisposable = vscode.commands.registerCommand(
-    "extension.saveAsInbox",
+    "robenkleene.saveAsInbox",
     async () => {
       const activeTextEditor = vscode.window.activeTextEditor;
       if (!activeTextEditor) {
@@ -565,7 +565,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(saveAsInboxDisposable);
 
   let archiveDisposable = vscode.commands.registerCommand(
-    "extension.archive",
+    "robenkleene.archive",
     async (uri: vscode.Uri) => {
       var filePath;
       var text = null;
@@ -607,7 +607,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(archiveDisposable);
 
   let openScratchFileDisposable = vscode.commands.registerCommand(
-    "extension.openScratchFile",
+    "robenkleene.openScratchFile",
     async () => {
       const filePath = await getScratchFile();
       if (filePath) {
@@ -621,7 +621,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(openScratchFileDisposable);
 
   let openScratchFileInSplitDisposable = vscode.commands.registerCommand(
-    "extension.openScratchFileInSplit",
+    "robenkleene.openScratchFileInSplit",
     async () => {
       const filePath = await getScratchFile();
       if (filePath) {
@@ -637,7 +637,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(openScratchFileInSplitDisposable);
 
   let slugProjectDisposable = vscode.commands.registerCommand(
-    "extension.slugProject",
+    "robenkleene.slugProject",
     async (uri: vscode.Uri) => {
       const fs = require("fs");
       var currentDirPath;
@@ -725,7 +725,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(slugProjectDisposable);
 
   let slugProjectArchiveDisposable = vscode.commands.registerCommand(
-    "extension.slugProjectArchive",
+    "robenkleene.slugProjectArchive",
     async (uri: vscode.Uri) => {
       const fs = require("fs");
       var currentDirPath;
@@ -762,7 +762,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(slugProjectArchiveDisposable);
 
   let slugProjectArchiveReadmeDisposable = vscode.commands.registerCommand(
-    "extension.slugProjectArchiveReadme",
+    "robenkleene.slugProjectArchiveReadme",
     async (uri: vscode.Uri) => {
       var filePath;
       const path = require("path");
@@ -806,7 +806,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(slugProjectArchiveReadmeDisposable);
 
   let openSourceControlSiteDisposable = vscode.commands.registerCommand(
-    "extension.openSourceControlSite",
+    "robenkleene.openSourceControlSite",
     async (uri: vscode.Uri) => {
       var filePath;
       if (uri) {
@@ -842,7 +842,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(openSourceControlSiteDisposable);
 
   let openInReplaDisposable = vscode.commands.registerCommand(
-    "extension.openInRepla",
+    "robenkleene.openInRepla",
     async (uri: vscode.Uri) => {
       var filePath;
       if (uri) {
@@ -873,7 +873,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(openInReplaDisposable);
 
   let makeTitleCaseDisposable = vscode.commands.registerCommand(
-    "extension.makeTitleCase",
+    "robenkleene.makeTitleCase",
     () => {
       const activeTextEditor = vscode.window.activeTextEditor;
       if (!activeTextEditor) {
@@ -908,7 +908,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(makeTitleCaseDisposable);
 
   let openReadmeDisposable = vscode.commands.registerCommand(
-    "extension.openReadme",
+    "robenkleene.openReadme",
     async (uri: vscode.Uri) => {
       var filePath;
       if (uri) {
@@ -956,7 +956,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(openReadmeDisposable);
 
   let quickOpenDocumentationDisposable = vscode.commands.registerCommand(
-    "extension.quickOpenDocumentation",
+    "robenkleene.quickOpenDocumentation",
     async () => {
       const path = require("path");
       const os = require("os");
@@ -988,7 +988,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(quickOpenDocumentationDisposable);
 
   let quickOpenZDisposable = vscode.commands.registerCommand(
-    "extension.quickOpenZ",
+    "robenkleene.quickOpenZ",
     async () => {
       const path = require("path");
       const os = require("os");
@@ -1018,7 +1018,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(quickOpenZDisposable);
 
   let quickOpenTextDisposable = vscode.commands.registerCommand(
-    "extension.quickOpenText",
+    "robenkleene.quickOpenText",
     async () => {
       const path = require("path");
       const os = require("os");
@@ -1050,7 +1050,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(quickOpenTextDisposable);
 
   let quickOpenAllDisposable = vscode.commands.registerCommand(
-    "extension.quickOpenAll",
+    "robenkleene.quickOpenAll",
     async () => {
       const path = require("path");
       const os = require("os");
@@ -1088,7 +1088,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(quickOpenAllDisposable);
 
   let quickOpenAllFilesDisposable = vscode.commands.registerCommand(
-    "extension.quickOpenAllFiles",
+    "robenkleene.quickOpenAllFiles",
     async () => {
       const path = require("path");
       const os = require("os");
@@ -1127,7 +1127,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(quickOpenAllFilesDisposable);
 
   let quickOpenDeveloperDisposable = vscode.commands.registerCommand(
-    "extension.quickOpenDeveloper",
+    "robenkleene.quickOpenDeveloper",
     async () => {
       const path = require("path");
       const os = require("os");
@@ -1164,7 +1164,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(quickOpenDeveloperDisposable);
 
   let insertTitleDisposable = vscode.commands.registerCommand(
-    "extension.insertTitle",
+    "robenkleene.insertTitle",
     () => {
       const activeTextEditor = vscode.window.activeTextEditor;
       if (!activeTextEditor) {
@@ -1216,7 +1216,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(insertTitleDisposable);
 
   let todoCheckDisposable = vscode.commands.registerCommand(
-    "extension.todoCheck",
+    "robenkleene.todoCheck",
     () => {
       todoCheck("-c");
     }
@@ -1224,7 +1224,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(todoCheckDisposable);
 
   let todoUncheckDisposable = vscode.commands.registerCommand(
-    "extension.todoUncheck",
+    "robenkleene.todoUncheck",
     () => {
       todoCheck("-u");
     }
@@ -1232,7 +1232,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(todoUncheckDisposable);
 
   let todoToggleDisposable = vscode.commands.registerCommand(
-    "extension.todoToggle",
+    "robenkleene.todoToggle",
     () => {
       todoCheck("-i");
     }
@@ -1240,7 +1240,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(todoToggleDisposable);
 
   let todoToggleLocalDisposable = vscode.commands.registerCommand(
-    "extension.todoToggleLocal",
+    "robenkleene.todoToggleLocal",
     () => {
       const activeTextEditor = vscode.window.activeTextEditor;
       if (!activeTextEditor) {
@@ -1261,7 +1261,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(todoToggleLocalDisposable);
 
   let copyMarkdownSourceControlLinkDisposable = vscode.commands.registerCommand(
-    "extension.copyMarkdownSourceControlLink",
+    "robenkleene.copyMarkdownSourceControlLink",
     async () => {
       const activeTextEditor = vscode.window.activeTextEditor;
       if (!activeTextEditor) {
@@ -1302,7 +1302,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(copyMarkdownSourceControlLinkDisposable);
 
   let copyMarkdownSourceControlQuoteDisposable = vscode.commands.registerCommand(
-    "extension.copyMarkdownSourceControlQuote",
+    "robenkleene.copyMarkdownSourceControlQuote",
     async () => {
       const activeTextEditor = vscode.window.activeTextEditor;
       if (!activeTextEditor) {
@@ -1343,7 +1343,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(copyMarkdownSourceControlQuoteDisposable);
 
   let openSourceControlLinkDisposable = vscode.commands.registerCommand(
-    "extension.openSourceControlLink",
+    "robenkleene.openSourceControlLink",
     () => {
       const activeTextEditor = vscode.window.activeTextEditor;
       if (!activeTextEditor) {
@@ -1377,7 +1377,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(openSourceControlLinkDisposable);
 
   let openFolderForFileDisposable = vscode.commands.registerCommand(
-    "extension.openDirectory",
+    "robenkleene.openDirectory",
     async (uri: vscode.Uri) => {
       var dirUri;
       var fileUri;
@@ -1423,7 +1423,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(openFolderForFileDisposable);
 
   let closeOtherEditorsDisposable = vscode.commands.registerCommand(
-    "extension.closeOtherEditors",
+    "robenkleene.closeOtherEditors",
     async (uri: vscode.Uri) => {
       var fileUri;
       const fs = require("fs");
@@ -1449,7 +1449,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(closeOtherEditorsDisposable);
 
   let openDocumentationDisposable = vscode.commands.registerCommand(
-    "extension.openDocumentation",
+    "robenkleene.openDocumentation",
     async () => {
       const homedir = require("os").homedir();
       const path = require("path");
@@ -1469,7 +1469,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(openDocumentationDisposable);
 
   let openTweetsDisposable = vscode.commands.registerCommand(
-    "extension.openTweets",
+    "robenkleene.openTweets",
     async () => {
       const homedir = require("os").homedir();
       const path = require("path");
@@ -1489,7 +1489,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(openTweetsDisposable);
 
   let openNotesDisposable = vscode.commands.registerCommand(
-    "extension.openNotes",
+    "robenkleene.openNotes",
     async () => {
       const homedir = require("os").homedir();
       const path = require("path");
@@ -1509,7 +1509,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(openNotesDisposable);
 
   let openSocialDisposable = vscode.commands.registerCommand(
-    "extension.openSocial",
+    "robenkleene.openSocial",
     async () => {
       const homedir = require("os").homedir();
       const path = require("path");
@@ -1529,7 +1529,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(openNotesDisposable);
 
   let newEmailDisposable = vscode.commands.registerCommand(
-    "extension.newEmail",
+    "robenkleene.newEmail",
     async () => {
       const title = await vscode.window.showInputBox({
         placeHolder: "Name",
@@ -1563,7 +1563,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(newEmailDisposable);
 
   let openDevelopmentScratchDisposable = vscode.commands.registerCommand(
-    "extension.openDevelopmentScratch",
+    "robenkleene.openDevelopmentScratch",
     async () => {
       const homedir = require("os").homedir();
       const path = require("path");
@@ -1583,7 +1583,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(openDevelopmentScratchDisposable);
 
   let openBlogDisposable = vscode.commands.registerCommand(
-    "extension.openBlog",
+    "robenkleene.openBlog",
     async () => {
       const homedir = require("os").homedir();
       const path = require("path");
@@ -1606,7 +1606,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(openBlogDisposable);
 
   let openWikiDisposable = vscode.commands.registerCommand(
-    "extension.openWiki",
+    "robenkleene.openWiki",
     async () => {
       const homedir = require("os").homedir();
       const path = require("path");
@@ -1626,7 +1626,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(openWikiDisposable);
 
   let openPersonalWikiDisposable = vscode.commands.registerCommand(
-    "extension.openPersonalWiki",
+    "robenkleene.openPersonalWiki",
     async () => {
       const homedir = require("os").homedir();
       const path = require("path");
@@ -1646,7 +1646,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(openPersonalWikiDisposable);
 
   let newInboxDocumentDisposable = vscode.commands.registerCommand(
-    "extension.newInboxDocument",
+    "robenkleene.newInboxDocument",
     async () => {
       const title = await vscode.window.showInputBox({
         placeHolder: "Title",
@@ -1680,7 +1680,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(newInboxDocumentDisposable);
 
   let openJournalEntryDisposable = vscode.commands.registerCommand(
-    "extension.openJournalEntry",
+    "robenkleene.openJournalEntry",
     async () => {
       const homedir = require("os").homedir();
       const path = require("path");
@@ -1700,7 +1700,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(openJournalEntryDisposable);
 
   let openProjectsDisposable = vscode.commands.registerCommand(
-    "extension.openProjects",
+    "robenkleene.openProjects",
     async () => {
       const homedir = require("os").homedir();
       const path = require("path");
