@@ -328,6 +328,39 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(insertFilePathDisposable);
 
+  let quickOpenDirectoryDisposable = vscode.commands.registerCommand(
+    "extension.quickOpenDirectory",
+    async () => {
+      const activeTextEditor = vscode.window.activeTextEditor;
+      if (!activeTextEditor) {
+        return;
+      }
+      const currentPath = activeTextEditor.document.uri.fsPath;
+      var path = require("path");
+      const fs = require("fs");
+      if (!fs.existsSync(currentPath)) {
+        return;
+      }
+
+      var rootDirs;
+      if (!vscode.workspace.workspaceFolders) {
+        rootDirs = [path.dirname(currentPath)];
+      }
+      const uri = await pickFile(true, rootDirs, undefined, "--type d");
+      if (!uri) {
+        return;
+      }
+
+      const destinationPath = uri.fsPath;
+      if (!fs.lstatSync(destinationPath).isDirectory()) {
+        return;
+      }
+      let destUri = vscode.Uri.file(destinationPath);
+      await vscode.commands.executeCommand("vscode.openFolder", destUri);
+    }
+  );
+  context.subscriptions.push(quickOpenDirectoryDisposable);
+
   let convertToSlugDisposable = vscode.commands.registerCommand(
     "extension.convertToSlug",
     () => {
