@@ -39,6 +39,7 @@
     "onCommand:extension.insertTitle",
     "onCommand:extension.openSourceControlSite",
     "onCommand:extension.insertFilePath",
+    "onCommand:extension.quickOpenDirectory",
     "onCommand:extension.copyMarkdownSourceControlLink",
     "onCommand:extension.copyMarkdownSourceControlQuote",
     "onCommand:extension.openSourceControlLink",
@@ -198,6 +199,10 @@
       {
         "command": "extension.insertFilePath",
         "title": "Insert File Path"
+      },
+      {
+        "command": "extension.quickOpenDirectory",
+        "title": "Quick Open Directory"
       },
       {
         "command": "extension.insertTitle",
@@ -367,6 +372,11 @@
       {
         "command": "extension.insertFilePath",
         "key": "alt+s e",
+        "when": "!terminalFocus"
+      },
+      {
+        "command": "extension.quickOpenDirectory",
+        "key": "alt+c",
         "when": "!terminalFocus"
       },
       {
