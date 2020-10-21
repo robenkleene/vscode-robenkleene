@@ -331,11 +331,7 @@ export function activate(context: vscode.ExtensionContext) {
   let quickOpenDirectoryDisposable = vscode.commands.registerCommand(
     "extension.quickOpenDirectory",
     async () => {
-      const activeTextEditor = vscode.window.activeTextEditor;
-      if (!activeTextEditor) {
-        return;
-      }
-      const currentPath = activeTextEditor.document.uri.fsPath;
+      let currentPath = vscode.workspace.rootPath
       var path = require("path");
       const fs = require("fs");
       if (!fs.existsSync(currentPath)) {
