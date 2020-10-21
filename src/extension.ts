@@ -1131,7 +1131,7 @@ export function activate(context: vscode.ExtensionContext) {
     async () => {
       const path = require("path");
       const os = require("os");
-      let developerDirPath = path.resolve(os.homedir(), "Developer");
+      let developerDirPath = path.resolve(os.homedir(), "Developer/Projects");
 
       const uri = await pickFile(
         true,
