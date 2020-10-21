@@ -12,435 +12,435 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extension.openURLs",
-    "onCommand:extension.openURLsInIINA",
-    "onCommand:extension.archive",
-    "onCommand:extension.openScratchFile",
-    "onCommand:extension.openScratchFileInSplit",
-    "onCommand:extension.convertToSlug",
-    "onCommand:extension.blogPostFromFile",
-    "onCommand:extension.blogLinkFromFile",
-    "onCommand:extension.openNotes",
-    "onCommand:extension.openSocial",
-    "onCommand:extension.newEmail",
-    "onCommand:extension.saveAsInbox",
-    "onCommand:extension.makeWikiLink",
-    "onCommand:extension.makeTitleCase",
-    "onCommand:extension.todoCheck",
-    "onCommand:extension.todoUncheck",
-    "onCommand:extension.todoToggle",
-    "onCommand:extension.todoToggleLocal",
-    "onCommand:extension.openDirectory",
-    "onCommand:extension.closeOtherEditors",
-    "onCommand:extension.quickOpenZ",
-    "onCommand:extension.slugProject",
-    "onCommand:extension.slugProjectArchive",
-    "onCommand:extension.slugProjectArchiveReadme",
-    "onCommand:extension.insertTitle",
-    "onCommand:extension.openSourceControlSite",
-    "onCommand:extension.insertFilePath",
-    "onCommand:extension.quickOpenDirectory",
-    "onCommand:extension.copyMarkdownSourceControlLink",
-    "onCommand:extension.copyMarkdownSourceControlQuote",
-    "onCommand:extension.openSourceControlLink",
-    "onCommand:extension.quickOpenDocumentation",
-    "onCommand:extension.quickOpenText",
-    "onCommand:extension.quickOpenAll",
-    "onCommand:extension.quickOpenDeveloper",
-    "onCommand:extension.quickOpenAllFiles",
-    "onCommand:extension.openDocumentation",
-    "onCommand:extension.openTweets",
-    "onCommand:extension.newInboxDocument",
-    "onCommand:extension.openJournalEntry",
-    "onCommand:extension.openDevelopmentScratch",
-    "onCommand:extension.openBlog",
-    "onCommand:extension.openWiki",
-    "onCommand:extension.openProjects",
-    "onCommand:extension.openPersonalWiki",
-    "onCommand:extension.openInRepla",
-    "onCommand:extension.openReadme",
-    "onCommand:extension.openFile"
+    "onCommand:robenkleene.openURLs",
+    "onCommand:robenkleene.openURLsInIINA",
+    "onCommand:robenkleene.archive",
+    "onCommand:robenkleene.openScratchFile",
+    "onCommand:robenkleene.openScratchFileInSplit",
+    "onCommand:robenkleene.convertToSlug",
+    "onCommand:robenkleene.blogPostFromFile",
+    "onCommand:robenkleene.blogLinkFromFile",
+    "onCommand:robenkleene.openNotes",
+    "onCommand:robenkleene.openSocial",
+    "onCommand:robenkleene.newEmail",
+    "onCommand:robenkleene.saveAsInbox",
+    "onCommand:robenkleene.makeWikiLink",
+    "onCommand:robenkleene.makeTitleCase",
+    "onCommand:robenkleene.todoCheck",
+    "onCommand:robenkleene.todoUncheck",
+    "onCommand:robenkleene.todoToggle",
+    "onCommand:robenkleene.todoToggleLocal",
+    "onCommand:robenkleene.openDirectory",
+    "onCommand:robenkleene.closeOtherEditors",
+    "onCommand:robenkleene.quickOpenZ",
+    "onCommand:robenkleene.slugProject",
+    "onCommand:robenkleene.slugProjectArchive",
+    "onCommand:robenkleene.slugProjectArchiveReadme",
+    "onCommand:robenkleene.insertTitle",
+    "onCommand:robenkleene.openSourceControlSite",
+    "onCommand:robenkleene.insertFilePath",
+    "onCommand:robenkleene.quickOpenDirectory",
+    "onCommand:robenkleene.copyMarkdownSourceControlLink",
+    "onCommand:robenkleene.copyMarkdownSourceControlQuote",
+    "onCommand:robenkleene.openSourceControlLink",
+    "onCommand:robenkleene.quickOpenDocumentation",
+    "onCommand:robenkleene.quickOpenText",
+    "onCommand:robenkleene.quickOpenAll",
+    "onCommand:robenkleene.quickOpenDeveloper",
+    "onCommand:robenkleene.quickOpenAllFiles",
+    "onCommand:robenkleene.openDocumentation",
+    "onCommand:robenkleene.openTweets",
+    "onCommand:robenkleene.newInboxDocument",
+    "onCommand:robenkleene.openJournalEntry",
+    "onCommand:robenkleene.openDevelopmentScratch",
+    "onCommand:robenkleene.openBlog",
+    "onCommand:robenkleene.openWiki",
+    "onCommand:robenkleene.openProjects",
+    "onCommand:robenkleene.openPersonalWiki",
+    "onCommand:robenkleene.openInRepla",
+    "onCommand:robenkleene.openReadme",
+    "onCommand:robenkleene.openFile"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "extension.openURLs",
+        "command": "robenkleene.openURLs",
         "title": "Open URLs"
       },
       {
-        "command": "extension.openURLsInIINA",
+        "command": "robenkleene.openURLsInIINA",
         "title": "Open URLs in IINA"
       },
       {
-        "command": "extension.makeWikiLink",
+        "command": "robenkleene.makeWikiLink",
         "title": "Make Wiki Link"
       },
       {
-        "command": "extension.archive",
+        "command": "robenkleene.archive",
         "title": "Archive"
       },
       {
-        "command": "extension.openScratchFile",
+        "command": "robenkleene.openScratchFile",
         "title": "Open Scratch File"
       },
       {
-        "command": "extension.openScratchFileInSplit",
+        "command": "robenkleene.openScratchFileInSplit",
         "title": "Open Scratch File in Split"
       },
       {
-        "command": "extension.convertToSlug",
+        "command": "robenkleene.convertToSlug",
         "title": "Convert to Slug"
       },
       {
-        "command": "extension.slugProject",
+        "command": "robenkleene.slugProject",
         "title": "Slug Project: New"
       },
       {
-        "command": "extension.slugProjectArchive",
+        "command": "robenkleene.slugProjectArchive",
         "title": "Slug Project: Archive"
       },
       {
-        "command": "extension.slugProjectArchiveReadme",
+        "command": "robenkleene.slugProjectArchiveReadme",
         "title": "Slug Project: Open Archive README"
       },
       {
-        "command": "extension.quickOpenDocumentation",
+        "command": "robenkleene.quickOpenDocumentation",
         "title": "Quick Open Documentation"
       },
       {
-        "command": "extension.quickOpenText",
+        "command": "robenkleene.quickOpenText",
         "title": "Quick Open Text"
       },
       {
-        "command": "extension.quickOpenAll",
+        "command": "robenkleene.quickOpenAll",
         "title": "Quick Open All"
       },
       {
-        "command": "extension.quickOpenAllFiles",
+        "command": "robenkleene.quickOpenAllFiles",
         "title": "Quick Open All Files"
       },
       {
-        "command": "extension.quickOpenDeveloper",
+        "command": "robenkleene.quickOpenDeveloper",
         "title": "Quick Open Developer"
       },
       {
-        "command": "extension.openDocumentation",
+        "command": "robenkleene.openDocumentation",
         "title": "Open Documentation"
       },
       {
-        "command": "extension.openTweets",
+        "command": "robenkleene.openTweets",
         "title": "Open Tweets"
       },
       {
-        "command": "extension.openWiki",
+        "command": "robenkleene.openWiki",
         "title": "Open Wiki"
       },
       {
-        "command": "extension.openProjects",
+        "command": "robenkleene.openProjects",
         "title": "Open Projects"
       },
       {
-        "command": "extension.openPersonalWiki",
+        "command": "robenkleene.openPersonalWiki",
         "title": "Open Personal Wiki"
       },
       {
-        "command": "extension.openDevelopmentScratch",
+        "command": "robenkleene.openDevelopmentScratch",
         "title": "Open Developer Scratch"
       },
       {
-        "command": "extension.openBlog",
+        "command": "robenkleene.openBlog",
         "title": "Open Blog"
       },
       {
-        "command": "extension.blogPostFromFile",
+        "command": "robenkleene.blogPostFromFile",
         "title": "Blog Post From File"
       },
       {
-        "command": "extension.blogLinkFromFile",
+        "command": "robenkleene.blogLinkFromFile",
         "title": "Blog Link From File"
       },
       {
-        "command": "extension.openNotes",
+        "command": "robenkleene.openNotes",
         "title": "Open Notes"
       },
       {
-        "command": "extension.openSocial",
+        "command": "robenkleene.openSocial",
         "title": "Open Social"
       },
       {
-        "command": "extension.newEmail",
+        "command": "robenkleene.newEmail",
         "title": "New Email"
       },
       {
-        "command": "extension.newInboxDocument",
+        "command": "robenkleene.newInboxDocument",
         "title": "New Inbox Document"
       },
       {
-        "command": "extension.openJournalEntry",
+        "command": "robenkleene.openJournalEntry",
         "title": "Open Journal Entry"
       },
       {
-        "command": "extension.openDirectory",
+        "command": "robenkleene.openDirectory",
         "title": "Open Directory"
       },
       {
-        "command": "extension.closeOtherEditors",
+        "command": "robenkleene.closeOtherEditors",
         "title": "Close Other Editors"
       },
       {
-        "command": "extension.quickOpenZ",
+        "command": "robenkleene.quickOpenZ",
         "title": "Quick Open Z"
       },
       {
-        "command": "extension.saveAsInbox",
+        "command": "robenkleene.saveAsInbox",
         "title": "Save As Inbox"
       },
       {
-        "command": "extension.insertFilePath",
+        "command": "robenkleene.insertFilePath",
         "title": "Insert File Path"
       },
       {
-        "command": "extension.quickOpenDirectory",
+        "command": "robenkleene.quickOpenDirectory",
         "title": "Quick Open Directory"
       },
       {
-        "command": "extension.insertTitle",
+        "command": "robenkleene.insertTitle",
         "title": "Insert Title"
       },
       {
-        "command": "extension.copyMarkdownSourceControlLink",
+        "command": "robenkleene.copyMarkdownSourceControlLink",
         "title": "Copy Markdown Source Control Link"
       },
       {
-        "command": "extension.copyMarkdownSourceControlQuote",
+        "command": "robenkleene.copyMarkdownSourceControlQuote",
         "title": "Copy Markdown Source Control Quote"
       },
       {
-        "command": "extension.openSourceControlLink",
+        "command": "robenkleene.openSourceControlLink",
         "title": "Open Source Control Link"
       },
       {
-        "command": "extension.openSourceControlSite",
+        "command": "robenkleene.openSourceControlSite",
         "title": "Source Control: Open Site"
       },
       {
-        "command": "extension.makeTitleCase",
+        "command": "robenkleene.makeTitleCase",
         "title": "Make Title Case"
       },
       {
-        "command": "extension.todoCheck",
+        "command": "robenkleene.todoCheck",
         "title": "Todo: Check"
       },
       {
-        "command": "extension.todoUncheck",
+        "command": "robenkleene.todoUncheck",
         "title": "Todo: Uncheck"
       },
       {
-        "command": "extension.todoToggle",
+        "command": "robenkleene.todoToggle",
         "title": "Todo: Toggle"
       },
       {
-        "command": "extension.todoToggleLocal",
+        "command": "robenkleene.todoToggleLocal",
         "title": "Todo: Toggle Local"
       },
       {
-        "command": "extension.openInRepla",
+        "command": "robenkleene.openInRepla",
         "title": "Open in Repla"
       },
       {
-        "command": "extension.openReadme",
+        "command": "robenkleene.openReadme",
         "title": "Open README"
       },
       {
-        "command": "extension.openFile",
+        "command": "robenkleene.openFile",
         "title": "Open File"
       }
     ],
     "menus": {
       "editor/context": [
         {
-          "command": "extension.archive"
+          "command": "robenkleene.archive"
         },
         {
-          "command": "extension.openScratchFile"
+          "command": "robenkleene.openScratchFile"
         },
         {
-          "command": "extension.openScratchFileInSplit"
+          "command": "robenkleene.openScratchFileInSplit"
         },
         {
-          "command": "extension.makeWikiLink",
+          "command": "robenkleene.makeWikiLink",
           "when": "resourceLangId == markdown"
         },
         {
-          "command": "extension.todoCheck",
+          "command": "robenkleene.todoCheck",
           "when": "resourceLangId == markdown"
         },
         {
-          "command": "extension.todoUncheck",
+          "command": "robenkleene.todoUncheck",
           "when": "resourceLangId == markdown"
         },
         {
-          "command": "extension.todoToggle",
+          "command": "robenkleene.todoToggle",
           "when": "resourceLangId == markdown"
         },
         {
-          "command": "extension.slugProject",
+          "command": "robenkleene.slugProject",
           "when": "resourceLangId == markdown"
         },
         {
-          "command": "extension.openURLs"
+          "command": "robenkleene.openURLs"
         },
         {
-          "command": "extension.openURLsInIINA"
+          "command": "robenkleene.openURLsInIINA"
         },
         {
-          "command": "extension.makeTitleCase"
+          "command": "robenkleene.makeTitleCase"
         }
       ],
       "explorer/context": [
         {
-          "command": "extension.archive",
+          "command": "robenkleene.archive",
           "group": "navigation"
         },
         {
-          "command": "extension.openReadme",
+          "command": "robenkleene.openReadme",
           "when": "explorerResourceIsFolder",
           "group": "navigation"
         },
         {
-          "command": "extension.blogPostFromFile",
+          "command": "robenkleene.blogPostFromFile",
           "when": "resourceLangId == markdown",
           "group": "navigation"
         },
         {
-          "command": "extension.blogLinkFromFile",
+          "command": "robenkleene.blogLinkFromFile",
           "when": "resourceLangId == markdown",
           "group": "navigation"
         },
         {
-          "command": "extension.openSourceControlSite",
+          "command": "robenkleene.openSourceControlSite",
           "when": "explorerResourceIsFolder",
           "group": "navigation"
         },
         {
-          "command": "extension.openInRepla",
+          "command": "robenkleene.openInRepla",
           "group": "navigation"
         },
         {
-          "command": "extension.slugProject",
+          "command": "robenkleene.slugProject",
           "when": "explorerResourceIsFolder",
           "group": "navigation"
         },
         {
-          "command": "extension.slugProjectArchive",
+          "command": "robenkleene.slugProjectArchive",
           "when": "explorerResourceIsFolder",
           "group": "navigation"
         },
         {
-          "command": "extension.slugProjectArchiveReadme",
+          "command": "robenkleene.slugProjectArchiveReadme",
           "when": "explorerResourceIsFolder",
           "group": "navigation"
         },
         {
-          "command": "extension.closeOtherEditors",
+          "command": "robenkleene.closeOtherEditors",
           "when": "!explorerResourceIsFolder",
           "group": "navigation"
         },
         {
-          "command": "extension.openDirectory",
+          "command": "robenkleene.openDirectory",
           "group": "navigation"
         }
       ]
     },
     "keybindings": [
       {
-        "command": "extension.openURLs",
+        "command": "robenkleene.openURLs",
         "key": "alt+l",
         "when": "!terminalFocus && editorHasSelection"
       },
       {
-        "command": "extension.openFile",
+        "command": "robenkleene.openFile",
         "key": "ctrl+x ctrl+f",
         "when": "!terminalFocus"
       },
       {
-        "command": "extension.insertFilePath",
+        "command": "robenkleene.insertFilePath",
         "key": "alt+s cmd-p",
         "when": "!terminalFocus"
       },
       {
-        "command": "extension.insertFilePath",
+        "command": "robenkleene.insertFilePath",
         "key": "alt+s e",
         "when": "!terminalFocus"
       },
       {
-        "command": "extension.quickOpenDirectory",
+        "command": "robenkleene.quickOpenDirectory",
         "key": "alt+c",
         "when": "!terminalFocus"
       },
       {
-        "command": "extension.makeWikiLink",
+        "command": "robenkleene.makeWikiLink",
         "key": "alt+s k",
         "when": "!terminalFocus"
       },
       {
-        "command": "extension.makeTitleCase",
+        "command": "robenkleene.makeTitleCase",
         "key": "alt+s c",
         "when": "!terminalFocus"
       },
       {
-        "command": "extension.slugProject",
+        "command": "robenkleene.slugProject",
         "key": "alt+s p",
         "when": "!terminalFocus"
       },
       {
-        "command": "extension.archive",
+        "command": "robenkleene.archive",
         "key": "ctrl+alt+d",
         "when": "!terminalFocus"
       },
       {
-        "command": "extension.archive",
+        "command": "robenkleene.archive",
         "key": "alt+s d",
         "when": "!terminalFocus"
       },
       {
-        "command": "extension.insertTitle",
+        "command": "robenkleene.insertTitle",
         "key": "alt+s t",
         "when": "!terminalFocus"
       },
       {
-        "command": "extension.closeOtherEditors",
+        "command": "robenkleene.closeOtherEditors",
         "key": "alt+s o",
         "when": "!terminalFocus"
       },
       {
-        "command": "extension.copyMarkdownSourceControlQuote",
+        "command": "robenkleene.copyMarkdownSourceControlQuote",
         "key": "alt+m",
         "when": "!terminalFocus"
       },
       {
-        "command": "extension.quickOpenZ",
+        "command": "robenkleene.quickOpenZ",
         "key": "alt+z",
         "when": "!terminalFocus"
       },
       {
-        "command": "extension.todoToggleLocal",
+        "command": "robenkleene.todoToggleLocal",
         "key": "alt+enter",
         "when": "!terminalFocus && !findWidgetVisible && resourceLangId == markdown"
       },
       {
-        "command": "extension.quickOpenAllFiles",
+        "command": "robenkleene.quickOpenAllFiles",
         "key": "alt+shift+o",
         "when": "!terminalFocus"
       },
       {
-        "command": "extension.quickOpenDeveloper",
+        "command": "robenkleene.quickOpenDeveloper",
         "key": "alt+g",
         "when": "!terminalFocus"
       },
       {
-        "command": "extension.quickOpenAll",
+        "command": "robenkleene.quickOpenAll",
         "key": "alt+o",
         "when": "!terminalFocus"
       }
