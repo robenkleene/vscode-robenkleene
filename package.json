@@ -22,6 +22,7 @@
     "onCommand:robenkleene.blogLinkFromFile",
     "onCommand:robenkleene.openNotes",
     "onCommand:robenkleene.openSocial",
+    "onCommand:robenkleene.openSettings",
     "onCommand:robenkleene.newEmail",
     "onCommand:robenkleene.saveAsInbox",
     "onCommand:robenkleene.makeWikiLink",
@@ -167,6 +168,10 @@
       {
         "command": "robenkleene.openSocial",
         "title": "Open Social"
+      },
+      {
+        "command": "robenkleene.openSettings",
+        "title": "Open Settings"
       },
       {
         "command": "robenkleene.newEmail",
