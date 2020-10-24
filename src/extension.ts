@@ -1526,7 +1526,28 @@ export function activate(context: vscode.ExtensionContext) {
       );
     }
   );
-  context.subscriptions.push(openNotesDisposable);
+  context.subscriptions.push(openSocialDisposable);
+
+  let openSettingsDisposable = vscode.commands.registerCommand(
+    "robenkleene.openSettings",
+    async () => {
+      const homedir = require("os").homedir();
+      const path = require("path");
+      // The `vscode.version` prints whether it's insiders, e.g. `1.51.0-insider`
+      const dirPath = path.join(homedir, "Library/Application Support/Code - Insiders/User");
+      const fs = require("fs");
+      if (!fs.lstatSync(dirPath).isDirectory()) {
+        return;
+      }
+      let dirUri = vscode.Uri.file(dirPath);
+      const success = await vscode.commands.executeCommand(
+        "vscode.openFolder",
+        dirUri
+      );
+    }
+  );
+  context.subscriptions.push(openSettingsDisposable);
+
 
   let newEmailDisposable = vscode.commands.registerCommand(
     "robenkleene.newEmail",
