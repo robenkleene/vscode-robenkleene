@@ -1416,26 +1416,6 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(closeOtherEditorsDisposable);
 
-  let openNotesDisposable = vscode.commands.registerCommand(
-    "robenkleene.openNotes",
-    async () => {
-      const homedir = require("os").homedir();
-      const path = require("path");
-      const dirPath = path.join(homedir, "/Documents/Text/Notes/");
-
-      const fs = require("fs");
-      if (!fs.lstatSync(dirPath).isDirectory()) {
-        return;
-      }
-      let dirUri = vscode.Uri.file(dirPath);
-      const success = await vscode.commands.executeCommand(
-        "vscode.openFolder",
-        dirUri
-      );
-    }
-  );
-  context.subscriptions.push(openNotesDisposable);
-
   let openSocialDisposable = vscode.commands.registerCommand(
     "robenkleene.openSocial",
     async () => {
