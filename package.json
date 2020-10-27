@@ -40,24 +40,19 @@
     "onCommand:robenkleene.insertTitle",
     "onCommand:robenkleene.openSourceControlSite",
     "onCommand:robenkleene.insertFilePath",
-    "onCommand:robenkleene.quickOpenDirectory",
     "onCommand:robenkleene.copyMarkdownSourceControlLink",
+    "onCommand:robenkleene.quickOpenDirectory",
     "onCommand:robenkleene.copyMarkdownSourceControlQuote",
     "onCommand:robenkleene.openSourceControlLink",
     "onCommand:robenkleene.quickOpenDocumentation",
-    "onCommand:robenkleene.quickOpenText",
     "onCommand:robenkleene.quickOpenAll",
     "onCommand:robenkleene.quickOpenDeveloper",
     "onCommand:robenkleene.quickOpenAllFiles",
-    "onCommand:robenkleene.openDocumentation",
-    "onCommand:robenkleene.openTweets",
     "onCommand:robenkleene.newInboxDocument",
     "onCommand:robenkleene.openJournalEntry",
     "onCommand:robenkleene.openDevelopmentScratch",
     "onCommand:robenkleene.openBlog",
-    "onCommand:robenkleene.openWiki",
     "onCommand:robenkleene.openProjects",
-    "onCommand:robenkleene.openPersonalWiki",
     "onCommand:robenkleene.openInRepla",
     "onCommand:robenkleene.openReadme",
     "onCommand:robenkleene.openFile"
@@ -110,10 +105,6 @@
         "title": "Quick Open Documentation"
       },
       {
-        "command": "robenkleene.quickOpenText",
-        "title": "Quick Open Text"
-      },
-      {
         "command": "robenkleene.quickOpenAll",
         "title": "Quick Open All"
       },
@@ -126,24 +117,8 @@
         "title": "Quick Open Developer"
       },
       {
-        "command": "robenkleene.openDocumentation",
-        "title": "Open Documentation"
-      },
-      {
-        "command": "robenkleene.openTweets",
-        "title": "Open Tweets"
-      },
-      {
-        "command": "robenkleene.openWiki",
-        "title": "Open Wiki"
-      },
-      {
         "command": "robenkleene.openProjects",
         "title": "Open Projects"
-      },
-      {
-        "command": "robenkleene.openPersonalWiki",
-        "title": "Open Personal Wiki"
       },
       {
         "command": "robenkleene.openDevelopmentScratch",

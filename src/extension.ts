@@ -1017,38 +1017,6 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(quickOpenZDisposable);
 
-  let quickOpenTextDisposable = vscode.commands.registerCommand(
-    "robenkleene.quickOpenText",
-    async () => {
-      const path = require("path");
-      const os = require("os");
-      let dirPath = path.resolve(os.homedir(), "Text");
-
-      const uri = await pickFile(true, [dirPath]);
-      if (!uri) {
-        return;
-      }
-
-      const destinationPath = uri.fsPath;
-      const fs = require("fs");
-      if (!fs.existsSync(destinationPath)) {
-        return;
-      }
-      let destUri = vscode.Uri.file(destinationPath);
-      if (fs.lstatSync(destinationPath).isDirectory()) {
-        const success = await vscode.commands.executeCommand(
-          "vscode.openFolder",
-          destUri
-        );
-      } else {
-        vscode.workspace.openTextDocument(destUri).then((doc) => {
-          vscode.window.showTextDocument(doc);
-        });
-      }
-    }
-  );
-  context.subscriptions.push(quickOpenTextDisposable);
-
   let quickOpenAllDisposable = vscode.commands.registerCommand(
     "robenkleene.quickOpenAll",
     async () => {
@@ -1448,46 +1416,6 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(closeOtherEditorsDisposable);
 
-  let openDocumentationDisposable = vscode.commands.registerCommand(
-    "robenkleene.openDocumentation",
-    async () => {
-      const homedir = require("os").homedir();
-      const path = require("path");
-      const dirPath = path.join(homedir, "Documentation");
-
-      const fs = require("fs");
-      if (!fs.lstatSync(dirPath).isDirectory()) {
-        return;
-      }
-      let dirUri = vscode.Uri.file(dirPath);
-      const success = await vscode.commands.executeCommand(
-        "vscode.openFolder",
-        dirUri
-      );
-    }
-  );
-  context.subscriptions.push(openDocumentationDisposable);
-
-  let openTweetsDisposable = vscode.commands.registerCommand(
-    "robenkleene.openTweets",
-    async () => {
-      const homedir = require("os").homedir();
-      const path = require("path");
-      const dirPath = path.join(homedir, "/Documents/Text/Social/Tweets/");
-
-      const fs = require("fs");
-      if (!fs.lstatSync(dirPath).isDirectory()) {
-        return;
-      }
-      let dirUri = vscode.Uri.file(dirPath);
-      const success = await vscode.commands.executeCommand(
-        "vscode.openFolder",
-        dirUri
-      );
-    }
-  );
-  context.subscriptions.push(openTweetsDisposable);
-
   let openNotesDisposable = vscode.commands.registerCommand(
     "robenkleene.openNotes",
     async () => {
@@ -1625,46 +1553,6 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
   context.subscriptions.push(openBlogDisposable);
-
-  let openWikiDisposable = vscode.commands.registerCommand(
-    "robenkleene.openWiki",
-    async () => {
-      const homedir = require("os").homedir();
-      const path = require("path");
-      const dirPath = path.join(homedir, "Text/wiki");
-
-      const fs = require("fs");
-      if (!fs.lstatSync(dirPath).isDirectory()) {
-        return;
-      }
-      let dirUri = vscode.Uri.file(dirPath);
-      const success = await vscode.commands.executeCommand(
-        "vscode.openFolder",
-        dirUri
-      );
-    }
-  );
-  context.subscriptions.push(openWikiDisposable);
-
-  let openPersonalWikiDisposable = vscode.commands.registerCommand(
-    "robenkleene.openPersonalWiki",
-    async () => {
-      const homedir = require("os").homedir();
-      const path = require("path");
-      const dirPath = path.join(homedir, "Text/personal-wiki");
-
-      const fs = require("fs");
-      if (!fs.lstatSync(dirPath).isDirectory()) {
-        return;
-      }
-      let dirUri = vscode.Uri.file(dirPath);
-      const success = await vscode.commands.executeCommand(
-        "vscode.openFolder",
-        dirUri
-      );
-    }
-  );
-  context.subscriptions.push(openPersonalWikiDisposable);
 
   let newInboxDocumentDisposable = vscode.commands.registerCommand(
     "robenkleene.newInboxDocument",
