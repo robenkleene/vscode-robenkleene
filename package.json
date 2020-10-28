@@ -382,7 +382,7 @@
       {
         "command": "robenkleene.insertTitle",
         "key": "alt+s t",
-        "when": "!terminalFocus"
+        "when": "!terminalFocus && resourceLangId == markdown"
       },
       {
         "command": "robenkleene.closeOtherEditors",
