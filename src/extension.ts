@@ -1099,14 +1099,15 @@ export function activate(context: vscode.ExtensionContext) {
     async () => {
       const path = require("path");
       const os = require("os");
-      let developerDirPath = path.resolve(os.homedir(), "Developer/Projects");
 
-      const uri = await pickFile(
-        true,
-        [developerDirPath],
-        undefined,
-        "--type d"
-      );
+      // let developerDirPath = path.resolve(os.homedir(), "Developer/Projects");
+      // const uri = await pickFile(
+      //   true,
+      //   [developerDirPath],
+      //   undefined,
+      //   "--type d"
+      // );
+      const uri = await pickFile(true, [""], "find ~/Developer -type d -exec test -e '{}/.git' ';' -print -prune");
       if (!uri) {
         return;
       }
