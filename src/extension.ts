@@ -1062,11 +1062,10 @@ export function activate(context: vscode.ExtensionContext) {
       const os = require("os");
       let textDirPath = path.resolve(os.homedir(), "Text");
       let documentationDirPath = path.resolve(os.homedir(), "Documentation");
-      let notesDirPath = path.resolve(os.homedir(), "Documents/Text/Notes");
 
       const uri = await pickFile(
         true,
-        [textDirPath, documentationDirPath, notesDirPath],
+        [textDirPath, documentationDirPath],
         undefined,
         "--type f"
       );
@@ -1436,6 +1435,26 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
   context.subscriptions.push(openSocialDisposable);
+
+  let openNotesDisposable = vscode.commands.registerCommand(
+    "robenkleene.openNotes",
+    async () => {
+      const homedir = require("os").homedir();
+      const path = require("path");
+      const dirPath = path.resolve(homedir, "Documents/Text/Notes");
+
+      const fs = require("fs");
+      if (!fs.lstatSync(dirPath).isDirectory()) {
+        return;
+      }
+      let dirUri = vscode.Uri.file(dirPath);
+      const success = await vscode.commands.executeCommand(
+        "vscode.openFolder",
+        dirUri
+      );
+    }
+  );
+  context.subscriptions.push(openNotesDisposable);
 
   let openSettingsDisposable = vscode.commands.registerCommand(
     "robenkleene.openSettings",
