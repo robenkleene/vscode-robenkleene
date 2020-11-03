@@ -21,6 +21,7 @@
     "onCommand:robenkleene.blogPostFromFile",
     "onCommand:robenkleene.blogLinkFromFile",
     "onCommand:robenkleene.openSocial",
+    "onCommand:robenkleene.openNotes",
     "onCommand:robenkleene.openSettings",
     "onCommand:robenkleene.newEmail",
     "onCommand:robenkleene.saveAsInbox",
@@ -138,6 +139,10 @@
       {
         "command": "robenkleene.openSocial",
         "title": "Open Social"
+      },
+      {
+        "command": "robenkleene.openNotes",
+        "title": "Open Notes"
       },
       {
         "command": "robenkleene.openSettings",
