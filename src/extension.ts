@@ -331,7 +331,7 @@ export function activate(context: vscode.ExtensionContext) {
   let quickOpenDirectoryDisposable = vscode.commands.registerCommand(
     "robenkleene.quickOpenDirectory",
     async () => {
-      let currentPath = vscode.workspace.rootPath
+      let currentPath = vscode.workspace.rootPath;
       var path = require("path");
       const fs = require("fs");
       if (!fs.existsSync(currentPath)) {
@@ -1106,7 +1106,11 @@ export function activate(context: vscode.ExtensionContext) {
       //   undefined,
       //   "--type d"
       // );
-      const uri = await pickFile(true, [""], "find ~/Developer -type d -exec test -e '{}/.git' ';' -print -prune");
+      const uri = await pickFile(
+        true,
+        [""],
+        "find ~/Developer -type d -exec test -e '{}/.git' ';' -print -prune"
+      );
       if (!uri) {
         return;
       }
@@ -1436,6 +1440,36 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(openSocialDisposable);
 
+  let openGitRootDisposable = vscode.commands.registerCommand(
+    "robenkleene.openGitRoot",
+    async () => {
+      let rootPath = vscode.workspace.rootPath;
+      if (!rootPath) {
+        return;
+      }
+      const child_process = require("child_process");
+      try {
+        const result = child_process.spawnSync(
+          "git rev-parse --show-toplevel | tr -d '\n'",
+          null,
+          {
+            shell: true,
+            cwd: rootPath,
+          }
+        );
+        displayError(result);
+        let dirPath = result.stdout.toString()
+        const fs = require("fs");
+        if (!fs.lstatSync(dirPath).isDirectory()) {
+          return;
+        }
+        let dirUri = vscode.Uri.file(dirPath);
+        await vscode.commands.executeCommand("vscode.openFolder", dirUri);
+      } catch (error) {}
+    }
+  );
+  context.subscriptions.push(openGitRootDisposable);
+
   let openNotesDisposable = vscode.commands.registerCommand(
     "robenkleene.openNotes",
     async () => {
@@ -1462,7 +1496,10 @@ export function activate(context: vscode.ExtensionContext) {
       const homedir = require("os").homedir();
       const path = require("path");
       // The `vscode.version` prints whether it's insiders, e.g. `1.51.0-insider`
-      const dirPath = path.join(homedir, "Library/Application Support/Code - Insiders/User");
+      const dirPath = path.join(
+        homedir,
+        "Library/Application Support/Code - Insiders/User"
+      );
       const fs = require("fs");
       if (!fs.lstatSync(dirPath).isDirectory()) {
         return;
@@ -1475,7 +1512,6 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
   context.subscriptions.push(openSettingsDisposable);
-
 
   let newEmailDisposable = vscode.commands.registerCommand(
     "robenkleene.newEmail",

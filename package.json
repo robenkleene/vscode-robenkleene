@@ -18,11 +18,12 @@
     "onCommand:robenkleene.openScratchFile",
     "onCommand:robenkleene.openScratchFileInSplit",
     "onCommand:robenkleene.convertToSlug",
-    "onCommand:robenkleene.blogPostFromFile",
     "onCommand:robenkleene.blogLinkFromFile",
+    "onCommand:robenkleene.openGitRoot",
     "onCommand:robenkleene.openSocial",
     "onCommand:robenkleene.openNotes",
     "onCommand:robenkleene.openSettings",
+    "onCommand:robenkleene.blogPostFromFile",
     "onCommand:robenkleene.newEmail",
     "onCommand:robenkleene.saveAsInbox",
     "onCommand:robenkleene.makeWikiLink",
@@ -135,6 +136,10 @@
       {
         "command": "robenkleene.blogLinkFromFile",
         "title": "Blog Link From File"
+      },
+      {
+        "command": "robenkleene.openGitRoot",
+        "title": "Open Git Root"
       },
       {
         "command": "robenkleene.openSocial",
