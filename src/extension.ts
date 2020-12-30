@@ -328,6 +328,39 @@ export function activate(context: vscode.ExtensionContext) {
   );
   context.subscriptions.push(insertFilePathDisposable);
 
+  let makeFileExecutableDisposable = vscode.commands.registerCommand(
+    "robenkleene.makeFileExecutable",
+    async () => {
+      const activeTextEditor = vscode.window.activeTextEditor;
+      if (!activeTextEditor) {
+        return;
+      }
+
+      var firstLine = activeTextEditor.document.lineAt(0);
+      var textRange = new vscode.Range(firstLine.range.start, firstLine.range.end);
+      var text = activeTextEditor.document.getText(textRange);
+      if (!/^#!/.test("#!/usr/bin/env node")) {
+        return;
+      }
+
+      const filePath = activeTextEditor.document.uri.fsPath;
+      const fs = require("fs");
+      if (!fs.existsSync(filePath)) {
+        return;
+      }
+
+      const child_process = require("child_process");
+      var args = ["+x", `"${escapeShell(filePath)}"`];
+      try {
+        const result = child_process.spawnSync("chmod", args, {
+          shell: true,
+        });
+        displayError(result);
+      } catch (error) {}
+    }
+  );
+  context.subscriptions.push(makeFileExecutableDisposable);
+
   let quickOpenDirectoryDisposable = vscode.commands.registerCommand(
     "robenkleene.quickOpenDirectory",
     async () => {
