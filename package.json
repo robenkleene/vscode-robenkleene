@@ -41,6 +41,7 @@
     "onCommand:robenkleene.insertTitle",
     "onCommand:robenkleene.openSourceControlSite",
     "onCommand:robenkleene.insertFilePath",
+    "onCommand:robenkleene.makeFileExecutable",
     "onCommand:robenkleene.copyMarkdownSourceControlLink",
     "onCommand:robenkleene.quickOpenDirectory",
     "onCommand:robenkleene.copyMarkdownSourceControlQuote",
@@ -184,6 +185,10 @@
       {
         "command": "robenkleene.insertFilePath",
         "title": "Insert File Path"
+      },
+      {
+        "command": "robenkleene.makeFileExecutable",
+        "title": "Make File Executable"
       },
       {
         "command": "robenkleene.quickOpenDirectory",
