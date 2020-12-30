@@ -339,7 +339,7 @@ export function activate(context: vscode.ExtensionContext) {
       var firstLine = activeTextEditor.document.lineAt(0);
       var textRange = new vscode.Range(firstLine.range.start, firstLine.range.end);
       var text = activeTextEditor.document.getText(textRange);
-      if (!/^#!/.test("#!/usr/bin/env node")) {
+      if (!/^#!/.test(text)) {
         return;
       }
 
