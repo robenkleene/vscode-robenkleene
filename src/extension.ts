@@ -364,14 +364,14 @@ export function activate(context: vscode.ExtensionContext) {
   let quickOpenDirectoryDisposable = vscode.commands.registerCommand(
     "robenkleene.quickOpenDirectory",
     async () => {
-      let currentPath = vscode.workspace.rootPath;
-      var path = require("path");
+      const currentPath = vscode.workspace.rootPath;
+      let path = require("path");
       const fs = require("fs");
       if (!fs.existsSync(currentPath)) {
         return;
       }
 
-      var rootDirs;
+      let rootDirs;
       if (!vscode.workspace.workspaceFolders) {
         rootDirs = [path.dirname(currentPath)];
       }
@@ -1529,9 +1529,17 @@ export function activate(context: vscode.ExtensionContext) {
       const homedir = require("os").homedir();
       const path = require("path");
       // The `vscode.version` prints whether it's insiders, e.g. `1.51.0-insider`
+      const isInsiders = /insider$/.test(vscode.version)
+      let settingsPath;
+      if (isInsiders) {
+        settingsPath = "Library/Application Support/Code - Insiders/User";
+      } else {
+        settingsPath = "Library/Application Support/Code/User";
+      }
+
       const dirPath = path.join(
         homedir,
-        "Library/Application Support/Code - Insiders/User"
+        settingsPath
       );
       const fs = require("fs");
       if (!fs.lstatSync(dirPath).isDirectory()) {
