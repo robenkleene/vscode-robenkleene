@@ -411,7 +411,8 @@
       },
       {
         "command": "robenkleene.quickOpenZ",
-        "key": "alt+z"
+        "key": "alt+z",
+        "when": "!terminalFocus"
       },
       {
         "command": "robenkleene.todoToggleLocal",
@@ -425,11 +426,13 @@
       },
       {
         "command": "robenkleene.quickOpenDeveloper",
-        "key": "alt+g"
+        "key": "alt+g",
+        "when": "!terminalFocus"
       },
       {
         "command": "robenkleene.quickOpenAll",
-        "key": "alt+o"
+        "key": "alt+o",
+        "when": "!terminalFocus"
       }
     ]
   },
