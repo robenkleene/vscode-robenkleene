@@ -11,18 +11,15 @@ export function activate(context: vscode.ExtensionContext) {
 
 		let result: string = "";
 		if (input) {
-			const { exec } = require('child_process');
-			exec(`zoxide query ${input}`, (error: { message: any; }, stdout: string, stderr: any) => {
-				if (error) {
-					vscode.window.showErrorMessage(`Error: ${error.message}`);
-					return;
-				}
-				if (stderr) {
-					vscode.window.showErrorMessage(`Error: ${stderr}`);
-					return;
-				}
-				result = stdout;
-			});
+			const { execSync } = require('child_process');
+			try {
+				const output = execSync(`zoxide query ${input} | tr -d '\n'`);
+				result = output.toString();
+			} catch (error) {
+				const err = error as Error;
+				vscode.window.showErrorMessage(`Error: ${err.message}`);
+				return;
+			}
 		}
 
 		if (!result?.length) {
