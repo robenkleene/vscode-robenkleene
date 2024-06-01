@@ -20,8 +20,20 @@
       {
         "command": "robenkleene.z",
         "title": "Z"
+      },
+      {
+        "command": "robenkleene.openDirectory",
+        "title": "Open Directory"
       }
-    ]
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "robenkleene.openDirectory",
+          "group": "navigation"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
