@@ -22,6 +22,10 @@
         "title": "Z"
       },
       {
+        "command": "robenkleene.copyGrep",
+        "title": "Copy grep"
+      },
+      {
         "command": "robenkleene.openDirectory",
         "title": "Open Directory"
       }

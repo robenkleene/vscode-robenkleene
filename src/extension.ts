@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import * as os from 'os';
 
 export function activate(context: vscode.ExtensionContext) {
 	let zDisposable = vscode.commands.registerCommand('robenkleene.z', async () => {
@@ -77,6 +78,28 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	);
 	context.subscriptions.push(openFolderForFileDisposable);
+
+	let disposable = vscode.commands.registerCommand('robenkleene.copyGrep', () => {
+		const editor = vscode.window.activeTextEditor;
+		if (!editor) {
+			return;
+		}
+		const document = editor.document;
+		const selection = editor.selection;
+		const line = selection.active.line + 1;
+		const column = selection.active.character + 1;
+		let filePath = document.uri.fsPath;
+		const homeDir = os.homedir();
+		if (filePath.startsWith(homeDir)) {
+		  filePath = `~${filePath.substring(homeDir.length)}`;
+		}  
+		const location = `${filePath}:${line}:${column}`;
+		vscode.env.clipboard.writeText(location).then(() => {
+		  vscode.window.showInformationMessage(`Copied location: ${location}`);
+		});
+	});
+	context.subscriptions.push(disposable);
+
 }
 
 // This method is called when your extension is deactivated
