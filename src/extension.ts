@@ -95,7 +95,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}  
 		const location = `${filePath}:${line}:${column}`;
 		vscode.env.clipboard.writeText(location).then(() => {
-		  vscode.window.showInformationMessage(`Copied location: ${location}`);
+		  vscode.window.showInformationMessage(`${location}`);
 		});
 	});
 	context.subscriptions.push(disposable);
