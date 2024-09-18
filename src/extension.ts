@@ -94,8 +94,17 @@ export function activate(context: vscode.ExtensionContext) {
 		  filePath = `~${filePath.substring(homeDir.length)}`;
 		}  
 		const location = `${filePath}:${line}:${column}`;
-		vscode.env.clipboard.writeText(location).then(() => {
-		  vscode.window.showInformationMessage(`${location}`);
+
+		let result = location;
+		if (selection) {
+			const text = editor.document.getText(selection);
+			if (text.length) {
+				result += `:\n${text}`;
+			}
+		}
+
+		vscode.env.clipboard.writeText(result).then(() => {
+		  vscode.window.showInformationMessage(`${result}`);
 		});
 	});
 	context.subscriptions.push(disposable);
