@@ -36,6 +36,11 @@
           "command": "robenkleene.openDirectory",
           "group": "navigation"
         }
+      ],
+      "editor/context/copy": [
+        {
+          "command": "robenkleene.copyGrep"
+        }
       ]
     }
   },
