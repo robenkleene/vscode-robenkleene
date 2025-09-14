@@ -18,6 +18,10 @@
   "contributes": {
     "commands": [
       {
+        "command": "robenkleene.z",
+        "title": "Z"
+      },
+      {
         "command": "robenkleene.copyGrep",
         "title": "Copy grep"
       },
@@ -38,7 +42,14 @@
           "command": "robenkleene.copyGrep"
         }
       ]
-    }
+    },
+    "keybindings": [
+      {
+        "command": "robenkleene.z",
+        "key": "alt+z",
+        "when": "!terminalFocus"
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
